@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&family=Noto+Serif+KR&family=Stylish&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Yeon+Sung&display=swap');
+/* 글꼴
+font-family: 'Nanum Myeongjo', serif;
+font-family: 'Noto Serif KR', serif;
+font-family: 'Stylish', sans-serif; 
+font-family: 'Yeon Sung', cursive;      연성*/
+*{
+    margin:0;
+    padding:0;
+}
+/* 타이틀폰트 적용 */
+.title_font{
+    font-family: 'Noto Serif KR', serif;
+}
+header{
+    padding:20px;
+    border-bottom: 1px solid #ddd;
+    /* border:1px solid blue; */
+}
+/* hr로 라인 처리 할 경우
+hr{
+    border:0;
+    border-top:1px solid #aaa;
+    margin:5px 0;
+} */
+
+/* 회원가입 폼 영역 */
+#regFormArea{
+    padding:20px 40px;
+    border-bottom:1px solid #ddd;
+}
+/* 라벨의 위치 지정 */
+form label{
+    display:block;  /* 원래 라벨은 inline이었다. */
+    /* border: 1px solid salmon; */
+}
+
+#regForm>table td{
+    width:150px;
+    height:100px;
+    /* height:50px; 설정 굳이 안해도 자동으로 설정됨.*/
+    padding:5px;
+    /* border:1px solid seagreen; */
+}
+
+/* 아이디, 비밀번호, 비밀번호 확인, 이름 */
+ #regForm input[type=text], 
+ #regForm input[type=password]{
+    width: 150px;
+    height:30px;
+    padding:0 5px;
+ }
+
+ /* 등록 버튼 */
+ #regForm input[type=submit]{
+    width:80px;
+    height:50px;
+    border:none;
+    font-size: 1.2em;
+    font-family: 'Stylish', sans-serif;
+    background-color: peachpuff;
+    border-radius: 20px;
+ }
+
+ /* 경고 글자 설정 */
+ div.msg{
+     color:crimson;
+     font-size:0.8em;
+     margin:5px 0;
+     display:none;
+     /* border:1px solid aqua; */
+ }
+
+ /* 회원 리스트 영역 */
+ #listArea{
+     padding:20px 40px;  
+     border-bottom:1px solid rgb(180, 180, 180);
+     /* border: 1px solid cadetblue; */
+    }
+    #listArea> table{    /* 왜 list로 잡으면 이렇게 설정이 안 되지? */
+        margin:10px 0;
+        width:600px;
+        border-collapse: collapse;
+        /* border:1px solid darkred; */
+    }
+    
+    #listArea>table th, #listArea>table td{
+        /* width:150px;  --padding을 따로 주었기 때문에 박스가 알아서 늘어남.
+        height:45px; */
+        padding:10px;
+        text-align: center;
+        border:1px solid rgb(204, 204, 204);
+    }
+    /* 회원 정보 수정 영역 */
+
+    #editFormArea{
+        width:360px;
+        padding:20px;
+        border:none;
+        border-radius: 10px;
+        background-color: rgb(226, 226, 226);
+        /* position 추가 -------------------------------------------------------------------- */
+        position:absolute;
+        left:50%;
+        top:100px;
+        margin-left:-175px;
+        display:none;
+
+    }
+    #div_header{
+        border-bottom:1px solid #ddd;
+        padding-bottom:5px;
+        overflow:hidden;
+        /* border: 1px solid violet; */
+        
+    }
+    #div_header>h2{ /* 왜 +로는 h2를 선택할 수가 없지? */
+        float:left;
+    }
+    #div_header>div{
+        float:right;
+    }
+    #editForm>table{
+        margin-top:15px;
+        width: 100%;
+        /* border:1px solid teal; */
+    }
+    #editForm>table td{
+        text-align: center;
+        padding:5px 10px;
+        /* border:1px solid black; */
+    }
+    #editForm input[type=submit]{
+        width:80px;
+        height:50px;
+        border:none;
+        font-size: 1.2em;
+        font-family: 'Stylish', sans-serif;
+        background-color: rgb(255, 255, 255);
+        border-radius: 20px;
+        color:rgb(7, 7, 7);
+     }
+
+    
