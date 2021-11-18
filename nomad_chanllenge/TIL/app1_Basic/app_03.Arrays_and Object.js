@@ -1,4 +1,5 @@
 /* Arrays */
+console.log('<Arrays>');
 const daysOfWeek = ["mon", "tue", "wed", "thu", "fri", "sat"];
 
 // Get Item from Array
@@ -11,6 +12,7 @@ console.log(daysOfWeek);
 
 
 /* Object */
+console.log('<Object>');
 const player = {
     name: "nico",
     point: 10, 

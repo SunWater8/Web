@@ -9,4 +9,4 @@ const calculator2 = {
     }
 };
 
-calculator.add(1,2);
+calculator2.add(1,2);

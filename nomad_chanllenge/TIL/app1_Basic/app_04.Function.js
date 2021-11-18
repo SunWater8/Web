@@ -1,4 +1,4 @@
-console.log("<function>")
+console.log('<function>');
 
 /* 2.7 Function part 1. */
 // arguments가 없는 function 
@@ -22,7 +22,7 @@ function sayHello3(nameOfPerson, age){
 sayHello3("sarn", 20);
 
 // Object 안에서 function
-const player = {
+const player2 = {
     name : "navam",
     sayHello4 : function(){ //argument가 있는 function
         console.log("hello!");
@@ -32,9 +32,9 @@ const player = {
     }
 };
 
-console.log(player.name);
-player.sayHello4();
-player.sayHello5("synn");
+console.log(player2.name);
+player2.sayHello4();
+player2.sayHello5("synn");
 
 /* 2.10 Recap 2 */
 // function cares about only first argument

@@ -1,4 +1,5 @@
 /* Data Type - Boolean(true, false), null, undefined*/
+console.log('<Boolean>');
 
 // false and true
 const amIFat = false;
