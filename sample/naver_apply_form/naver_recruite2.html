@@ -1,0 +1,2321 @@
+
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>지원서 작성하기 : NAVER WEBTOON Careers</title>
+<script type="text/javascript" src="js01.js"></script>
+<script type="text/javascript" src="js02.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	var pathName = window.location.pathname;
+	var pathArray = pathName.split("/");
+	var path = pathArray[pathArray.length - 1];
+	
+	$("#menu_" + path).addClass("on");
+	
+	$("#btnRelateSite").click(function(){
+		if ($("#relate_site").hasClass("on")) {
+			$("#relate_site").removeClass("on");
+		} else {
+			$("#relate_site").addClass("on");
+		}
+	});
+	
+	$(".site_list > ul").find("li").click(function() {
+		if ($("#relate_site").hasClass("on")) {
+			$("#relate_site").removeClass("on");
+		}
+	});
+	
+	// placeholder
+	$("input, textarea").placeholder();
+	
+	// safari, chrome 에서의 input에 대한 placeholder css 재정의 
+	$("input").each(function() {
+		if ($(this).prop("tagName") == "INPUT" 
+			&& navigator.userAgent.indexOf("Safari") > -1 
+			&& navigator.userAgent.indexOf("Chrome") == -1
+			&& getOSInfo().indexOf("Mac") == -1) {
+			$(this).css("line-height", "0px");
+		}
+	});
+});
+</script>
+
+<link rel="stylesheet" type="text/css" href="css01.css">
+<style type="text/css">
+.placeholder { color: #aaa; }
+input:focus::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+	color: transparent!important;
+}
+input:focus::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color: transparent!important;
+}
+input:focus:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color:    #aaa;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+	color:    #aaa;
+}
+</style>
+<script type="text/javascript">
+var initFormObj;
+var isOpenYn;
+var isApplicantModTarget = "false";
+var isRequiredSchool = true;
+
+$(document).ready(function() {
+	$(window).on("beforeunload", function() {
+		var formObj = $("#form1").serialize();
+		if (initFormObj != formObj) {
+			return "이 페이지를 벗어나면 마지막 저장 후 수정된 내용은 저장되지 않습니다.";
+		}
+	});
+	
+	
+	if (isApplicantModTarget != "true") {
+		var finalInputYn = "";
+		if ("Y" == finalInputYn) {
+			$.blockUI({ message: $('#finalOkMsg'), css: { border: '0px' } });
+		} else if ("N" == finalInputYn) {
+			$.blockUI({ message: $('#tempSaveDialog'), css: { border: '0px' } });
+		}
+	}
+	
+	
+	$("select[name='applJobList[0].classId']").css("display", "none");
+	$("select[name='applJobList[0].jobId']").css("display", "none");
+	
+	var classId = ("" != "") ? "" : "";
+	var jobId = ("" != "") ? "" : "";
+	
+	$("select[name='applJobList[0].classId']").change(function(e) {
+		var param = "";
+		param += "searchId=SfY3stEs_c5H380gJPmVzHsDSeloUHlexjfSz8L3QrOSlw1NbnB8ODAT2whjGNpg50GgydrOPLilXeEeLu-6fQ==";
+		param += "&annoId=20006920";
+
+		
+		if (isApplicantModTarget == "true") {
+			param += "&isApplicantModTarget=false"
+		}
+		param += "&classId=" + $(this).val();
+		
+		codeSearch($("select[name='applJobList[0].jobId']"), param, "option", "all", jobId);
+		
+		createComboBoxList($("select[name='applJobList[0].jobId']"));
+		
+		var spanObj = $("#divAnnoJob").find("span").eq(0);
+		var jobNm = $("select[name='applJobList[0].jobId'] option:eq(1)").text();
+		if ("" == jobId) {
+			spanObj.empty().html(jobNm);
+			$("select[name='applJobList[0].jobId'] option:eq(1)").attr("selected", "selected").change();
+		} else {
+			$("select[name='applJobList[0].jobId']").val(jobId);
+			if ($("select[name='applJobList[0].jobId']").val() == "") {
+				spanObj.empty().html(jobNm);
+				$("select[name='applJobList[0].jobId'] option:eq(1)").attr("selected", "selected").change();
+			} else {
+				spanObj.empty().html($("select[name='applJobList[0].jobId'] option:selected").text());
+			}
+		}
+		
+		spanObj.addClass("selected");
+		
+		
+		var classCount = getSelectboxCount($("select[name='applJobList[0].classId'] option"));
+		var jobCount = getSelectboxCount($("select[name='applJobList[0].jobId'] option"));
+		if ((classCount == 1 && jobCount == 1) || isApplicantModTarget == "true") {
+			$("#divAnnoClassJob").hide();
+			$("#personalInfoTitle").addClass("top_margin_none");
+		} else if (classCount == 1 && jobCount > 1) {
+			$("#annoClassDiv").hide();
+		}
+	});
+	
+	$("select[name='applJobList[0].jobId']").change(function(){
+		if ($(this).val() != "") {
+			getAnnoSubject();
+			getSelfIntroAnswer();
+		}
+	});
+	
+	if ("" == classId) {
+		$("select[name='applJobList[0].classId'] option:eq(1)").attr("selected", "selected").change();
+	} else {
+		$("select[name='applJobList[0].classId']").val(classId).attr("selected", "selected").change();
+	}
+	
+	var spanObj = $("#annoClassDiv").find("span").eq(0);
+	spanObj.empty().html($("select[name='applJobList[0].classId'] option:selected").text());
+	spanObj.addClass("selected");
+	
+	
+	changePatriot("N");
+	
+	
+	if (scholarData.dataList.length > 0) {
+		prependRowAndSetDiv($("#addTableScholarship"), "prependRow", scholarData.dataList);
+		prependRow($("#addTableScholarship"));
+		prependRowValidationCheckEvent($("#addTableScholarship"));
+		
+		var trCount = getAppendTrTotalCount($("#addTableScholarship > tbody > tr"));
+		setHideSchloarshipPlace(trCount-1);
+	} else {
+		prependRow($("#addTableScholarship"));
+		prependRowValidationCheckEvent($("#addTableScholarship"));
+		
+		var trCount = getAppendTrTotalCount($("#addTableScholarship > tbody > tr"));
+		setHideSchloarshipPlace(trCount-1);
+	}
+	setFormElementAttributeScholarship();
+	
+	
+	if (careerData.dataList.length > 0) {
+		prependRowAndSetDiv($("#addTableCareer"), "prependRow", careerData.dataList);
+		prependRow($("#addTableCareer"));
+		prependRowValidationCheckEvent($("#addTableCareer"));
+	} else {
+		prependRow($("#addTableCareer"));
+		prependRowValidationCheckEvent($("#addTableCareer"));
+	}
+
+	setFormElementAttributeCareer();
+	
+	
+	
+	if (licenseLanguageData.dataList.length > 0) {
+		prependRowAndSetDiv($("#addTableLicenseLanguage"), "prependRow", licenseLanguageData.dataList);
+		prependRow($("#addTableLicenseLanguage"));
+		prependRowValidationCheckEvent($("#addTableLicenseLanguage"));
+	} else {
+		prependRow($("#addTableLicenseLanguage"));
+		prependRowValidationCheckEvent($("#addTableLicenseLanguage"));
+	}
+	
+	setFormElementAttributeLicenseLanguage();
+	
+	 
+	
+	
+	$.fn.clickOutsideThisElement = function (callback) {
+		return this.each(function () {
+			var self = this;
+			$(document).click(function (e) {
+				if (!$(e.target).closest(self).length) {
+					callback.call(self, e)
+				}
+			})
+		});
+	};
+
+	$(document).click(function(){
+		$(".slct_box").each(function(idx) {
+			if ($(this).hasClass("on")) {
+				$(this).removeClass("on");
+				$(this).children('.choice_txt').removeClass("on");
+			}
+		});
+	});
+	
+	var selectedName;
+	$(document).on("click", ".slct_box", function(e) {
+		if (!$(this).hasClass("on")) {
+			if (typeof(selectedName) != "undefined") {
+				if (selectedName != $(this).children("select").attr("name")) {
+					$("select[name='"+ selectedName +"']").parent().removeClass("on");
+				}
+			}
+			$(this).addClass("on");
+			$(this).children('.choice_txt').addClass("on");
+			selectedName = $(this).children("select").attr("name");
+		} else {
+			$(this).removeClass("on");
+			$(this).children('.choice_txt').removeClass("on");
+		}
+		e.stopPropagation();
+	});
+	
+	$(".cr_inpt, .text_area").each(function() {
+		$(this).focusin(function() {
+			$(this).addClass("on");
+		}).focusout(function() {
+			$(this).removeClass("on");
+		});
+	});
+	
+	$("select").change(function() {
+		var value = $(this).val();
+		var text = $("option:selected", this).text();
+		
+		var spanObj = $(this).prev().find("span").eq(0);
+		spanObj.empty().html(text);
+		spanObj.addClass("selected");
+	});
+	
+	$("#divEtcInfo select, #divPersonalInfo select, #divAnnoClassJob select").each(function(idx){
+		createComboBoxList($(this));
+	});
+	
+	
+	$("#codeSearchLayer").find("#cdNm").keydown(function(key) {
+		if (key.keyCode == 13) {
+			searchCode($('#codeSearchLayer'));
+		}
+	});
+	
+	
+	var applyPathCd = "";
+	if (recomApplyPathCd.indexOf(applyPathCd) > -1) {
+		displayRecomEmpInfo(applyPathCd);
+	}
+	
+	
+	$("#applicant\\.genderType").change(function() {
+		if ($(this).val() == "F") {
+			$("#military\\.demobTypeCd").val("031").change();
+		}
+	});
+	
+	$("input:text").setMask();
+	
+	initFormObj = $("#form1").serialize();
+	
+});
+
+	function completeValidation(tableObj) {
+		var isComplete = true;
+		var rowObj = $("#" + tableObj.attr("id") + " > tbody > tr");
+		rowObj.each(function(i) {
+			var viewArea = $(this).find(".wrt_ok_area");
+			var completeDiv = $(this).find(".fld_cplt");
+			
+			var hasClass = completeDiv.hasClass("on");
+			var viewAreaDisp = viewArea.css("display");
+			
+			if (hasClass && viewAreaDisp != "block") {
+				isComplete = false;
+				return false;
+			}
+		});
+		return isComplete;
+	}
+	
+	function submitApplication() {
+		var validationMsg = $("#validationMsg");
+		
+		if (!formValidationCheck(document.form1)) {
+			return false;
+		}
+
+		
+		
+		
+		
+			
+			var scholarshipIndex = getSaveRowTotalCount("scholarList", getAppendTrTotalCount($("#addTableScholarship > tbody > tr")));
+
+			if (scholarshipIndex == 1) {
+				validationMsg.empty().html(getInputErrorMsg("학력사항"));
+				showFinalValidationLayer();
+				return false;
+			}
+
+			
+			if (!completeValidation($("#addTableScholarship"))) {
+				alert("학력사항 입력이 완료되지 않았습니다.");
+				return false;
+			}
+
+			
+			setScholarshipLast();
+
+			
+			var lastYesCnt = 0;
+			for (var i=0; i < scholarshipIndex; i++) {
+				if ($("[name='scholarList[" + i + "].lastYn']").val() == "Y") {
+					lastYesCnt++;
+				}
+			}
+
+			if (lastYesCnt != 1) {
+				validationMsg.empty().html("<em>최종학력정보</em>가 잘못되었습니다.");
+				showFinalValidationLayer();
+				return false;
+			}
+			
+
+
+
+		
+		var careerIndex = getSaveRowTotalCount("careerList", getAppendTrTotalCount($("#addTableCareer > tbody > tr")));
+		
+		
+		if (!completeValidation($("#addTableCareer"))) {
+			alert("경력사항 입력이 완료되지 않았습니다.");
+			return false;
+		}
+		
+		if ("002" == "002" && 1 == careerIndex) {
+			validationMsg.empty().html(getInputErrorMsg("경력사항"));
+			showFinalValidationLayer();
+			return false;
+		}
+
+		
+		if (!completeValidation($("#addTableLicenseLanguage"))) {
+			alert("자격/어학사항 입력이 완료되지 않았습니다.");
+			return false;
+		}
+
+		
+		for (var i = 0; i < selfAnswerData.length; i++) {
+			var questionTypeCd = $("[name='selfAnswerList[" + i + "].questionTypeCd']").val();
+			var reqYn = $("[name='selfAnswerList[" + i + "].reqYn']").val();
+			var fileData = $("[name='selfAnswerList["+ i +"].fileData']");
+			
+			if (reqYn == "Y") {
+				if (questionTypeCd == "DESC") {
+					var answer = $("[name='selfAnswerList["+ i +"].answer']").val();
+					if (answer == "") {
+						validationMsg.empty().html("<em>직무질문</em>이 입력되지 않았습니다.");
+						showFinalValidationLayer();
+						return false;
+					}
+				} else if (questionTypeCd == "FILE") {
+					var fileId = $("[name='selfAnswerList["+ i +"].sysFileList[0].fileId']");
+					
+					if (fileData.val() == "" && typeof(fileId.val()) == "undefined") {
+						validationMsg.empty().html("직무질문중 필수인 <em>파일</em>이 첨부되지 않았습니다.");
+						showFinalValidationLayer();
+						return false;
+					}
+				} else if (questionTypeCd == "FILE_URL") {
+					var fileId = $("[name='selfAnswerList["+ i +"].sysFileList[0].fileId']");
+					var answer = $("[name='selfAnswerList["+ i +"].answer']");
+					
+					if (fileData.val() == "" && typeof(fileId.val()) == "undefined" && answer.val() == "") {
+						validationMsg.empty().html("직무질문중 필수인 <em>파일</em>이 첨부되지 않았거나 <em>URL</em>이 입력되지 않았습니다.");
+						showFinalValidationLayer();
+						return false;
+					}
+				}
+			}
+		}
+		
+		$("#confirmMsgEmail").empty().html($("#applicant\\.email").val().escapeHTML());
+		$("#confirmMsgCellNo").empty().html($("#applicant\\.cellNo").val().escapeHTML());
+		
+		
+		if (isApplicantModTarget != "true") {
+			checkExistApplicant();
+		} else {
+			saveTemporaryApplication();
+		}
+	}
+	
+	
+	function getSaveRowTotalCount(objNm, rowIdx) {
+		var saveCnt = 0;
+		for (var i=0; i < rowIdx; i++) {
+			if ($("[name='" + objNm + "[" + i + "].sStatus']").val() != "D") {
+				saveCnt++;
+			}
+		}
+		return saveCnt;
+	}
+	
+	function checkExistApplicant() {
+		var async = false;
+		var aventailPatch = {src:""};
+		var param = "";
+		param += "annoId=20006920";
+		param += "&applId=zI2LFbnidHHNyV78Jb8Kt2msS_rsIt9aXaaX4mk0aVk=";
+		param += "&applNm=김은선";
+		param += "&email=eheyap@gmail.com";
+		param += "&birthYmd=19880326";
+		param += "&passwd=3de48fedeaaccccb42221e8d684c2704a331f688cc664708df02c72f444f2cab";
+		param += "&sysCompanyCd=WTKR";
+		
+		aventailPatch.src = "/webtoon/ko/application/checkExistApplicantStatus.nhn";
+		
+		$.ajax({
+			type: "POST",
+			url: aventailPatch.src,
+			data: param,
+			success: function(data, textStatus, xhr){
+				if (typeof(data) != "undefined") {
+					isExistApplicant(data);
+				}
+			},
+			error: function(x, o, e) {
+				alert("오류가 발생하였습니다" + e);
+				retObj = x;
+			},
+			dataType: "json",
+			async: async
+		});
+	}
+	
+	function isExistApplicant(data) {
+		if (data.isExist == "Y") {
+			alert("상시모집 직무로 최종 제출하신 지원서가 있습니다.\n현재 평가가 진행 중이기에 중복지원은 불가능합니다.");
+			return false;
+		}
+		
+		
+		if ("006" == "007") {
+			$("#cnfirmMsg").empty().html("상시모집 직무는<br><em>중복지원</em>이 <em>불가능</em>하며<br>최종 제출 후에는<br>지원서 <em>수정이 불가능</em>합니다<br>지원하시겠습니까?");
+		}
+		
+		$.blockUI({ message: $('#finalConfirmMsg'), css: { border: '0px', top:'15%' } });
+	}
+	
+	function checkAnnoOpenYn() {
+		var async = false;
+		var aventailPatch = {src:""};
+		var param = "";
+		param += "annoId=20006920";
+		param += "&applicantId=22178607";
+		param += "&applId=zI2LFbnidHHNyV78Jb8Kt2msS_rsIt9aXaaX4mk0aVk=";
+		
+		aventailPatch.src = "/webtoon/ko/application/checkAnnoOpenYn.nhn";
+		
+		$.ajax({
+			type: "POST",
+			url: aventailPatch.src,
+			data: param,
+			success: function(data, textStatus, xhr){
+				if (typeof(data) != "undefined") {
+					isOpenYn = data.openYn;
+				}
+			},
+			error: function(x, o, e) {
+				alert("오류가 발생하였습니다" + e);
+				retObj = x;
+			},
+			dataType: "json",
+			async: async
+		});
+	}
+	
+	function saveApplication() {
+		$("#applicant\\.finalInputYn").val("Y");
+		formElementAllEnable(document.form1);
+		removeFormElementFmt(document.form1);
+		window.onbeforeunload = null;
+		$.unblockUI();
+		$('#form1').submit();
+	}
+	
+	
+	
+	function formValidationCheck(frm) {
+		checkAnnoOpenYn();
+		
+		if (isOpenYn == "N") {
+			alert("지원서 접수가 마감되었습니다.");
+			return false;
+		}
+		
+		var isValidation = true;
+		
+		
+		if (checkIfEmptyValue($("#applicant\\.applNm"), "이름을")) return false;
+		if (checkIfEmptyValue($("#applicant\\.birthYmd"), "생년월일을")) return false;
+		if (!$("#applicant\\.birthYmd").val().isDate()) {
+			alert('생년월일이 올바른 날짜가 아닙니다.');
+			$("#applicant\\.birthYmd").focus();
+			return false;
+		}
+		if (checkIfEmptyValue($("#applicant\\.email"), "이메일을")) return false;
+		
+		if (checkIfEmptyValue($("#applicant\\.genderType"), "성별을")) return false;
+		if (checkIfEmptyValue($("#applicant\\.nationNm"), "국적을")) return false;
+		if (checkIfEmptyValue($("#applicant\\.cellNo"), "연락처를")) return false;
+		
+		if (checkIfEmptyValue($("#applicant\\.applyPathCd"), "지원경로를")) return false;
+		var applyPathCd = $("#applicant\\.applyPathCd").val();
+		
+		if ($("#applicant\\.recomEmpNm").is(":visible")) {
+			if ("12" == applyPathCd) {
+				if (checkIfEmptyValue($("#applicant\\.recomEmpNm"), "해당 임직원분의 소속/성명을")) return false;
+			} else if ("16" == applyPathCd) {
+				if (checkIfEmptyValue($("#applicant\\.recomEmpNm"), "교수님의 학교/학과/성명을")) return false;
+			} else if ("14" == applyPathCd) {
+				if (checkIfEmptyValue($("#applicant\\.recomEmpNm"), "경로를")) return false;
+			} else if ("08" == applyPathCd) {
+				if (checkIfEmptyValue($("#applicant\\.recomEmpNm"), "사이트 이름을")) return false;
+			} else if ("27" == applyPathCd) {
+				if (checkIfEmptyValue($("#applicant\\.recomEmpNm"), "지인 성명을")) return false;
+			} else if ("13" == applyPathCd) {
+				if (checkIfEmptyValue($("#applicant\\.recomEmpNm"), "헤드헌팅 업체명/담당자 성명을")) return false;
+			} else if ("20" == applyPathCd) {
+				if (checkIfEmptyValue($("#applicant\\.recomEmpNm"), "사이트 이름을")) return false;
+			} else if ("33" == applyPathCd) {
+				if (checkIfEmptyValue($("#applicant\\.recomEmpNm"), "사이트 이름을")) return false;
+			}
+		}
+		
+		if (checkIfEmptyValue($("#military\\.demobTypeCd"), "병역구분을")) return false;
+		
+		
+		setScholarshipLast();
+		
+		
+		
+		
+		
+		
+		
+		if (isValidation) {
+			
+			$("#applicant\\.applNm").val($.trim($("#applicant\\.applNm").val()));
+			$("#applicant\\.email").val($.trim($("#applicant\\.email").val()));
+			
+			isSaveApplication = true;
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	
+	function changePatriot(val) {
+		if (val == "N") {
+			$("#applicant\\.patriotN").attr("checked", true);
+			$("label[for='applicant\\.patriotN']").addClass("on");
+			$("label[for='applicant\\.patriotY']").removeClass("on");
+		} else {
+			$("#applicant\\.patriotY").attr("checked", true);
+			$("label[for='applicant\\.patriotY']").addClass("on");
+			$("label[for='applicant\\.patriotN']").removeClass("on");
+		}
+	}
+	
+	
+	function changeHandicap(val) {
+		if (val == "") {
+			disableFormElement($("#handicap\\.handicapTypeCd"), true, "");
+		} else {
+			disableFormElement($("#handicap\\.handicapTypeCd"), false);
+		}
+	}
+
+	
+	function setFormElementAttributeScholarship() {
+		var index = getAppendTrTotalCount($("#addTableScholarship > tbody > tr"));
+		for (var i = 0; i < index; i++) {
+			$("[name='scholarList[" + i + "].staYm']").attr("masktype", "dateYm");
+			$("[name='scholarList[" + i + "].endYm']").attr("masktype", "dateYm");
+		}
+	
+		$("input:text").setMask();
+	}
+	
+	
+	function formValidationCheckScholarshipRow(index) {
+		var sStatus = $("[name='scholarList[" + index + "].sStatus']").val();
+		var scholarTypeCd = $("[name='scholarList[" + index + "].scholarTypeCd']").val();
+		
+		if (checkIfEmptyValue($("[name='scholarList[" + index + "].scholarTypeCd']"), "학력을")) return false;
+		if (checkIfEmptyValue($("[name='scholarList[" + index + "].schoolCd']"), "학교를")) return false;
+		
+		if (scholarTypeCd != "001") {
+			if (checkIfEmptyValue($("[name='scholarList[" + index + "].majorCd']"), "전공을")) return false;
+			if (checkIfEmptyValue($("[name='scholarList[" + index + "].gradePnt']"), "평점을")) return false;
+			if (checkIfEmptyValue($("[name='scholarList[" + index + "].gradeBasis']"), "총점을")) return false;
+		}
+		
+		if (checkIfEmptyValue($("[name='scholarList[" + index + "].staYm']"), "입학년월을")) return false;
+		if (checkIfEmptyValue($("[name='scholarList[" + index + "].endYm']"), "졸업(예정)년월을")) return false;
+		
+		if (scholarTypeCd != "001") {
+			if (checkIfEmptyValue($("[name='scholarList[" + index + "].graduationType']"), "졸업구분을")) return false;
+		}
+		
+		if (checkDateValue($("[name='scholarList[" + index + "].staYm']"))) return false;
+		if (checkDateValue($("[name='scholarList[" + index + "].endYm']"))) return false;
+		if (checkFloatValue($("[name='scholarList[" + index + "].gradePnt']"))) return false;
+		if (checkFloatValue($("[name='scholarList[" + index + "].gradeBasis']"))) return false;
+		if (checkDatePeriod($("[name='scholarList[" + index + "].staYm']"), $("[name='scholarList[" + index + "].endYm']"), "졸업(예정)일은 입학일보다 커야합니다.")) return false;
+		
+		return true;
+	}
+	
+	
+	
+	function changeScholarType(obj) {
+		var index = getFormElementIndex(obj);
+		
+		var scholarTypeNm = $("[name='scholarList[" + index + "].scholarTypeCd'] option:selected").text();
+		var scholarTypeNmObj = $("[name='scholarList[" + index + "].scholarTypeCd']").prev().find("span");
+		scholarTypeNmObj.empty().html(scholarTypeNm);
+		scholarTypeNmObj.addClass("selected");
+		
+		if (obj.value == "001") {	
+			$("[name='scholarList[" + index + "].scholarTypeCd']").css("width", "131px");
+			$("[name='scholarList[" + index + "].scholarTypeCd']").next().css("width", "141px");
+			$("[name='scholarList[" + index + "].scholarTypeCd']").prev().css("width", "131px");
+			$("[name='scholarList[" + index + "].schoolNm']").css("width", "202px");
+			$("[name='scholarList[" + index + "].staYm']").css("width", "144px");
+			$("[name='scholarList[" + index + "].endYm']").css("width", "143px");
+			
+			
+			$("[name='scholarList[" + index + "].graduationType']").val("001");
+			
+			disableFormElement($("[name='scholarList[" + index + "].gradePnt']"), true, "");
+			disableFormElement($("[name='scholarList[" + index + "].gradeBasis']"), true, "");
+			disableFormElement($("[name='scholarList[" + index + "].majorDetailNm']"), true, "");
+			disableFormElement($("[name='scholarList[" + index + "].majorCd']"), true, "");
+			disableFormElement($("[name='scholarList[" + index + "].majorNm']"), true, "");
+			disableFormElement($("[name='scholarList[" + index + "].entryYn']"), true, "");
+			disableFormElement($("[name='scholarList[" + index + "].btnMajor']"), true, "");
+			disableFormElement($("[name='scholarList[" + index + "].btnMinor']"), true, "");
+			disableFormElement($("[name='scholarList[" + index + "].minorCd']"), true, "");
+			disableFormElement($("[name='scholarList[" + index + "].minorNm']"), true, "");
+			
+			$("[name='scholarList[" + index + "].graduationType']").css("display", "none");
+			$("[name='scholarList[" + index + "].graduationType']").prev().css("display", "none");
+			$("[name='scholarList[" + index + "].gradeBasis']").parent().removeClass("v2");
+		} else {	
+			$("[name='scholarList[" + index + "].scholarTypeCd']").css("width", "61px");
+			$("[name='scholarList[" + index + "].scholarTypeCd']").next().css("width", "71px");
+			$("[name='scholarList[" + index + "].scholarTypeCd']").prev().css("width", "61px");
+			$("[name='scholarList[" + index + "].schoolNm']").css("width", "64px");
+			$("[name='scholarList[" + index + "].staYm']").css("width", "59px");
+			$("[name='scholarList[" + index + "].endYm']").css("width", "59px");
+		
+			disableFormElement($("[name='scholarList[" + index + "].gradePnt']"), false, "");
+			disableFormElement($("[name='scholarList[" + index + "].gradeBasis']"), false, "");
+			disableFormElement($("[name='scholarList[" + index + "].majorDetailNm']"), false, "");
+			disableFormElement($("[name='scholarList[" + index + "].majorCd']"), false, "");
+			disableFormElement($("[name='scholarList[" + index + "].majorNm']"), false, "");
+			disableFormElement($("[name='scholarList[" + index + "].entryYn']"), false, "");
+			disableFormElement($("[name='scholarList[" + index + "].btnMajor']"), false, "");
+			disableFormElement($("[name='scholarList[" + index + "].btnMinor']"), false, "");
+			disableFormElement($("[name='scholarList[" + index + "].minorCd']"), false, "");
+			disableFormElement($("[name='scholarList[" + index + "].minorNm']"), false, "");
+			
+			$("[name='scholarList[" + index + "].graduationType']").prev().css("display", "block");
+			$("[name='scholarList[" + index + "].gradeBasis']").parent().addClass("v2");
+		}
+	
+		
+		if (obj.value == "002" || obj.value == "003") {
+			disableFormElement($("[name='scholarList[" + index + "].majorDetailNm']"), true, "");
+			disableFormElement($("[name='scholarList[" + index + "].minorCd']"), false, "");
+			disableFormElement($("[name='scholarList[" + index + "].minorNm']"), false, "");
+			disableFormElement($("[name='scholarList[" + index + "].btnMinor']"), false, "");
+		}
+		
+		
+		if (obj.value == "004" || obj.value == "005") {
+			disableFormElement($("[name='scholarList[" + index + "].majorDetailNm']"), false, "");
+			disableFormElement($("[name='scholarList[" + index + "].minorCd']"), true, "");
+			disableFormElement($("[name='scholarList[" + index + "].minorNm']"), true, "");
+			disableFormElement($("[name='scholarList[" + index + "].btnMinor']"), true, "");
+		}
+	
+		$("[name='scholarList[" + index + "].schPlaceCd']").next().css("display", "none");
+		
+	}
+	
+	
+	function changeScholarGraduationType(obj) {
+		var index = getFormElementIndex(obj);
+		
+		var graduationTypeNm = $("[name='scholarList[" + index + "].graduationType'] option:selected").text();
+		var graduationTypeNmObj = $("[name='scholarList[" + index + "].graduationType']").prev().find("span").eq(0);
+		graduationTypeNmObj.empty().html(graduationTypeNm);
+		graduationTypeNmObj.addClass("selected");
+	} 
+	
+	
+	function deleteRowForScholarship(obj, addTableObj, tableId) {
+		if (getFormElementIndex(obj) == 0) {
+			alert("고등학교 학력은 삭제 할 수 없습니다.");
+		} else {
+			deleteRow(obj, addTableObj, tableId);
+		}
+	}
+	
+	
+	function editRowForScholarship(obj, addTableObj, tableId) {
+		editRow(obj, addTableObj, tableId);
+	}
+	
+	function editRow(obj, tableObj, prefix) {
+		var index = getFormElementIndex(obj);
+		$("#" + tableObj.attr("id") + " > tbody > tr:eq(" + (index + 1) + ")").find(".wrt_ok_area").css("display", "none");
+		$("#" + tableObj.attr("id") + " > tbody > tr:eq(" + (index + 1) + ")").find(".inpt_field").css("display", "block");
+		$("[name='" + prefix + "[" + index + "].sStatus']").val("U").change();
+	}
+	
+	
+	function completeRowForScholarship(obj, addTableObj, tableId) {
+		var index = getFormElementIndex(obj);
+		if (formValidationCheckScholarshipRow(index)) {
+			completeRow(obj, addTableObj, tableId);
+			setFormElementAttributeScholarship();
+			setHideSchloarshipPlace((index + 1));
+		}
+	}
+	
+	function completeRow(obj, tableObj, prefix) {
+		var index = getFormElementIndex(obj);
+		var sStatus = $("[name='" + prefix + "[" + index + "].sStatus']");
+		$("#" + tableObj.attr("id") + " > tbody > tr:eq(" + (index + 1) + ")").find(".wrt_ok_area").css("display", "block");
+		$("#" + tableObj.attr("id") + " > tbody > tr:eq(" + (index + 1) + ")").find(".inpt_field").css("display", "none");
+		
+		
+		if (sStatus.val() == "X") {
+			sStatus.val("U").change();
+		}
+		
+		updateViewArea(tableObj, index);
+		
+		if ($("#" + tableObj.attr("id") + " > tbody > tr").size() == index + 2) {
+			prependRow(tableObj);
+			prependRowValidationCheckEvent(tableObj);
+		}
+	}
+	
+	function setHideSchloarshipPlace(index) {
+		$("[name='scholarList[" + index + "].schPlaceCd']").next().css("display", "none");
+	}
+	
+	
+	
+	
+	function setFormElementAttributeCareer() {
+		var index = getAppendTrTotalCount($("#addTableCareer > tbody > tr"));
+		for (var i = 0; i < index; i++) {
+			$("[name='careerList[" + i + "].enterYmd']").attr("masktype", "date");
+			$("[name='careerList[" + i + "].retireYmd']").attr("masktype", "date");
+		}
+
+		$("input:text").setMask();
+	}
+	
+	function formValidationCheckCareerRow(index) {
+		var sStatus = $("[name='careerList[" + index + "].sStatus']").val();
+		var corpNm = $("[name='careerList[" + index + "].corpNm']").val();
+		var enterYmd = $("[name='careerList[" + index + "].enterYmd']").val();
+		var retireYmd = $("[name='careerList[" + index + "].retireYmd']").val();
+		
+		if (checkIfEmptyValue($("[name='careerList[" + index + "].corpCd']"), "회사명을")) return false;
+		if (checkIfEmptyValue($("[name='careerList[" + index + "].enterYmd']"), "입사일을")) return false;
+		if (checkIfEmptyValue($("[name='careerList[" + index + "].jobPosition']"), "직위를")) return false;
+		if (checkIfEmptyValue($("[name='careerList[" + index + "].jobRole']"), "직무를")) return false;
+		if (checkDateValue($("[name='careerList[" + index + "].enterYmd']"))) return false;
+		if (retireYmd != "") {
+			
+			if (checkIfEmptyValue($("[name='careerList[" + index + "].retireYmd']"), "퇴사일을")) return false;
+			if (checkDateValue($("[name='careerList[" + index + "].retireYmd']"))) return false;
+			if (checkDatePeriod($("[name='careerList[" + index + "].enterYmd']"), $("[name='careerList[" + index + "].retireYmd']"), "퇴사일은 입사일 이후 날짜여야 합니다.")) return false;
+		}
+		
+		var careerIndex = getAppendTrTotalCount($("#addTableCareer > tbody > tr"));
+		for (var j = 0; j < careerIndex; j++) {
+			var compStatus = $("[name='careerList[" + j + "].sStatus']").val();
+			var compCorpNm = $("[name='careerList[" + j + "].corpNm']").val();
+			var compEnterYmd = $("[name='careerList[" + j + "].enterYmd']").val();
+
+			if (index == j) continue;
+			if (compStatus == "D") continue;
+			if (compCorpNm == "") continue;
+
+			if (enterYmd == compEnterYmd) {
+				alert("중복된 입사일이 있습니다. 입사일을 확인하세요.");
+				$("[name='careerList[" + j + "].enterYmd']").focus();
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	
+	function deleteRowForCareer(obj, addTableObj, tableId) {
+		deleteRow(obj, addTableObj, tableId);
+	}
+	
+	
+	function editRowForCareer(obj, addTableObj, tableId) {
+		editRow(obj, addTableObj, tableId);
+	}
+	
+	
+	function completeRowForCareer(obj, addTableObj, tableId) {
+		var index = getFormElementIndex(obj);
+		if (formValidationCheckCareerRow(index)) {
+			completeRow(obj, addTableObj, tableId);
+			setFormElementAttributeCareer();
+		}
+	}
+	
+	
+	
+ 	function setFormElementAttributeLicenseLanguage() {
+		var index = getAppendTrTotalCount($("#addTableLicenseLanguage > tbody > tr"));
+		for (var i = 0; i < index; i++) {
+			$("[name='licenseLanguageList[" + i + "].takeYmd']").attr("masktype", "date");
+			$("[name='licenseLanguageList[" + i + "].testYmd']").attr("masktype", "date");
+		}
+	}
+
+	function changeLicenseGrdCd(obj) {
+		var idx = getFormElementIndex(obj);
+		var licenseLanguageTypeCd = $("[name='licenseLanguageList[" + idx + "].licenseLanguageTypeCd']").val();
+		var grdCdObj = $("[name='licenseLanguageList[" + idx + "].licenseGrdCd']");
+		var grdNmObj = $("[name='licenseLanguageList[" + idx + "].licenseGrdNm']");
+
+		if (licenseLanguageTypeCd == "LICENSE") {
+			if (grdCdObj.val() == "") {
+				disableFormElement(grdNmObj, false, "");
+			} else {
+				disableFormElement(grdNmObj, true, "");
+			}
+		}
+	}
+	
+	function formValidationCheckLicenseLanguageRow(index) {
+		var sStatus = $("[name='licenseLanguageList[" + index + "].sStatus']").val();
+		var licenseLanguageTypeCd = $("[name='licenseLanguageList[" + index + "].licenseLanguageTypeCd']").val();
+		if (checkIfEmptyValue($("[name='licenseLanguageList[" + index + "].licenseLanguageTypeCd']"), "자격/어학 구분을")) return false;
+		
+		if (licenseLanguageTypeCd == "LICENSE") {
+			if (sStatus != "D") {
+				if (checkIfEmptyValue($("[name='licenseLanguageList[" + index + "].licenseNm']"), "자격/면허종류를")) return false;
+				if (checkIfEmptyValue($("[name='licenseLanguageList[" + index + "].licenseGrdNm']"), "등급을")) return false;
+				if (checkIfEmptyValue($("[name='licenseLanguageList[" + index + "].takeYmd']"), "취득/응시일을")) return false;
+				if (checkIfEmptyValue($("[name='licenseLanguageList[" + index + "].issueOrgNm']"), "발급기관을")) return false;
+				if (checkDateValue($("[name='licenseLanguageList[" + index + "].takeYmd']"))) return false;
+			}
+		} else {
+			if (sStatus != "D") {
+				if (checkIfEmptyValue($("[name='licenseLanguageList[" + index + "].langTypeNm']"), "언어를")) return false;
+				if (checkIfEmptyValue($("[name='licenseLanguageList[" + index + "].langTestNm']"), "시험을")) return false;
+				if (checkIfEmptyValue($("[name='licenseLanguageList[" + index + "].testYmd']"), "취득/응시일을")) return false;
+				if (checkIfEmptyValue($("[name='licenseLanguageList[" + index + "].langOrgNm']"), "발급기관을")) return false;
+				if (checkDateValue($("[name='licenseLanguageList[" + index + "].testYmd']"))) return false;
+				if (checkFloatValue($("[name='licenseLanguageList[" + index + "].score']"))) return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	
+	function changeLicenseLanguageType(obj) {
+		var index = getFormElementIndex(obj);
+		
+		
+		var licenseLanguageTypeVal = $("[name='licenseLanguageList[" + index + "].licenseLanguageTypeCd'] option:selected").text();
+		var licenseLanguageTypeObj = $("[name='licenseLanguageList[" + index + "].licenseLanguageTypeCd']").prev().find("span").eq(0);
+		
+		licenseLanguageTypeObj.empty().html(licenseLanguageTypeVal);
+		licenseLanguageTypeObj.addClass("selected");
+		
+		if (obj.value == "LICENSE") {	
+			disableFormElement($("[name='licenseLanguageList[" + index + "].btnSearchLicense']"), false, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].licenseCd']"), false, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].licenseNm']"), false, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].btnSearchLicenseGrade']"), false, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].licenseGrdCd']"), false, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].licenseGrdNm']"), false, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].takeYmd']"), false, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].issueOrgNm']"), false, "");
+			
+			disableFormElement($("[name='licenseLanguageList[" + index + "].btnSearchLanguageType']"), true, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].langTypeCd']"), true, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].langTypeNm']"), true, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].btnSearchLanguageTest']"), true, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].langTestCd']"), true, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].langTestNm']"), true, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].btnSearchLanguageGrade']"), true, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].langGrdCd']"), true, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].langGrdNm']"), true, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].score']"), true, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].testYmd']"), true, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].langOrgNm']"), true, "");
+		} else {	
+			disableFormElement($("[name='licenseLanguageList[" + index + "].btnSearchLicense']"), true, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].licenseCd']"), true, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].licenseNm']"), true, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].btnSearchLicenseGrade']"), true, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].licenseGrdCd']"), true, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].licenseGrdNm']"), true, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].takeYmd']"), true, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].issueOrgNm']"), true, "");
+			
+			disableFormElement($("[name='licenseLanguageList[" + index + "].btnSearchLanguageType']"), false, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].langTypeCd']"), false, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].langTypeNm']"), false, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].btnSearchLanguageTest']"), false, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].langTestCd']"), false, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].langTestNm']"), false, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].btnSearchLanguageGrade']"), false, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].langGrdCd']"), false, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].langGrdNm']"), false, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].score']"), false, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].testYmd']"), false, "");
+			disableFormElement($("[name='licenseLanguageList[" + index + "].langOrgNm']"), false, "");
+		}
+	}
+	
+	function changeLangTypeCd(obj) {
+		var idx = getFormElementIndex(obj);
+
+		changeCdObjAndNmObj($("[name='licenseLanguageList[" + idx + "].langTypeCd']"), $("[name='licenseLanguageList[" + idx + "].langTypeNm']"));
+	}
+	function changeLangTestCd(obj) {
+		var idx = getFormElementIndex(obj);
+
+		changeCdObjAndNmObj($("[name='licenseLanguageList[" + idx + "].langTestCd']"), $("[name='licenseLanguageList[" + idx + "].langTestNm']"));
+	}
+	function changeLangGrdCd(obj) {
+		var idx = getFormElementIndex(obj);
+
+		changeCdObjAndNmObj($("[name='licenseLanguageList[" + idx + "].langGrdCd']"), $("[name='licenseLanguageList[" + idx + "].langGrdNm']"));
+	}
+	function changeCdObjAndNmObj(cdObj, nmObj) {
+		if (cdObj.val() == "999") {
+			disableFormElement(nmObj, false, "");
+		} else {
+			disableFormElement(nmObj, true, "");
+		}
+	}
+	
+	
+	function deleteRowForLicenseLanguage(obj, addTableObj, tableId) {
+		deleteRow(obj, addTableObj, tableId);
+	}
+	
+	
+	function editRowForLicenseLanguage(obj, addTableObj, tableId) {
+		editRow(obj, addTableObj, tableId);
+	}
+	
+	
+	function completeRowForLicenseLanguage(obj, addTableObj, tableId) {
+		var index = getFormElementIndex(obj);
+		if (formValidationCheckLicenseLanguageRow(index)) {
+			completeRow(obj, addTableObj, tableId);
+			setFormElementAttributeLicenseLanguage();
+		}
+	}
+	
+	
+	function formValidationCheckSelfintro(frm) {
+		for (var i = 0; i < answerClassArr.length; i++) {
+			if (answerClassArr[i].questionTypeCd == "DESC") {
+				if (answerClassArr[i].reqYn == "Y") {
+					if (checkIfEmptyValue($("[name='selfAnswerList[" + i + "].answer']"), "[" + answerClassArr[i].subjectNm.replace("<br>", "") + "] 을(를)")) return false;
+				}
+			}
+		}
+
+		return true;
+	}
+	
+	function getAnnoSubject() {
+		var async = false;
+		var aventailPatch = {src:""};
+		var param = "";
+		param += "annoId=20006920";
+		param += "&classId=" + $("[name='applJobList[0].classId']").val();
+		param += "&jobId=" + $("[name='applJobList[0].jobId']").val();
+		param += "&applId=zI2LFbnidHHNyV78Jb8Kt2msS_rsIt9aXaaX4mk0aVk=";
+		
+		aventailPatch.src = "/webtoon/ko/application/getAnnoSubject.nhn";
+		
+		$.ajax({
+			type: "POST",
+			url: aventailPatch.src,
+			data: param,
+			success: function(data, textStatus, xhr){
+				setAnnoSubject(data);
+			},
+			error: function(x, o, e) {
+				alert("오류가 발생하였습니다" + e);
+				retObj = x;
+			},
+			dataType: "json",
+			async: async
+		});
+	}
+	
+	function setAnnoSubject(jsonData) {
+		if (jsonData.annoSubject != "") {
+			$("#annoSubject").empty().html(jsonData.annoSubject);
+		}
+	} 
+	
+	function getSelfIntroAnswer() {
+		var async = false;
+		var aventailPatch = {src:""};
+		var param = "";
+		param += "annoId=20006920";
+		param += "&classId=" + $("[name='applJobList[0].classId']").val();
+		param += "&jobId=" + $("[name='applJobList[0].jobId']").val();
+		param += "&applId=zI2LFbnidHHNyV78Jb8Kt2msS_rsIt9aXaaX4mk0aVk=";
+		
+		aventailPatch.src = "/webtoon/ko/application/getSelfIntroAnswer.nhn";
+		
+		$.ajax({
+			type: "POST",
+			url: aventailPatch.src,
+			data: param,
+			success: function(data, textStatus, xhr){
+				selfAnswerData = data;
+				setSelfIntroAnswerData(data);
+			},
+			error: function(x, o, e) {
+				alert("오류가 발생하였습니다" + e);
+				retObj = x;
+			},
+			dataType: "json",
+			async: async
+		});
+	}
+	
+	function setSelfIntroAnswerData(jsonData) {
+		var selfIntroHtml = "";
+		var refCount = 0;
+		
+		for (var i=0; i < jsonData.length; i++) {
+			var answerCount = i + 1;
+			var subjectNm = jsonData[i]["subjectNm"];
+			var answer = (jsonData[i]["answer"] != null) ? jsonData[i]["answer"] : "";
+			var questionTypeCd = jsonData[i]["questionTypeCd"];
+			var selfintroAnswerId = (jsonData[i]["selfintroAnswerId"] != null) ? jsonData[i]["selfintroAnswerId"] : "";
+			var selfintroId = jsonData[i]["selfintroId"];
+			var uploadId = (jsonData[i]["uploadId"] != null) ? jsonData[i]["uploadId"] : "";
+			var questionTypeCd = jsonData[i]["questionTypeCd"];
+			var sysFileList = jsonData[i]["sysFileList"];
+			var reqYn = jsonData[i]["reqYn"];
+			var reqNm = (jsonData[i].reqYn == "N") ? "[선택]" : "[필수]";
+			var oriAnswer = answer;
+			answer = answer.unescapeHTML();
+			
+			
+			selfIntroHtml +="<div id='divSelfIntro_" + i + "'>";
+			selfIntroHtml += "<input type='hidden' name='selfAnswerList[" + i + "].selfintroAnswerId' value='" + selfintroAnswerId + "'/>\n";
+			selfIntroHtml += "<input type='hidden' name='selfAnswerList[" + i + "].selfintroId' value='" + selfintroId + "'/>\n";
+			selfIntroHtml += "<input type='hidden' name='selfAnswerList[" + i + "].uploadId' value='" + uploadId + "'/>\n";
+			selfIntroHtml += "<input type='hidden' name='selfAnswerList[" + i + "].questionTypeCd' value='" + questionTypeCd + "'/>\n";
+			selfIntroHtml += "<input type='hidden' name='selfAnswerList[" + i + "].reqYn' value='" + reqYn + "'/>\n";
+			
+			if (questionTypeCd == "DESC") {
+				selfIntroHtml += "<div class='wrt_txtarea'>";
+				selfIntroHtml += "<input type='hidden' name='selfAnswerList[" + i + "].fakeFilePath' id='selfAnswerList[" + i + "].fakeFilePath' class='input_txt' title='파일경로' readonly>";
+				selfIntroHtml += "<input type='file' id='selfAnswerList[" + i + "].fileData' name='selfAnswerList[" + i + "].fileData' class='file' title='파일입력' style='display:none'>";
+				selfIntroHtml += "<p><label for='selfAnswerList["+i+"].answer'>" + reqNm + " " + subjectNm + "</label></p>\n";
+				selfIntroHtml += "<textarea cols='100' rows='14' id='selfAnswerList[" + i + "].answer' name='selfAnswerList[" + i + "].answer' class='text_area' title='자기소개_" + answerCount + "'>" + answer + "</textarea>";
+				selfIntroHtml += "</div>";
+			} else if (questionTypeCd == "FILE") {
+				if (refCount == 0) {
+					selfIntroHtml += "<h5>첨부자료</h5><font style='color: #2db400; font-size: 13px;'>* 타사의 영업비밀에 해당하거나, 이에 해당될 수 있는 것으로 오해할 수 있는 자료는 경력기술서 또는 포트폴리오에 포함하여서는 안됩니다.<br><br></font>\n";
+					refCount++;
+				}
+				
+				selfIntroHtml += "<div class='file_area'>\n";
+				selfIntroHtml += "<p>" + reqNm +  " " + subjectNm + "</p>\n";
+				selfIntroHtml += "<div class='inpt_field v2'>\n";
+				selfIntroHtml += "	<label for='selfAnswerList[" + i + "].fakeFilePath' class='lbl_type'>\n";
+				selfIntroHtml += "		<input type='text' name='selfAnswerList[" + i + "].fakeFilePath' id='selfAnswerList[" + i + "].fakeFilePath' class='cr_inpt' style='width:464px;' title='파일경로' readonly>\n";
+				selfIntroHtml += "	</label>\n";
+				selfIntroHtml += "	<label for='selfAnswerList[" + i + "].fileData' class='lbl_type'>\n";
+				selfIntroHtml += "		<span class='f_dummy'><input type='file' id='selfAnswerList[" + i + "].fileData' name='selfAnswerList[" + i + "].fileData' class='cr_inpt_file' onChange='displayRealFilePath(this);' title='파일입력'></span>\n";
+				selfIntroHtml += "	</label>\n";
+				
+				if (sysFileList != null) {
+					selfIntroHtml += "<br><br><br><p class='note'>\n";
+					for (var f=0; f < sysFileList.length; f++) {
+						var fileNm = sysFileList[f]["fileNm"].escapeHTML();
+						var fileId = sysFileList[f]["fileId"];
+						
+						selfIntroHtml += "<a href='/common/file/downloadFile?fileId=" + fileId + "'>" + fileNm + "</a>\n";
+						selfIntroHtml += "<input type='hidden' name='selfAnswerList[" + i + "].sysFileList[" + f + "].fileId' value='" + fileId + "'>\n";
+						selfIntroHtml += "&nbsp;<input type='checkbox' name='selfAnswerList[" + i + "].sysFileList[" + f + "].sStatus' value='D' style='vertical-align:middle;margin-bottom:2px'>\n";
+						selfIntroHtml += "&nbsp;<label onclick='$(this).prev().click()'>삭제</label><br>\n";
+					}
+					selfIntroHtml += "</p>\n";
+				}
+				selfIntroHtml += "	</div>\n";
+				selfIntroHtml += "</div>\n";
+			} else if (questionTypeCd == "FILE_URL") {
+				if (refCount == 0) {
+					selfIntroHtml += "<h5>첨부자료</h5><font style='color: #2db400; font-size: 13px;'>* 타사의 영업비밀에 해당하거나, 이에 해당될 수 있는 것으로 오해할 수 있는 자료는 경력기술서 또는 포트폴리오에 포함하여서는 안됩니다.<br><br></font>\n";
+					refCount++;
+				}
+				
+				selfIntroHtml += "<div class='file_area'>\n";
+				selfIntroHtml += "<p>" + reqNm +  " " + subjectNm + "</p>\n";
+				selfIntroHtml += "<div class='inpt_field v2'>\n";
+				selfIntroHtml += "	<label for='selfAnswerList[" + i + "].fakeFilePath' class='lbl_type'>\n";
+				selfIntroHtml += "		<input type='text' name='selfAnswerList[" + i + "].fakeFilePath' id='selfAnswerList[" + i + "].fakeFilePath' class='cr_inpt' style='width:464px;' title='파일경로' readonly>\n";
+				selfIntroHtml += "	</label>\n";
+				selfIntroHtml += "	<label for='selfAnswerList[" + i + "].fileData' class='lbl_type'>\n";
+				selfIntroHtml += "		<span class='f_dummy'><input type='file' id='selfAnswerList[" + i + "].fileData' name='selfAnswerList[" + i + "].fileData' class='cr_inpt_file' onChange='displayRealFilePath(this);' title='파일입력'></span>\n";
+				selfIntroHtml += "	</label>\n";
+				
+				if (sysFileList != null && sysFileList.length != 0) {
+					selfIntroHtml += "<br><br><br><p class='note'>\n";
+					for (var f=0; f < sysFileList.length; f++) {
+						var fileNm = sysFileList[f]["fileNm"].escapeHTML();
+						var fileId = sysFileList[f]["fileId"];
+						
+						selfIntroHtml += "<a href='/common/file/downloadFile?fileId=" + fileId + "'>" + fileNm + "</a>\n";
+						selfIntroHtml += "<input type='hidden' name='selfAnswerList[" + i + "].sysFileList[" + f + "].fileId' value='" + fileId + "'>\n";
+						selfIntroHtml += "&nbsp;<input type='checkbox' name='selfAnswerList[" + i + "].sysFileList[" + f + "].sStatus' value='D' style='vertical-align:middle;margin-bottom:2px'>\n";
+						selfIntroHtml += "&nbsp;<label onclick='$(this).prev().click()'>삭제</label><br>\n";
+					}
+					selfIntroHtml += "</p>\n";
+				}
+				
+				selfIntroHtml += "</div>\n";
+				selfIntroHtml += "<div class='inpt_field'>\n";
+				selfIntroHtml += "	<label for='selfAnswerList[" + i + "].answer' class='lbl_type'>\n";
+				selfIntroHtml += "		<input type='text' id='selfAnswerList[" + i + "].answer' name='selfAnswerList[" + i + "].answer' placeholder='http://' title='자기소개_" + answerCount + "' value='" + oriAnswer + "' class='cr_inpt' style='width: 582px;'>\n";
+				selfIntroHtml += "	</label>\n";
+				selfIntroHtml += "</div>\n";
+				
+			}
+			
+			selfIntroHtml += "</div>\n";
+		}
+		
+		$("#divSelfIntro").empty().html(selfIntroHtml);
+	}
+
+	function displayRealFilePath(obj) {
+		if (isUploadLimitFileSize(obj)) {
+			return false;
+		}
+		
+		var index = getFormElementIndex(obj);
+		$("[name='selfAnswerList[" + index + "].fakeFilePath']").val(obj.value);
+	}
+	
+	function showCodeSearchLayer(cdKind, searchType, searchValue, returnMethod, schPlaceCd, groupCd) {
+		var param = "";
+		if (typeof(cdKind) != "undefined" && cdKind != "") {
+			$("#cdKind").val(cdKind);
+			param += "cdKind=" + cdKind;
+		}
+		
+		if (typeof(searchType) != "undefined" && searchType != "") {
+			$("#searchType").val(searchType);
+		}
+		
+		if (typeof(searchValue) != "undefined" && searchValue != "") {
+			$("#cdNm").val(searchValue);
+		}
+		
+		if (typeof(returnMethod) != "undefined" && returnMethod != "") {
+			$("#returnMethod").val(returnMethod);
+		}
+		
+		if (typeof(groupCd) != "undefined" && groupCd != "") {
+			$("#groupCd").val(groupCd);
+			param += "&groupCd=" + groupCd;
+		}
+		
+		if (typeof(schPlaceCd) != "undefined" && schPlaceCd != "") {
+			$("#schPlaceCd").val(schPlaceCd).change();
+			
+		}
+		
+		$("#codeSearchLayer").find("#cdNm").focus();
+		$("#codeSearchLayer").find("#codeSearchLayerTitle").text(getSearchTypeNm(searchType) + " 조회");
+		$("#codeSearchLayer").find("#cdNm").attr("placeholder", getSearchTypeNm(searchType));
+		
+		
+		if (searchType == "school") {
+			$("#cdNm").css("width", "165px");
+			$("#codeSearchLayer").find(".slct_box_list").remove();
+			createComboBoxList($("#insertGroupCd"));
+			createComboBoxList($("#schPlaceCd"));
+			selectComboBoxData($("#codeSearchLayer > inputArea").find(".slct_box_list > ul"));
+			selectComboBoxData($("#codeSearchLayer > selectGroupArea").find(".slct_box_list > ul"));
+			$("#scholarshipPlaceArea").show();
+		} else {
+			$("#cdNm").css("width", "285px");
+			$("#scholarshipPlaceArea").hide();
+		}
+		
+		$.blockUI({ message: $('#codeSearchLayer'), css: { border: '0px', textAlign: 'left' } });
+		
+		if ($("#cdNm").val() != '') {
+			searchCode($('#codeSearchLayer'));
+		}
+	}
+	
+	function showDirectInputCode() {
+		$("#codeSearchLayer #cdNm").val("");
+		$("#codeSearchLayer #commentArea").css("display", "none");
+		$("#codeSearchLayer #searchArea").css("display", "none");
+		$("#codeSearchLayer #insertArea").css("display", "block");
+		if ($("#searchType").val() == "school") {
+			$("#codeSearchLayer #selectGroupArea").css("display", "block");
+		}
+		$("#codeSearchLayer #buttonArea").css("display", "block");
+		$("#codeSearchLayer #passiveInput").val("Y");
+		$("#codeSearchLayer #insertNm").focus();
+	}
+	
+	function displayRecomEmpInfo(val) {
+		if("12" == val) { // 임직원 추천
+			$("#applicant\\.applyPathCd").prev().css("width", "98px");
+			$("#applicant\\.recomEmpNm").show();
+			$("#applicant\\.recomEmpNm").attr("placeholder", "소속/성명");
+			disableFormElement($("#applicant\\.recomEmpNm"), false);
+		} else if ("16" == val) { // 교수 추천
+			$("#applicant\\.applyPathCd").prev().css("width", "98px");
+			$("#applicant\\.recomEmpNm").show();
+			$("#applicant\\.recomEmpNm").attr("placeholder", "학교/학과/성명");
+			disableFormElement($("#applicant\\.recomEmpNm"), false);
+		} else if ("14" == val) { // 기타
+			$("#applicant\\.applyPathCd").prev().css("width", "98px");
+			$("#applicant\\.recomEmpNm").show();
+			$("#applicant\\.recomEmpNm").attr("placeholder", "경로");
+			disableFormElement($("#applicant\\.recomEmpNm"), false);
+		} else if ("08" == val) { // 외부 채용사이트
+			$("#applicant\\.applyPathCd").prev().css("width", "98px");
+			$("#applicant\\.recomEmpNm").show();
+			$("#applicant\\.recomEmpNm").attr("placeholder", "사이트 이름");
+			disableFormElement($("#applicant\\.recomEmpNm"), false);
+		} else if ("13" == val) { // 헤드헌팅 업체
+			$("#applicant\\.recomEmpNm").show();
+			$("#applicant\\.recomEmpNm").attr("placeholder", "헤드헌팅 업체명");
+			disableFormElement($("#applicant\\.recomEmpNm"), false);
+		} else {
+			$("#applicant\\.applyPathCd").prev().css("width", "168px");
+			$("#applicant\\.recomEmpNm").hide();
+			disableFormElement($("#applicant\\.recomEmpNm"), true, "");
+		}
+	}
+</script>
+
+<script type="text/javascript">
+
+function changeScholarType(obj) {
+	var index = getFormElementIndex(obj);
+	
+	var scholarTypeNm = $("[name='scholarList[" + index + "].scholarTypeCd'] option:selected").text();
+	var scholarTypeNmObj = $("[name='scholarList[" + index + "].scholarTypeCd']").prev().find("span");
+	scholarTypeNmObj.empty().html(scholarTypeNm);
+	scholarTypeNmObj.addClass("selected");
+	
+	if (obj.value == "001") {	
+		$("[name='scholarList[" + index + "].scholarTypeCd']").css("width", "250px");
+		$("[name='scholarList[" + index + "].scholarTypeCd']").next().css("width", "250px");
+		$("[name='scholarList[" + index + "].scholarTypeCd']").prev().css("width", "250px");
+		$("[name='scholarList[" + index + "].schoolNm']").css("width", "290px");
+		$("[name='scholarList[" + index + "].staYm']").css("width", "140px");
+		$("[name='scholarList[" + index + "].endYm']").css("width", "140px");
+		
+		
+		$("[name='scholarList[" + index + "].graduationType']").val("001");
+		
+		disableFormElement($("[name='scholarList[" + index + "].gradePnt']"), true, "");
+		disableFormElement($("[name='scholarList[" + index + "].gradeBasis']"), true, "");
+		disableFormElement($("[name='scholarList[" + index + "].majorDetailNm']"), true, "");
+		disableFormElement($("[name='scholarList[" + index + "].majorCd']"), true, "");
+		disableFormElement($("[name='scholarList[" + index + "].majorNm']"), true, "");
+		disableFormElement($("[name='scholarList[" + index + "].entryYn']"), true, "");
+		disableFormElement($("[name='scholarList[" + index + "].btnMajor']"), true, "");
+		disableFormElement($("[name='scholarList[" + index + "].btnMinor']"), true, "");
+		disableFormElement($("[name='scholarList[" + index + "].minorCd']"), true, "");
+		disableFormElement($("[name='scholarList[" + index + "].minorNm']"), true, "");
+		
+		$("[name='scholarList[" + index + "].graduationType']").css("display", "none");
+		$("[name='scholarList[" + index + "].graduationType']").prev().css("display", "none");
+		$("[name='scholarList[" + index + "].gradeBasis']").parent().removeClass("v2");
+	} else {	
+		$("[name='scholarList[" + index + "].scholarTypeCd']").css("width", "150px");
+		$("[name='scholarList[" + index + "].scholarTypeCd']").next().css("width", "150px");
+		$("[name='scholarList[" + index + "].scholarTypeCd']").prev().css("width", "150px");
+		$("[name='scholarList[" + index + "].schoolNm']").css("width", "140px");
+		$("[name='scholarList[" + index + "].staYm']").css("width", "130px");
+		$("[name='scholarList[" + index + "].endYm']").css("width", "130px");
+	
+		disableFormElement($("[name='scholarList[" + index + "].gradePnt']"), false, "");
+		disableFormElement($("[name='scholarList[" + index + "].gradeBasis']"), false, "");
+		disableFormElement($("[name='scholarList[" + index + "].majorDetailNm']"), false, "");
+		disableFormElement($("[name='scholarList[" + index + "].majorCd']"), false, "");
+		disableFormElement($("[name='scholarList[" + index + "].majorNm']"), false, "");
+		disableFormElement($("[name='scholarList[" + index + "].entryYn']"), false, "");
+		disableFormElement($("[name='scholarList[" + index + "].btnMajor']"), false, "");
+		disableFormElement($("[name='scholarList[" + index + "].btnMinor']"), false, "");
+		disableFormElement($("[name='scholarList[" + index + "].minorCd']"), false, "");
+		disableFormElement($("[name='scholarList[" + index + "].minorNm']"), false, "");
+		
+		$("[name='scholarList[" + index + "].graduationType']").prev().css("display", "block");
+		$("[name='scholarList[" + index + "].gradeBasis']").parent().addClass("v2");
+	}
+
+	
+	if (obj.value == "002" || obj.value == "003") {
+		disableFormElement($("[name='scholarList[" + index + "].majorDetailNm']"), true, "");
+		disableFormElement($("[name='scholarList[" + index + "].minorCd']"), false, "");
+		disableFormElement($("[name='scholarList[" + index + "].minorNm']"), false, "");
+		disableFormElement($("[name='scholarList[" + index + "].btnMinor']"), false, "");
+	}
+	
+	
+	if (obj.value == "004" || obj.value == "005") {
+		disableFormElement($("[name='scholarList[" + index + "].majorDetailNm']"), false, "");
+		disableFormElement($("[name='scholarList[" + index + "].minorCd']"), true, "");
+		disableFormElement($("[name='scholarList[" + index + "].minorNm']"), true, "");
+		disableFormElement($("[name='scholarList[" + index + "].btnMinor']"), true, "");
+	}
+
+	$("[name='scholarList[" + index + "].schPlaceCd']").next().css("display", "none");
+	
+}
+
+function setSelfIntroAnswerData(jsonData) {
+	var selfIntroHtml = "";
+	var refCount = 0;
+	
+	for (var i=0; i < jsonData.length; i++) {
+		var answerCount = i + 1;
+		var subjectNm = jsonData[i]["subjectNm"];
+		var answer = (jsonData[i]["answer"] != null) ? jsonData[i]["answer"] : "";
+		var questionTypeCd = jsonData[i]["questionTypeCd"];
+		var selfintroAnswerId = (jsonData[i]["selfintroAnswerId"] != null) ? jsonData[i]["selfintroAnswerId"] : "";
+		var selfintroId = jsonData[i]["selfintroId"];
+		var uploadId = (jsonData[i]["uploadId"] != null) ? jsonData[i]["uploadId"] : "";
+		var questionTypeCd = jsonData[i]["questionTypeCd"];
+		var sysFileList = jsonData[i]["sysFileList"];
+		var reqYn = jsonData[i]["reqYn"];
+		var reqNm = (jsonData[i].reqYn == "N") ? "[선택]" : "[필수]";
+		var oriAnswer = answer;
+		answer = answer.unescapeHTML();
+		
+		
+		selfIntroHtml +="<div id='divSelfIntro_" + i + "'>";
+		selfIntroHtml += "<input type='hidden' name='selfAnswerList[" + i + "].selfintroAnswerId' value='" + selfintroAnswerId + "'/>\n";
+		selfIntroHtml += "<input type='hidden' name='selfAnswerList[" + i + "].selfintroId' value='" + selfintroId + "'/>\n";
+		selfIntroHtml += "<input type='hidden' name='selfAnswerList[" + i + "].uploadId' value='" + uploadId + "'/>\n";
+		selfIntroHtml += "<input type='hidden' name='selfAnswerList[" + i + "].questionTypeCd' value='" + questionTypeCd + "'/>\n";
+		selfIntroHtml += "<input type='hidden' name='selfAnswerList[" + i + "].reqYn' value='" + reqYn + "'/>\n";
+		
+		if (questionTypeCd == "DESC") {
+			selfIntroHtml += "<div class='wrt_txtarea'>";
+			selfIntroHtml += "<input type='hidden' name='selfAnswerList[" + i + "].fakeFilePath' id='selfAnswerList[" + i + "].fakeFilePath' class='input_txt' title='파일경로' readonly>";
+			selfIntroHtml += "<input type='file' id='selfAnswerList[" + i + "].fileData' name='selfAnswerList[" + i + "].fileData' class='file' title='파일입력' style='display:none'>";
+			selfIntroHtml += "<p><label for='selfAnswerList["+i+"].answer'>" + reqNm + " " + subjectNm + "</label></p>\n";
+			selfIntroHtml += "<textarea cols='100' rows='14' id='selfAnswerList[" + i + "].answer' name='selfAnswerList[" + i + "].answer' class='text_area' title='자기소개_" + answerCount + "'>" + answer + "</textarea>";
+			selfIntroHtml += "</div>";
+		} else if (questionTypeCd == "FILE") {
+			if (refCount == 0) {
+				selfIntroHtml += "<h4>첨부자료</h4>\n";
+				refCount++;
+			}
+			
+			selfIntroHtml += "<div class='file_area'>\n";
+			selfIntroHtml += "<p>" + reqNm +  " " + subjectNm + "</p>\n";
+			selfIntroHtml += "<div class='inpt_field'>\n";
+			selfIntroHtml += "	<label for='selfAnswerList[" + i + "].fakeFilePath' class='lbl_type'>\n";
+			selfIntroHtml += "		<input type='text' name='selfAnswerList[" + i + "].fakeFilePath' id='selfAnswerList[" + i + "].fakeFilePath' class='cr_inpt' style='width:470px;' title='파일경로' readonly>\n";
+			selfIntroHtml += "	</label>\n";
+			selfIntroHtml += "	<label for='selfAnswerList[" + i + "].fileData' class='lbl_type'>\n";
+			selfIntroHtml += "		<span class='f_dummy'>찾아보기<input type='file' id='selfAnswerList[" + i + "].fileData' name='selfAnswerList[" + i + "].fileData' class='cr_inpt_file' onChange='displayRealFilePath(this);' title='파일입력'></span>\n";
+			selfIntroHtml += "	</label>\n";
+			selfIntroHtml += "</div>\n";
+			
+			if (sysFileList != null) {
+				selfIntroHtml += "<p class='add_file'>\n";
+				for (var f=0; f < sysFileList.length; f++) {
+					var fileNm = sysFileList[f]["fileNm"].escapeHTML();
+					var fileId = sysFileList[f]["fileId"];
+					
+					selfIntroHtml += "<a class='file_name' href='/common/file/downloadFile?fileId=" + fileId + "'>" + fileNm + "</a>\n";
+					selfIntroHtml += "<input type='hidden' name='selfAnswerList[" + i + "].sysFileList[" + f + "].fileId' value='" + fileId + "'>\n";
+					selfIntroHtml += "&nbsp;<input type='checkbox' id='selfAnswerList[" + i + "].sysFileList[" + f + "].sStatus' name='selfAnswerList[" + i + "].sysFileList[" + f + "].sStatus' value='D' class='blind'>\n";
+					selfIntroHtml += "&nbsp;<label for='selfAnswerList[" + i + "].sysFileList[" + f + "].sStatus' class='btn_chk2 right_margin'>삭제</label><br>\n";
+				}
+				selfIntroHtml += "</p>\n";
+			}
+			selfIntroHtml += "	</div>\n";
+		} else if (questionTypeCd == "FILE_URL") {
+			if (refCount == 0) {
+				selfIntroHtml += "<h4>첨부자료</h4>\n";
+				refCount++;
+			}
+			
+			selfIntroHtml += "<div class='file_area'>\n";
+			selfIntroHtml += "<p>" + reqNm +  " " + subjectNm + "</p>\n";
+			selfIntroHtml += "<div class='inpt_field'>\n";
+			selfIntroHtml += "	<label for='selfAnswerList[" + i + "].fakeFilePath' class='lbl_type'>\n";
+			selfIntroHtml += "		<input type='text' name='selfAnswerList[" + i + "].fakeFilePath' id='selfAnswerList[" + i + "].fakeFilePath' class='cr_inpt' style='width:470px;' title='파일경로' readonly placeholder='파일명'>\n";
+			selfIntroHtml += "	</label>\n";
+			selfIntroHtml += "	<label for='selfAnswerList[" + i + "].fileData' class='lbl_type'>\n";
+			selfIntroHtml += "		<span class='f_dummy'>찾아보기<input type='file' id='selfAnswerList[" + i + "].fileData' name='selfAnswerList[" + i + "].fileData' class='cr_inpt_file' onChange='displayRealFilePath(this);' title='파일입력'></span>\n";
+			selfIntroHtml += "	</label>\n";
+			selfIntroHtml += "</div>\n";
+			
+			if (sysFileList != null) {
+				selfIntroHtml += "<p class='add_file'>\n";
+				for (var f=0; f < sysFileList.length; f++) {
+					var fileNm = sysFileList[f]["fileNm"].escapeHTML();
+					var fileId = sysFileList[f]["fileId"];
+					
+					selfIntroHtml += "<a href='/common/file/downloadFile?fileId=" + fileId + "' class='file_name'>" + fileNm + "</a>\n";
+					selfIntroHtml += "<input type='hidden' name='selfAnswerList[" + i + "].sysFileList[" + f + "].fileId' value='" + fileId + "'>\n";
+					selfIntroHtml += "&nbsp;<input type='checkbox' id='selfAnswerList[" + i + "].sysFileList[" + f + "].sStatus' name='selfAnswerList[" + i + "].sysFileList[" + f + "].sStatus' value='D' class='blind'>\n";
+					selfIntroHtml += "&nbsp;<label for='selfAnswerList[" + i + "].sysFileList[" + f + "].sStatus' class='btn_chk2 right_margin'><span>삭제</span></label>\n";
+				}
+				selfIntroHtml += "</p>\n";
+			}
+			
+			selfIntroHtml += "<div class='inpt_field'>\n";
+			selfIntroHtml += "	<label for='selfAnswerList[" + i + "].answer' class='lbl_type'>\n";
+			selfIntroHtml += "		<input type='text' id='selfAnswerList[" + i + "].answer' name='selfAnswerList[" + i + "].answer' placeholder='http://' title='자기소개_" + answerCount + "' value='" + oriAnswer + "' class='cr_inpt' style='width: 600px;'>\n";
+			selfIntroHtml += "	</label>\n";
+			selfIntroHtml += "</div>\n";
+			
+		}
+		
+		selfIntroHtml += "</div>\n";
+	}
+	
+	$("#divSelfIntro").empty().html(selfIntroHtml);
+}
+
+function showCodeSearchLayer(cdKind, searchType, searchValue, returnMethod, schPlaceCd, groupCd) {
+	var param = "";
+	if (typeof(cdKind) != "undefined" && cdKind != "") {
+		$("#cdKind").val(cdKind);
+		param += "cdKind=" + cdKind;
+	}
+	
+	if (typeof(searchType) != "undefined" && searchType != "") {
+		$("#searchType").val(searchType);
+	}
+	
+	if (typeof(searchValue) != "undefined" && searchValue != "") {
+		$("#cdNm").val(searchValue);
+	}
+	
+	if (typeof(returnMethod) != "undefined" && returnMethod != "") {
+		$("#returnMethod").val(returnMethod);
+	}
+	
+	if (typeof(groupCd) != "undefined" && groupCd != "") {
+		$("#groupCd").val(groupCd);
+		param += "&groupCd=" + groupCd;
+	}
+	
+	if (typeof(schPlaceCd) != "undefined" && schPlaceCd != "") {
+		$("#schPlaceCd").val(schPlaceCd).change();
+	}
+	
+	$("#codeSearchLayer").position({of: $(window)});
+	$("#codeSearchLayer").css("display", "block");
+	$("#codeSearchLayer").find("#cdNm").focus();
+	
+	$("#codeSearchLayer").find("#codeSearchLayerTitle").text(getSearchTypeNm(searchType) + " 조회");
+	$("#codeSearchLayer").find("#cdNm").attr("placeholder", getSearchTypeNm(searchType));
+	
+	
+	if (searchType == "school") {
+		$("#cdNm").css("width", "212px");
+		$("#codeSearchLayer").find(".slct_box_list").remove();
+		createComboBoxList($("#insertGroupCd"));
+		createComboBoxList($("#schPlaceCd"));
+		selectComboBoxData($("#codeSearchLayer > inputArea").find(".slct_box_list > ul"));
+		selectComboBoxData($("#codeSearchLayer > selectGroupArea").find(".slct_box_list > ul"));
+		$("#scholarshipPlaceArea").show();
+	} else {
+		$("#cdNm").css("width", "370px");
+		$("#scholarshipPlaceArea").hide();
+	}
+	
+	$(".dim").css("display", "block");
+	$("#codeSearchLayer").position({of: $(window)});
+	$("#codeSearchLayer").show();
+	
+	if ($("#cdNm").val() != '') {
+		searchCode($('#codeSearchLayer'));
+	}
+}
+
+function displayRecomEmpInfo(val) {
+	if("12" == val) { // 임직원 추천
+		$("#applicant\\.recomEmpNm").show();
+		$("#applicant\\.recomEmpNm").attr("placeholder", "소속/성명");
+		disableFormElement($("#applicant\\.recomEmpNm"), false);
+	} else if ("16" == val) { // 교수 추천
+		$("#applicant\\.recomEmpNm").show();
+		$("#applicant\\.recomEmpNm").attr("placeholder", "학교/학과/성명");
+		disableFormElement($("#applicant\\.recomEmpNm"), false);
+	} else if ("14" == val) { // 기타
+		$("#applicant\\.recomEmpNm").show();
+		$("#applicant\\.recomEmpNm").attr("placeholder", "경로");
+		disableFormElement($("#applicant\\.recomEmpNm"), false);
+	} else if ("08" == val) { // 외부 채용사이트
+		$("#applicant\\.recomEmpNm").show();
+		$("#applicant\\.recomEmpNm").attr("placeholder", "사이트 이름");
+		disableFormElement($("#applicant\\.recomEmpNm"), false);
+	} else if ("13" == val) { // 헤드헌팅 업체
+		$("#applicant\\.recomEmpNm").show();
+		$("#applicant\\.recomEmpNm").attr("placeholder", "업체명/담당자 성명");
+		disableFormElement($("#applicant\\.recomEmpNm"), false);
+	} else if ("27" == val) { // 지인 추천
+		$("#applicant\\.recomEmpNm").show();
+		$("#applicant\\.recomEmpNm").attr("placeholder", "지인 성명");
+		disableFormElement($("#applicant\\.recomEmpNm"), false);
+	} else {
+		$("#applicant\\.recomEmpNm").hide();
+		disableFormElement($("#applicant\\.recomEmpNm"), true, "");
+	}
+}
+</script>
+</head>
+<body class="careers">
+
+<div id="wrap" class="">
+	
+	
+		
+	
+	
+ 		<!-- header -->
+		<header>
+			<div class="header_wrap">
+				<img src="/img/webtoon/careers_main_bg.png" alt="커리어 페이지 bg">
+				<h1 class="logo"><a href="#" onclick="goPage('', '/'); return false;"><span class="blind">WEBTOON CAREERS</span></a></h1>
+				<div class="careers_gnb_area">
+					<ul class="gnb">
+						<li id="li_joinUs">
+							<a href="/webtoon/ko/joinUs">JOIN US</a>
+						</li>
+						<li id="li_job">
+							<a href="/webtoon/ko/job/list">채용공고</a>
+						</li>
+						<li id="li_myApplicationLogin">
+							<a href="/webtoon/ko/login/myApplicationLogin">내 지원서</a>
+						</li>
+						<li id="li_recruitFaq">
+							<a href="/webtoon/ko/recruitFaq">지원문의</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</header>
+		<!-- //header -->
+
+	<!-- container -->
+	<div id="container" class="container ">
+
+		<!-- content -->
+		<div id="content" class="content">
+			<div class="dim" style="display:none;"></div>
+
+<form name="tempForm" id="tempForm"></form>
+<form name="form1" id="form1" method="post" enctype="multipart/form-data">
+<input type="hidden" name="annoId" value="20006920">
+<input type="hidden" name="handicap.handicapId" value="">
+<input type="hidden" name="military.militaryId" value="">
+<input type="hidden" name="applicant.sysCompanyCd" id="applicant.sysCompanyCd" value="WTKR">
+<input type="hidden" name="applicant.applyType" id="applicant.applyType" value="I">
+<input type="hidden" name="applicant.finalInputYn" id="applicant.finalInputYn" value="">
+<input type="hidden" name="applicant.entTypeCd" id="applicant.entTypeCd" value="002">
+<input type="hidden" name="applId" value="zI2LFbnidHHNyV78Jb8Kt2msS_rsIt9aXaaX4mk0aVk=">
+			
+				
+					
+
+<div id="tempSaveDialog" class="ly_pop ly_pop_small" style="display:none; width:602px; margin:0 0 0 -301px">
+	<div class="ly_con">
+		<strong class="ly_pop_tit">현재는 입사지원서 <em>임시저장 상태</em>입니다</strong>
+		<p class="ly_pop_txt">페이지 하단의 지원하기 버튼을 클릭하여<br>입사지원서를 최종 제출하시기 바랍니다</p>
+	</div>
+	<div class="ly_btn_area">
+		<a href="#null" onclick="$.unblockUI();" class="btn regi">확인</a>
+	</div>
+</div>
+
+<div id="finalValidationDialog" class="ly_pop ly_pop_small" style="display: none; width:602px; margin:0 0 0 -301px">
+	<div class="ly_con">
+		<strong id="validationMsg" class="ly_pop_tit"></strong>
+		<p class="ly_pop_txt">지원서의 필수 입력사항을 다시한번 확인해 주세요</p>
+	</div>
+	<div class="ly_btn_area">
+		<a href="#null" onclick="$.unblockUI();" class="btn regi">닫기</a>
+	</div>
+</div>
+
+<div id="finalConfirmMsg" class="ly_pop ly_pop_small" style="display: none; width:602px; margin:0 0 0 -301px">
+	<div class="ly_con">
+		<strong id="cnfirmMsg" class="ly_pop_tit">최종 제출 후에는<br>지원서 <em>수정이 불가능</em>합니다<br>지원하시겠습니까?</strong>
+		<p class="ly_pop_txt not_edit_txt">아래 정보는 전형결과 조회 시 필요하므로 다시 한번 확인해 주세요</p>
+		<div class="person_info">
+			<dl>
+			<dt class="blind">이메일 주소</dt>
+			<dd id="confirmMsgEmail">eheyap@gmail.com</dd>
+			<dt class="blind">휴대폰 번호</dt>
+			<dd id="confirmMsgCellNo"></dd>
+			</dl>
+		</div>
+	</div>
+	<div class="ly_btn_area">
+		<a href="#null" onclick="saveApplication();" class="btn recruit">지원하기</a>
+		<a href="#null" onclick="$.unblockUI();" class="btn close">확인</a>
+	</div>
+</div>
+
+<div id="finalOkMsg" class="ly_pop ly_pop_small" style="display:none; width:602px; margin:0 0 0 -301px">
+	<div class="ly_con">
+		<strong>지원서가 <em class="txt_grn">정상적으로 접수</em> 되었습니다</strong>
+	</div>
+	<div class="ly_btn_area">
+		<a href="#null" onclick="location.href='/'" class="btn close">확인</a>
+	</div>
+</div>
+
+<div id="codeSearchLayer" class="ly_pop ly_srch" style="display:none;width:650px;margin:0 0 0 -301px">
+	<input type="hidden" name="cdKind" id="cdKind">
+	<input type="hidden" name="searchType" id="searchType">
+	<input type="hidden" name="returnMethod" id="returnMethod">
+	<input type="hidden" name="passiveInput" id="passiveInput">
+	<input type="hidden" name="groupCd" id="groupCd">
+	
+	<strong id="codeSearchLayerTitle">학교명 조회</strong>
+	<div id="inputArea" class="inpt_field">
+		<div id="scholarshipPlaceArea" class="slct_box" style="width:150px; display: none;">
+			<a href="#null" class="choice_txt" style="width:150px;" title="소재지">
+				<span class="">소재지</span>
+			</a>
+			<select name="schPlaceCd" id="schPlaceCd" title="소재지" style="width:150px; display: none;">
+				<option value=""></option>
+				<option value="001">서울</option>
+<option value="002">경기</option>
+<option value="003">인천</option>
+<option value="004">강원</option>
+<option value="005">충북</option>
+<option value="006">충남</option>
+<option value="007">대전</option>
+<option value="018">세종</option>
+<option value="008">부산</option>
+<option value="009">울산</option>
+<option value="010">대구</option>
+<option value="011">경북</option>
+<option value="012">경남</option>
+<option value="013">전북</option>
+<option value="014">전남</option>
+<option value="015">광주</option>
+<option value="016">제주</option>
+<option value="017">해외</option>
+
+			</select>
+		</div>
+		<label for="cdNm" class="lbl_type">
+			<input type="text" name="cdNm" id="cdNm" placeholder="학교명" class="cr_inpt" value="" style="width:212px">
+		</label>
+		<a href="#null" onclick="searchCode($('#codeSearchLayer'));" class="sp srch_txt">검색</a>
+	</div>
+	<em class="blind">검색 목록</em>
+	<div id="searchArea" class="srch_list" style="display: none;">
+		<ul></ul>
+	</div>
+	<div id="commentArea" class="er_txt" style="display: none;">
+		<a href="#null" onclick="showDirectInputCode();">직접입력</a>
+	</div>
+	<div id="selectGroupArea" class="inpt_field" style="margin:20px 0 -5px; display: none;">
+		<div class="slct_box">
+			<a href="#null" class="choice_txt" style="width:500px;" title="분류 선택">
+				<span class="">분류 선택</span>
+			</a>
+			<select name="insertGroupCd" id="insertGroupCd" title="분류선택" style="width:500px; display: none;">
+				<option value=""></option>
+				<option value="EA01">서울지역 기타대학교</option>
+<option value="EA02">부산지역 기타대학교</option>
+<option value="EA03">대구지역 기타대학교</option>
+<option value="EA04">인천지역 기타대학교</option>
+<option value="EA05">광주지역 기타대학교</option>
+<option value="EA06">대전지역 기타대학교</option>
+<option value="EA07">울산지역 기타대학교</option>
+<option value="EA08">경기지역 기타대학교</option>
+<option value="EA09">강원지역 기타대학교</option>
+<option value="EA10">충남지역 기타대학교</option>
+<option value="EA11">충북지역 기타대학교</option>
+<option value="EA12">전남지역 기타대학교</option>
+<option value="EA13">전북지역 기타대학교</option>
+<option value="EA14">경남지역 기타대학교</option>
+<option value="EA15">경북지역 기타대학교</option>
+<option value="EA16">제주지역 기타대학교</option>
+<option value="EB01">미국지역 기타대학교</option>
+<option value="EB02">캐나다지역 기타대학교</option>
+<option value="EB03">북미 기타대학교 </option>
+<option value="EB04">멕시코지역 기타대학교</option>
+<option value="EB05">브라질지역 기타대학교</option>
+<option value="EB06">아르헨티나지역 기타대학교</option>
+<option value="EB07">남미 기타대학교</option>
+<option value="EB08">영국지역 기타대학교</option>
+<option value="EB09">프랑스지역 기타대학교</option>
+<option value="EB10">독일지역 기타대학교</option>
+<option value="EB11">덴마크지역 기타고등학교</option>
+<option value="EB12">러시아지역 기타대학교</option>
+<option value="EB13">유럽 기타대학교</option>
+<option value="EB14">일본지역 기타대학</option>
+<option value="EB15">중국지역 기타대학교</option>
+<option value="EB16">인도지역 기타대학교</option>
+<option value="EB17">태국지역 기타대학교</option>
+<option value="EB18">베트남지역 기타대학교</option>
+<option value="EB19">인도네시아지역 기타대학교</option>
+<option value="EB20">아시아 기타대학교</option>
+<option value="EB21">오스트레일리아지역 기타대학교</option>
+<option value="EB22">뉴질랜드지역 기타대학교</option>
+<option value="EB23">오세아니아 기타대학교</option>
+<option value="EB24">중동지역 기타대학교</option>
+<option value="EB25">남아공지역 기타대학교</option>
+<option value="EB26">아프리카 기타대학교</option>
+<option value="FA01">서울지역 기타특수학교</option>
+<option value="FA02">부산지역 기타특수학교</option>
+<option value="FA03">대구지역 기타특수학교</option>
+<option value="FA04">인천지역 기타특수학교</option>
+<option value="FA05">광주지역 기타특수학교</option>
+<option value="FA06">대전지역 기타특수학교</option>
+<option value="FA07">울산지역 기타특수학교</option>
+<option value="FA08">경기지역 기타특수학교</option>
+<option value="FA09">강원지역 기타특수학교</option>
+<option value="FA10">충남지역 기타특수학교</option>
+<option value="FA11">충북지역 기타특수학교</option>
+<option value="FA12">전남지역 기타특수학교</option>
+<option value="FA13">전북지역 기타특수학교</option>
+<option value="FA14">경남지역 기타특수학교</option>
+<option value="FA15">경북지역 기타특수학교</option>
+<option value="FA16">제주지역 기타특수학교</option>
+<option value="FB00">해외지역 기타특수학교</option>
+<option value="GA01">서울지역 학교기타</option>
+<option value="GB00">해외지역 학교기타</option>
+<option value="GB02">부산지역 학교기타</option>
+<option value="GB03">대구지역 학교기타</option>
+<option value="GB04">인천지역 학교기타</option>
+<option value="GB05">광주지역 학교기타</option>
+<option value="GB06">대전지역 학교기타</option>
+<option value="GB07">울산지역 학교기타</option>
+<option value="GB08">경기지역 학교기타</option>
+<option value="GB09">강원지역 학교기타</option>
+<option value="GB10">충남지역 학교기타</option>
+<option value="GB11">충북지역 학교기타</option>
+<option value="GB12">전남지역 학교기타</option>
+<option value="GB13">전북지역 학교기타</option>
+<option value="GB14">경남지역 학교기타</option>
+<option value="GB15">경북지역 학교기타</option>
+<option value="GB16">제주지역 학교기타</option>
+<option value="GB99">검정고시</option>
+
+			</select>
+		</div>
+	</div>
+	<div id="insertArea" class="inpt_field v3" style="display: none;">
+		<label for="insertNm" class="lbl_type lbl_type_text">
+			<input type="text" name="insertNm" id="insertNm" placeholder="직접입력" class="cr_inpt" style="width:500px">
+		</label>
+	</div>
+	<div id="buttonArea" class="ly_btn_area top_margin" style="display: none;">
+		<a href="#null" onclick="checkDirectInsert();" class="btn ly_btn_cfrm">확인</a>
+	</div>
+	<a href="#null" onclick="hideCodeSearchLayer();" class="btn_ly_clse sp_ico btn_close"><span class="blind">레이어 닫기</span></a>
+</div>
+
+<div id="previewApplicationLayer" class="ly_pop ly_preview" style="top:282px;display:none;width:1000px;margin:0 0 0 -500px"></div>
+
+				<div class="cont_wrap_careers">
+					<div class="job_fam">
+							<h2 class="wrt_app_txt">지원서 작성하기</h2>
+							<div class="wrt_tit_box">
+								<h3><span id="annoSubject"></span></h3>
+							</div>
+							
+							<div class="wrt_con">
+								<div id="divAnnoClassJob" >
+									<h4 class="top_margin_none">지원사항 <em>필수</em></h4>
+									<div class="inpt_field">
+										<div id="annoClassDiv" class="slct_box v2">
+											<a href="#null" class="choice_txt" style="width: 300px" title="지원 부문">
+												
+													
+													<span>지원 부문</span>
+												
+											</a>
+											
+											
+											<select name="applJobList[0].classId" style="display: none; width: 300px;" title="지원 부문">
+												<option value=""></option>
+												<option value="170">기술(Engineering)</option>
+
+											</select>
+										</div>
+										<div id="divAnnoJob" class="slct_box v2">
+											<a href="#null" class="choice_txt" style="width:300px" title="지원 직무">
+												
+													
+													<span>지원 직무</span>
+												
+											</a>
+											<select name="applJobList[0].jobId" style="display: none; width: 300px" title="지원 직무">
+												<option value=""></option>
+											</select>
+											<input type="hidden" name="applJobList[0].applSeq" value="1">
+											<input type="hidden" name="applJobList[0].applJobId" value="">
+										</div>
+									</div>
+								</div>
+							
+								<h4 id="personalInfoTitle" class="">기본 인적사항 <em>필수</em></h4>
+								<div class="inpt_field">
+									<input type="text" class="cr_inpt" name="applicant.applNm" id="applicant.applNm" value="김은선" placeholder="이름" title="이름 입력" style="width:150px">
+									<input type="text" class="cr_inpt" name="applicant.birthYmd" id="applicant.birthYmd"  value="19880326" placeholder="생년월일 예) 1990.12.20" style="width:180px" maxlength="10" masktype="dateYmd">
+									<input type="email" class="cr_inpt" name="applicant.email" id="applicant.email" value="eheyap@gmail.com" placeholder="이메일" title="이메일 입력" style="width:260px">
+								</div>
+								<div id="divPersonalInfo" class="inpt_field">
+									<div class="slct_box" style="width:150px;">
+										<a href="#null" class="choice_txt">
+											
+												
+												<span>성별</span>
+											
+										</a>
+										<select name="applicant.genderType" id="applicant.genderType" style="display: none; width: 150px" title="성별">
+											<option value=""></option>
+											<option value="M">남성</option>
+<option value="F">여성</option>
+
+										</select>
+									</div>
+									<label for="applicant.nationNm" class="lbl_type cr_inpt_srch">
+										<input type="text" name="applicant.nationNm" id="applicant.nationNm" onkeydown="showNationEvent(this, event)" placeholder="국적" value="대한민국" class="cr_inpt" style="width:180px">
+										<button type="button" onclick="showNationLayer(this)" class="sp_ico btn_nation ico_srch2"><span class="blind">국적 검색 버튼</span></button>
+										<input type="hidden" name="applicant.nationCd" id="applicant.nationCd" value="KR">
+									</label>
+									<label for="applicant.cellNo" class="lbl_type">
+										<input type="text" name="applicant.cellNo" id="applicant.cellNo" placeholder="연락처" value=""  class="cr_inpt" style="width:260px">
+									</label>
+									<div class="slct_box" style="width:250px;">
+										<a href="#null" class="choice_txt">
+											
+												
+												<span>지원경로</span>
+											
+										</a>
+										<select name="applicant.applyPathCd" id="applicant.applyPathCd" style="display: none; width: 250px" title="지원경로" onChange="displayRecomEmpInfo(this.value)">
+											<option value=""></option>
+											<option value="01">네이버웹툰 채용 홈페이지</option>
+<option value="08">외부 채용사이트</option>
+<option value="20">네이버 웹툰 SNS</option>
+<option value="12">임직원 추천</option>
+<option value="16">교수 추천</option>
+<option value="13">헤드헌팅 업체</option>
+<option value="21">취업정보 카페</option>
+<option value="05">학교(취업게시판/채용설명회)</option>
+<option value="10">행사(경진대회/채용박람회 등)</option>
+<option value="14">기타</option>
+
+										</select>
+									</div>
+									<label for="applicant.recomEmpNm" class="lbl_type" style="display:inline-block;width:260px">
+										<input type="text" name="applicant.recomEmpNm" id="applicant.recomEmpNm" value="" placeholder="" class="cr_inpt" style="width:260px; display: none;">
+									</label>
+								</div>
+								
+								<h4>학력사항 <em>필수</em></h4>
+								
+					<table id="addTableScholarship">
+						<thead>
+							<tr><td></td></tr>
+						</thead>
+						<tbody>
+						<tr style="display: none;">
+							<td>
+								<div id="viewArea" class="wrt_ok_area" style="display: none;">
+									<span id="viewAreaInfo"></span>
+									<em>
+										<button type="button" name="scholarList.btnEdit" onclick="editRowForScholarship(this, $('#addTableScholarship'), 'scholarList')">수정</button>
+										<button type="button" name="scholarList.btnDelete" onclick="deleteRowForScholarship(this, $('#addTableScholarship'), 'scholarList')">삭제</button>
+									</em>
+								</div>
+								<div id="inptArea" class="inpt_field">
+									<div class="slct_box">
+										<a href="#null" class="choice_txt" style="width:250px" title="학교 구분">
+											<span class="">구분</span>
+										</a>
+										<select name="scholarList.scholarTypeCd" id="scholarList.scholarTypeCd" style="display: none; width:250px" onchange="changeScholarType(this)" title="학력">
+											<option value=""></option>
+											<option value="001">고등학교</option>
+<option value="002">전문대학</option>
+<option value="003">대학교</option>
+<option value="004">대학원(석사)</option>
+<option value="005">대학원(박사)</option>
+
+										</select>
+									</div>
+									<label for="scholarList.schoolNm" class="lbl_type cr_inpt_srch">
+										<input type="text" name="scholarList.schoolNm" id="scholarList.schoolNm" onkeydown="showSchoolEvent(this, event)" placeholder="학교명" class="cr_inpt v3" style="width:290px">
+										<button type="button" name="scholarList.btnSchool" onclick="showSchoolLayer(this)" class="sp_ico btn_nation ico_srch2"><span class="blind">검색</span></button>
+										<input type="hidden" name="scholarList.schoolCd">
+										<input type="hidden" name="scholarList.schoolGroupCd">
+									</label>
+									 <label for="scholarList.majorNm" class="lbl_type cr_inpt_srch">
+										<input type="text" name="scholarList.majorNm" id="scholarList.majorNm" onkeydown="showMajorEvent(this, event)" placeholder="전공" class="cr_inpt" style="width:100px; display: none;">
+										<button type="button" name="scholarList.btnMajor" onClick="showMajorLayer(this)" class="sp_ico btn_nation ico_srch2" style="display: none;"><span class="blind">검색</span></button>
+										<input type="hidden" name="scholarList.majorCd">
+										<input type="hidden" name="scholarList.majorGroupCd">
+									</label>
+									<label for="scholarList.minorNm" class="lbl_type cr_inpt_srch">
+										<input type="text" name="scholarList.minorNm" id="scholarList.minorNm" onkeydown="showMajorEvent(this, event)" placeholder="부전공" class="cr_inpt" style="width:120px; display: none;">
+										<button type="button" name="scholarList.btnMinor" onClick="showMajorLayer(this)" class="sp_ico btn_nation ico_srch2" style="display: none;"><span class="blind">검색</span></button>
+										<input type="hidden" name="scholarList.minorCd">
+										<input type="hidden" name="scholarList.minorGroupCd">
+									</label>
+									<label for="scholarList.majorDetailNm" class="lbl_type">
+										<input type="text" name="scholarList.majorDetailNm" id="scholarList.majorDetailNm" placeholder="세부전공" class="cr_inpt" style="width:78px; display: none;">
+									</label>
+									<label for="scholarList.gradePnt" class="lbl_type">
+										<input type="text" name="scholarList.gradePnt" id="scholarList.gradePnt" placeholder="평점" class="cr_inpt v4" style="width:40px; display: none; ime-mode:disabled;" maxlength="4">
+									</label>
+									<label for="scholarList.gradeBasis" class="lbl_type">
+										<input type="text" name="scholarList.gradeBasis" id="scholarList.gradeBasis" placeholder="총점" class="cr_inpt v4" style="width:40px; display: none; ime-mode:disabled;" maxlength="4">
+									</label>
+									<label for="scholarList.staYm" class="lbl_type">
+										<input type="text" name="scholarList.staYm" id="scholarList.staYm" placeholder="입학년월" class="cr_inpt" style="width:140px" masktype="dateYm">
+									</label>
+									<span class="from_to">~</span>
+									<label for="scholarList.endYm" class="lbl_type">
+										<input type="text" name="scholarList.endYm" id="scholarList.endYm" placeholder="졸업년월" class="cr_inpt" style="width:140px" masktype="dateYm">
+									</label>
+									<div class="slct_box">
+										<a href="#null" class="choice_txt" style="width:110px; display: none;" title="졸업 구분">
+											<span class="">졸업</span>
+										</a>
+										<select name="scholarList.graduationType" id="scholarList.graduationType" style=" display: none; width:110px;" onchange="changeScholarGraduationType(this);" title="졸업구분">
+											<option value=""></option>
+											<option value="001">졸업</option>
+<option value="009">졸업예정</option>
+<option value="002">휴학</option>
+<option value="004">재학</option>
+<option value="005">수료</option>
+<option value="008">중퇴/자퇴</option>
+
+										</select>
+									</div>
+									<div id="completeDiv" class="fld_cplt">
+										<select name="scholarList.schPlaceCd" id="scholarList.schPlaceCd" style="display: none;">
+											<option value=""></option>
+											<option value="001">서울</option>
+<option value="002">경기</option>
+<option value="003">인천</option>
+<option value="004">강원</option>
+<option value="005">충북</option>
+<option value="006">충남</option>
+<option value="007">대전</option>
+<option value="018">세종</option>
+<option value="008">부산</option>
+<option value="009">울산</option>
+<option value="010">대구</option>
+<option value="011">경북</option>
+<option value="012">경남</option>
+<option value="013">전북</option>
+<option value="014">전남</option>
+<option value="015">광주</option>
+<option value="016">제주</option>
+<option value="017">해외</option>
+
+										</select>
+										<input type="hidden" name="scholarList.sStatus" value="X">
+										<input type="hidden" name="scholarList.scholarshipId" value="">
+										<input type="hidden" name="scholarList.lastYn" value="N">
+										<a href="#null" onclick="completeRowForScholarship($(this).prev().get(0), $('#addTableScholarship'), 'scholarList')"><span class="sp ico_cplt"></span>완료</a>
+									</div>
+								</div>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+								<div class="wrt_noti">
+									<ul>
+										<li>
+											<span>학력은 고등학교에서부터 현 최종학력 순으로 순차적으로 기재하시기 바랍니다.</span>
+										</li>
+										<li>
+											<span>해당 항목을 모두 기입한 후, 완료버튼을 누르면 다음 항목이 활성화됩니다.</span>
+										</li>
+										<li>
+											<span>입학년월/졸업년월은 YYYY.MM 순서로 입력해 주세요. (예: 2012.02)</span>
+										</li>
+										<li>
+											<span>복수전공 및 이중전공을 이수하신 분들은 부전공란에 입력해주세요.</span>
+										</li>
+									</ul>
+								</div>
+								
+								<h4>경력사항 <em>필수</em></h4>
+								
+					<table id="addTableCareer" style="border-spacing:0px;">
+						<thead>
+							<tr><td></td></tr>
+						</thead>
+						<tbody>
+						<tr style="display: none;">
+							<td>
+								<div id="viewArea" class="wrt_ok_area" style="display: none;">
+									<span id="viewAreaInfo"></span>
+									<em>
+										<button type="button" name="careerList.btnEdit" onclick="editRowForCareer(this, $('#addTableCareer'), 'careerList')">수정</button>
+										<button type="button" name="careerList.btnDelete" onclick="deleteRowForCareer(this, $('#addTableCareer'), 'careerList')">삭제</button>
+									</em>
+								</div>
+								<div id="inptArea" class="inpt_field">
+									<label for="careerList.corpNm" class="lbl_type cr_inpt_srch">
+										<input type="text" name="careerList.corpNm" id="careerList.corpNm" onkeydown="showCompanyEvent(this, event)" placeholder="회사명" class="cr_inpt v3" style="width:200px">
+										<button type="button" name="scholarList.btnCareer" onclick="showCompanyLayer(this)" class="sp_ico btn_nation ico_srch2"><span class="blind">검색</span></button>
+										<input type="hidden" name="careerList.corpCd">
+										<input type="hidden" name="careerList.corpGroupCd">
+									</label>
+									<label for="careerList.deptNm" class="lbl_type">
+										<input type="text" name="careerList.deptNm" id="careerList.deptNm" placeholder="부서명" class="cr_inpt" style="width:170px">
+									</label>
+									<label for="careerList.enterYmd" class="lbl_type">
+										<input type="text" name="careerList.enterYmd" id="careerList.enterYmd" placeholder="입사일" class="cr_inpt" style="width:140px" masktype="dateYmd">
+									</label>
+									<span class="from_to">~</span>
+									<label for="careerList.retireYmd" class="lbl_type">
+										<input type="text" name="careerList.retireYmd" id="careerList.retireYmd" placeholder="퇴사일" class="cr_inpt" style="width:140px" masktype="dateYmd">
+									</label>
+									<label for="careerList.jobPosition" class="lbl_type">
+										<input type="text" name="careerList.jobPosition" id="careerList.jobPosition" placeholder="직위" class="cr_inpt" style="width:140px">
+									</label>
+									<label for="careerList.jobRole" class="lbl_type">
+										<input type="text" name="careerList.jobRole" id="careerList.jobRole" placeholder="직무" class="cr_inpt" style="width:140px">
+									</label>
+									<div id="completeDiv" class="fld_cplt">
+										<input type="hidden" name="careerList.sStatus" value="X">
+										<input type="hidden" name="careerList.careerId" value="">
+										<a href="#null" onclick="completeRowForCareer($(this).prev().get(0), $('#addTableCareer'), 'careerList')"><span class="sp ico_cplt"></span>완료</a>
+									</div>
+								</div>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+								<div class="wrt_noti">
+									<ul>
+										<li>
+											<span>해당 항목을 모두 기입한 후, 완료버튼을 누르면 다음 항목이 활성화됩니다.</span>
+										</li>
+										<li>
+											<span>입사일/퇴사일은 "YYYY.MM.DD" 순서로 입력해 주세요. (예 : 2012.02.22)</span>
+										</li>
+										<li>
+											<span>아르바이트 경력은 기재하지 않습니다.</span>
+										</li>
+										<li>
+											<span>최종 회사에 재직중이면, 퇴사일은 비워 두셔도 됩니다.</span>
+										</li>
+									</ul>
+								</div>
+						
+								<h4>자격/어학 사항</h4>
+								
+					<table id="addTableLicenseLanguage">
+						<thead>
+							<tr><td></td></tr>
+						</thead>
+						<tbody>
+						<tr style="display: none;">
+							<td>
+								<div id="viewArea" class="wrt_ok_area" style="display: none;">
+									<span id="viewAreaInfo"></span>
+									<em>
+										<button type="button" name="careerList.btnEdit" onclick="editRowForLicenseLanguage(this, $('#addTableLicenseLanguage'), 'licenseLanguageList')">수정</button>
+										<button type="button" name="careerList.btnDelete" onclick="deleteRowForLicenseLanguage(this, $('#addTableLicenseLanguage'), 'licenseLanguageList')">삭제</button>
+									</em>
+								</div>
+								<div id="inptArea" class="inpt_field">
+									<div class="slct_box">
+										<a href="#null" class="choice_txt" style="width:130px;" title="자격/어학 구분">
+											<span class="">구분</span>
+										</a>
+										<select name="licenseLanguageList.licenseLanguageTypeCd" id="licenseLanguageList.licenseLanguageTypeCd" style="width:130px; display: none;" title="자격/어학 구분" onchange="changeLicenseLanguageType(this)">
+											<option value=""></option>
+											<option value="LICENSE">자격</option>
+											<option value="LANGUAGE">어학</option>
+										</select>
+									</div>
+									<label for="licenseLanguageList.licenseNm" class="lbl_type cr_inpt_srch">
+										<input type="text" name="licenseLanguageList.licenseNm" id="licenseLanguageList.licenseNm" onkeydown="showLicenseEvent(this, event)" placeholder="자격/면허종류" class="cr_inpt v3" style="width:280px">
+										<button type="button" name="licenseLanguageList.btnSearchLicense" onclick="showLicenseLayer(this);" class="sp_ico btn_nation"><span class="blind">검색</span></button>
+										<input type="hidden" name="licenseLanguageList.licenseCd">
+									</label>
+									<label for="licenseLanguageList.langTypeNm" class="lbl_type cr_inpt_srch">
+										<input type="text" name="licenseLanguageList.langTypeNm" id="licenseLanguageList.langTypeNm" onkeydown="showLanguageEvent(this, 'TYPE', event)" placeholder="언어" class="cr_inpt v3" style="width:135px; display: none;">
+										<button type="button" name="licenseLanguageList.btnSearchLanguageType" onclick="showLanguageLayer(this, 'TYPE');" class="sp_ico btn_nation" style="display: none;"><span class="blind">검색</span></button>
+										<input type="hidden" name="licenseLanguageList.langTypeCd">
+									</label>
+									<label for="licenseLanguageList.langTestNm" class="lbl_type cr_inpt_srch">
+										<input type="text" name="licenseLanguageList.langTestNm" id="licenseLanguageList.langTestNm" onkeydown="showLanguageEvent(this, 'TEST', event)" placeholder="시험" class="cr_inpt v3" style="width:135px; display: none;">
+										<button type="button" name="licenseLanguageList.btnSearchLanguageTest" onclick="showLanguageLayer(this, 'TEST');" class="sp_ico btn_nation" style="display: none;"><span class="blind">검색</span></button>
+										<input type="hidden" name="licenseLanguageList.langTestCd">
+									</label>
+									<label for="licenseLanguageList.licenseGrdNm" class="lbl_type cr_inpt_srch">
+										<input type="text" name="licenseLanguageList.licenseGrdNm" id="licenseLanguageList.licenseGrdNm" onkeydown="showGradeSearchEvent(this, 'LICENSE', event)" placeholder="등급" class="cr_inpt v3" style="width:271px">
+										<button type="button" name="licenseLanguageList.btnSearchLicense" onclick="showGradeSearchLayer(this, 'LICENSE');" class="sp_ico btn_nation"><span class="blind">검색</span></button>
+										<input type="hidden" name="licenseLanguageList.licenseGrdCd">
+									</label>
+									<label for="licenseLanguageList.langGrdNm" class="lbl_type cr_inpt_srch">
+										<input type="text" name="licenseLanguageList.langGrdNm" id="licenseLanguageList.langGrdNm" onkeydown="showGradeSearchEvent(this, 'LANGUAGE', event)" placeholder="등급" class="cr_inpt v3" style="width:160px; display: none;">
+										<button type="button" name="licenseLanguageList.btnSearchLanguageGrade" onclick="showGradeSearchLayer(this, 'LANGUAGE');" class="sp_ico btn_nation" style="display: none;"><span class="blind">검색</span></button>
+										<input type="hidden" name="licenseLanguageList.langGrdCd">
+									</label>
+									<label for="licenseLanguageList.score" class="lbl_type">
+										<input type="text" name="licenseLanguageList.score" id="licenseLanguageList.score" placeholder="점수" class="cr_inpt" style="width:100px; display: none; ime-mode:disabled;" maxlength="6">
+									</label>
+									<label for="licenseLanguageList.takeYmd" class="lbl_type">
+										<input type="text" name="licenseLanguageList.takeYmd" id="licenseLanguageList.takeYmd" placeholder="취득/응시일" class="cr_inpt" style="width:160px" masktype="dateYmd">
+									</label>
+									<label for="licenseLanguageList.testYmd" class="lbl_type">
+										<input type="text" name="licenseLanguageList.testYmd" id="licenseLanguageList.testYmd" placeholder="취득/응시일" class="cr_inpt" style="width:160px; display: none;" masktype="dateYmd">
+									</label>
+									<label for="licenseLanguageList.issueOrgNm" class="lbl_type">
+										<input type="text" name="licenseLanguageList.issueOrgNm" id="licenseLanguageList.issueOrgNm" placeholder="발급기관" class="cr_inpt" style="width:170px">
+									</label>
+									<label for="licenseLanguageList.langOrgNm" class="lbl_type">
+										<input type="text" name="licenseLanguageList.langOrgNm" id="licenseLanguageList.langOrgNm" placeholder="발급기관" class="cr_inpt" style="width:170px; display: none;">
+									</label>
+									<div id="completeDiv" class="fld_cplt">
+										<input type="hidden" name="licenseLanguageList.sStatus" value="X">
+										<input type="hidden" name="licenseLanguageList.licenseId" value="">
+										<input type="hidden" name="licenseLanguageList.languageId" value="">
+										<a href="#null" onclick="completeRowForLicenseLanguage($(this).prev().get(0), $('#addTableLicenseLanguage'), 'licenseLanguageList')"><span class="sp ico_cplt"></span>완료</a>
+									</div>
+								</div>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+								
+								<h4>직무질문 <em>필수</em></h4>
+								<div id="divSelfIntro"></div>
+								
+								<div id="divEtcInfo" class="dvid_area">
+									<h4>병역사항 <em>필수</em></h4>
+									<div class="inpt_field">
+										<div class="slct_box" style="width:250px;">
+											<a href="#null" class="choice_txt">
+												
+													
+													<span>병역구분</span>
+												
+											</a>
+											<select name="military.demobTypeCd" id="military.demobTypeCd" style="width:250px; display: none;" title="병역복무유형">
+												<option value=""></option>
+												<option value="001">만기제대</option>
+<option value="010">제대 기타</option>
+<option value="006">복무중</option>
+<option value="003">병역특례복무만료</option>
+<option value="019">병역특례 복무 중(전문)</option>
+<option value="020">병역특례 복무 중(산업)</option>
+<option value="004">군미필</option>
+<option value="030">면제</option>
+<option value="031">해당없음</option>
+
+											</select>
+										</div>
+									</div>
+									<h4 class="loc_h5">보훈대상 여부 <em>필수</em></h4>
+									<div class="chk_area">
+										<ul>
+											<li><input type="radio" class="blind" id="applicant.patriotY" name="applicant.patriotYn" value="Y" onClick="changePatriot(this.value);"><label for="applicant.patriotY" class="btn_chk2 right_margin"><span>대상</span></label></li>
+											<li><input type="radio" class="blind" id="applicant.patriotN" name="applicant.patriotYn" value="N" onClick="changePatriot(this.value);"><label for="applicant.patriotN" class="btn_chk2 on"><span>비대상</span></label></li>
+										</ul>
+									</div>
+									<h4 class="loc_h5 v2">장애사항 <em>필수</em></h4>
+									<div class="inpt_field v3">
+										<div class="slct_box" style="width:250px;">
+											<a href="#null" class="choice_txt">
+												
+													
+													<span class="selected">해당없음</span>
+												
+											</a>
+											<select name="handicap.handicapCd" id="handicap.handicapCd" style="width:250px; display: none;" title="장애구분">
+												<option value="">해당없음</option>
+												<option value="003">일반</option>
+<option value="001">산재</option>
+<option value="002">보훈</option>
+
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="btn_area btn_big_box">
+									
+										
+											<a href="#" onclick="saveTemporaryApplication(); return false;" class="btn inquiry">임시저장</a>
+											<a href="#" onclick="showPreviewApplication(); return false;" class="btn inquiry btn_center">미리보기</a>
+											<a href="#" onclick="submitApplication(); return false;" class="btn recruit">지원하기</a>
+										
+										
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				
+				
+				
+				
+				
+				
+				
+			
+</form>
+<script type="text/javascript">
+var careerData = {"dataList":[]};
+var scholarData = {"dataList":[]};
+var licenseLanguageData = {"dataList":[]};
+var selfAnswerData;
+</script>
+		</div>
+		<!-- //content -->
+
+	</div>
+	<!-- //container -->
+	
+	
+ 		<!-- footer -->
+		<footer>
+			<div class="fotter_wrap">
+				<p class="copyright">
+					ⓒ NAVER WEBTOON Limited All Right Reserved.
+				</p>
+				<ul class="ft_menu">
+					<li>
+						<a href="#" onclick="goPage('/privacy', g_home_url); return false;" class="">개인정보 처리방침</a>
+					</li>
+					<li>
+						<a href="#" onclick="goPage('/ethics', g_home_url); return false;" class="">기업윤리 센터</a>
+					</li>
+				</ul>
+			</div>
+		</footer>
+		<!-- //footer -->
+</div>
+<script type="text/javascript">lcs_do();</script>
+<script type="text/javascript">
+	$(function(){
+		//countTimer();
+	});
+</script>
+</body>
+</html>

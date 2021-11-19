@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <div id="previewApplicationLayer" class="ly_pop ly_preview"
+        style="top:282px;display:none;width:1000px;margin:0 0 0 -500px"></div>
+
+    <div class="cont_wrap_careers">
+        <div class="job_fam">
+            <h2 class="wrt_app_txt">지원서 작성하기</h2>
+            <div class="wrt_tit_box">
+                <h3><span id="annoSubject"></span></h3>
+            </div>
+
+            <div class="wrt_con">
+                <div id="divAnnoClassJob" style="display: ">
+                    <h4 class="top_margin_none">지원사항 <em>필수</em></h4>
+                    <div class="inpt_field">
+                        <div id="annoClassDiv" class="slct_box v2">
+                            <a href="#null" class="choice_txt" style="width: 300px" title="지원 부문">
+
+
+                                <span>지원 부문</span>
+
+                            </a>
+
+
+                            <select name="applJobList[0].classId" style="display: none; width: 300px;" title="지원 부문">
+                                <option value=""></option>
+                                <option value="170">기술(Engineering)</option>
+
+                            </select>
+                        </div>
+                        <div id="divAnnoJob" class="slct_box v2">
+                            <a href="#null" class="choice_txt" style="width:300px" title="지원 직무">
+
+
+                                <span>지원 직무</span>
+
+                            </a>
+                            <select name="applJobList[0].jobId" style="display: none; width: 300px" title="지원 직무">
+                                <option value=""></option>
+                            </select>
+                            <input type="hidden" name="applJobList[0].applSeq" value="1">
+                            <input type="hidden" name="applJobList[0].applJobId" value="">
+                        </div>
+                    </div>
+                </div>
+
+                <h4 id="personalInfoTitle" class="">기본 인적사항 <em>필수</em></h4>
+                <div class="inpt_field">
+                    <input type="text" class="cr_inpt" name="applicant.applNm" id="applicant.applNm" value="김은선"
+                        placeholder="이름" title="이름 입력" style="width:150px">
+                    <input type="text" class="cr_inpt" name="applicant.birthYmd" id="applicant.birthYmd"
+                        value="19880326" placeholder="생년월일 예) 1990.12.20" style="width:180px" maxlength="10"
+                        masktype="dateYmd">
+                    <input type="email" class="cr_inpt" name="applicant.email" id="applicant.email"
+                        value="eheyap@gmail.com" placeholder="이메일" title="이메일 입력" style="width:260px">
+                </div>
+                <div id="divPersonalInfo" class="inpt_field">
+                    <div class="slct_box" style="width:150px;">
+                        <a href="#null" class="choice_txt">
+
+
+                            <span>성별</span>
+
+                        </a>
+                        <select name="applicant.genderType" id="applicant.genderType"
+                            style="display: none; width: 150px" title="성별">
+                            <option value=""></option>
+                            <option value="M">남성</option>
+                            <option value="F">여성</option>
+
+                        </select>
+                    </div>
+                    <label for="applicant.nationNm" class="lbl_type cr_inpt_srch">
+                        <input type="text" name="applicant.nationNm" id="applicant.nationNm"
+                            onkeydown="showNationEvent(this, event)" placeholder="국적" value="대한민국" class="cr_inpt"
+                            style="width:180px">
+                        <button type="button" onclick="showNationLayer(this)" class="sp_ico btn_nation ico_srch2"><span
+                                class="blind">국적 검색 버튼</span></button>
+                        <input type="hidden" name="applicant.nationCd" id="applicant.nationCd" value="KR">
+                    </label>
+                    <label for="applicant.cellNo" class="lbl_type">
+                        <input type="text" name="applicant.cellNo" id="applicant.cellNo" placeholder="연락처" value=""
+                            class="cr_inpt" style="width:260px">
+                    </label>
+                    <div class="slct_box" style="width:250px;">
+                        <a href="#null" class="choice_txt">
+
+
+                            <span>지원경로</span>
+
+                        </a>
+                        <select name="applicant.applyPathCd" id="applicant.applyPathCd"
+                            style="display: none; width: 250px" title="지원경로" onChange="displayRecomEmpInfo(this.value)">
+                            <option value=""></option>
+                            <option value="01">네이버웹툰 채용 홈페이지</option>
+                            <option value="08">외부 채용사이트</option>
+                            <option value="20">네이버 웹툰 SNS</option>
+                            <option value="12">임직원 추천</option>
+                            <option value="16">교수 추천</option>
+                            <option value="13">헤드헌팅 업체</option>
+                            <option value="21">취업정보 카페</option>
+                            <option value="05">학교(취업게시판/채용설명회)</option>
+                            <option value="10">행사(경진대회/채용박람회 등)</option>
+                            <option value="14">기타</option>
+
+                        </select>
+                    </div>
+                    <label for="applicant.recomEmpNm" class="lbl_type" style="display:inline-block;width:260px">
+                        <input type="text" name="applicant.recomEmpNm" id="applicant.recomEmpNm" value="" placeholder=""
+                            class="cr_inpt" style="width:260px; display: none;">
+                    </label>
+                </div>
+
+                <h4>학력사항 <em>필수</em></h4>
+
+                <table id="addTableScholarship">
+                    <thead>
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="display: none;">
+                            <td>
+                                <div id="viewArea" class="wrt_ok_area" style="display: none;">
+                                    <span id="viewAreaInfo"></span>
+                                    <em>
+                                        <button type="button" name="scholarList.btnEdit"
+                                            onclick="editRowForScholarship(this, $('#addTableScholarship'), 'scholarList')">수정</button>
+                                        <button type="button" name="scholarList.btnDelete"
+                                            onclick="deleteRowForScholarship(this, $('#addTableScholarship'), 'scholarList')">삭제</button>
+                                    </em>
+                                </div>
+                                <div id="inptArea" class="inpt_field">
+                                    <div class="slct_box">
+                                        <a href="#null" class="choice_txt" style="width:250px" title="학교 구분">
+                                            <span class="">구분</span>
+                                        </a>
+                                        <select name="scholarList.scholarTypeCd" id="scholarList.scholarTypeCd"
+                                            style="display: none; width:250px" onchange="changeScholarType(this)"
+                                            title="학력">
+                                            <option value=""></option>
+                                            <option value="001">고등학교</option>
+                                            <option value="002">전문대학</option>
+                                            <option value="003">대학교</option>
+                                            <option value="004">대학원(석사)</option>
+                                            <option value="005">대학원(박사)</option>
+
+                                        </select>
+                                    </div>
+                                    <label for="scholarList.schoolNm" class="lbl_type cr_inpt_srch">
+                                        <input type="text" name="scholarList.schoolNm" id="scholarList.schoolNm"
+                                            onkeydown="showSchoolEvent(this, event)" placeholder="학교명"
+                                            class="cr_inpt v3" style="width:290px">
+                                        <button type="button" name="scholarList.btnSchool"
+                                            onclick="showSchoolLayer(this)" class="sp_ico btn_nation ico_srch2"><span
+                                                class="blind">검색</span></button>
+                                        <input type="hidden" name="scholarList.schoolCd">
+                                        <input type="hidden" name="scholarList.schoolGroupCd">
+                                    </label>
+                                    <label for="scholarList.majorNm" class="lbl_type cr_inpt_srch">
+                                        <input type="text" name="scholarList.majorNm" id="scholarList.majorNm"
+                                            onkeydown="showMajorEvent(this, event)" placeholder="전공" class="cr_inpt"
+                                            style="width:100px; display: none;">
+                                        <button type="button" name="scholarList.btnMajor" onClick="showMajorLayer(this)"
+                                            class="sp_ico btn_nation ico_srch2" style="display: none;"><span
+                                                class="blind">검색</span></button>
+                                        <input type="hidden" name="scholarList.majorCd">
+                                        <input type="hidden" name="scholarList.majorGroupCd">
+                                    </label>
+                                    <label for="scholarList.minorNm" class="lbl_type cr_inpt_srch">
+                                        <input type="text" name="scholarList.minorNm" id="scholarList.minorNm"
+                                            onkeydown="showMajorEvent(this, event)" placeholder="부전공" class="cr_inpt"
+                                            style="width:120px; display: none;">
+                                        <button type="button" name="scholarList.btnMinor" onClick="showMajorLayer(this)"
+                                            class="sp_ico btn_nation ico_srch2" style="display: none;"><span
+                                                class="blind">검색</span></button>
+                                        <input type="hidden" name="scholarList.minorCd">
+                                        <input type="hidden" name="scholarList.minorGroupCd">
+                                    </label>
+                                    <label for="scholarList.majorDetailNm" class="lbl_type">
+                                        <input type="text" name="scholarList.majorDetailNm"
+                                            id="scholarList.majorDetailNm" placeholder="세부전공" class="cr_inpt"
+                                            style="width:78px; display: none;">
+                                    </label>
+                                    <label for="scholarList.gradePnt" class="lbl_type">
+                                        <input type="text" name="scholarList.gradePnt" id="scholarList.gradePnt"
+                                            placeholder="평점" class="cr_inpt v4"
+                                            style="width:40px; display: none; ime-mode:disabled;" maxlength="4">
+                                    </label>
+                                    <label for="scholarList.gradeBasis" class="lbl_type">
+                                        <input type="text" name="scholarList.gradeBasis" id="scholarList.gradeBasis"
+                                            placeholder="총점" class="cr_inpt v4"
+                                            style="width:40px; display: none; ime-mode:disabled;" maxlength="4">
+                                    </label>
+                                    <label for="scholarList.staYm" class="lbl_type">
+                                        <input type="text" name="scholarList.staYm" id="scholarList.staYm"
+                                            placeholder="입학년월" class="cr_inpt" style="width:140px" masktype="dateYm">
+                                    </label>
+                                    <span class="from_to">~</span>
+                                    <label for="scholarList.endYm" class="lbl_type">
+                                        <input type="text" name="scholarList.endYm" id="scholarList.endYm"
+                                            placeholder="졸업년월" class="cr_inpt" style="width:140px" masktype="dateYm">
+                                    </label>
+                                    <div class="slct_box">
+                                        <a href="#null" class="choice_txt" style="width:110px; display: none;"
+                                            title="졸업 구분">
+                                            <span class="">졸업</span>
+                                        </a>
+                                        <select name="scholarList.graduationType" id="scholarList.graduationType"
+                                            style=" display: none; width:110px;"
+                                            onchange="changeScholarGraduationType(this);" title="졸업구분">
+                                            <option value=""></option>
+                                            <option value="001">졸업</option>
+                                            <option value="009">졸업예정</option>
+                                            <option value="002">휴학</option>
+                                            <option value="004">재학</option>
+                                            <option value="005">수료</option>
+                                            <option value="008">중퇴/자퇴</option>
+
+                                        </select>
+                                    </div>
+                                    <div id="completeDiv" class="fld_cplt">
+                                        <select name="scholarList.schPlaceCd" id="scholarList.schPlaceCd"
+                                            style="display: none;">
+                                            <option value=""></option>
+                                            <option value="001">서울</option>
+                                            <option value="002">경기</option>
+                                            <option value="003">인천</option>
+                                            <option value="004">강원</option>
+                                            <option value="005">충북</option>
+                                            <option value="006">충남</option>
+                                            <option value="007">대전</option>
+                                            <option value="018">세종</option>
+                                            <option value="008">부산</option>
+                                            <option value="009">울산</option>
+                                            <option value="010">대구</option>
+                                            <option value="011">경북</option>
+                                            <option value="012">경남</option>
+                                            <option value="013">전북</option>
+                                            <option value="014">전남</option>
+                                            <option value="015">광주</option>
+                                            <option value="016">제주</option>
+                                            <option value="017">해외</option>
+
+                                        </select>
+                                        <input type="hidden" name="scholarList.sStatus" value="X">
+                                        <input type="hidden" name="scholarList.scholarshipId" value="">
+                                        <input type="hidden" name="scholarList.lastYn" value="N">
+                                        <a href="#null"
+                                            onclick="completeRowForScholarship($(this).prev().get(0), $('#addTableScholarship'), 'scholarList')"><span
+                                                class="sp ico_cplt"></span>완료</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="wrt_noti">
+                    <ul>
+                        <li>
+                            <span>학력은 고등학교에서부터 현 최종학력 순으로 순차적으로 기재하시기 바랍니다.</span>
+                        </li>
+                        <li>
+                            <span>해당 항목을 모두 기입한 후, 완료버튼을 누르면 다음 항목이 활성화됩니다.</span>
+                        </li>
+                        <li>
+                            <span>입학년월/졸업년월은 YYYY.MM 순서로 입력해 주세요. (예: 2012.02)</span>
+                        </li>
+                        <li>
+                            <span>복수전공 및 이중전공을 이수하신 분들은 부전공란에 입력해주세요.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <h4>경력사항 <em>필수</em></h4>
+
+                <table id="addTableCareer" style="border-spacing:0px;">
+                    <thead>
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="display: none;">
+                            <td>
+                                <div id="viewArea" class="wrt_ok_area" style="display: none;">
+                                    <span id="viewAreaInfo"></span>
+                                    <em>
+                                        <button type="button" name="careerList.btnEdit"
+                                            onclick="editRowForCareer(this, $('#addTableCareer'), 'careerList')">수정</button>
+                                        <button type="button" name="careerList.btnDelete"
+                                            onclick="deleteRowForCareer(this, $('#addTableCareer'), 'careerList')">삭제</button>
+                                    </em>
+                                </div>
+                                <div id="inptArea" class="inpt_field">
+                                    <label for="careerList.corpNm" class="lbl_type cr_inpt_srch">
+                                        <input type="text" name="careerList.corpNm" id="careerList.corpNm"
+                                            onkeydown="showCompanyEvent(this, event)" placeholder="회사명"
+                                            class="cr_inpt v3" style="width:200px">
+                                        <button type="button" name="scholarList.btnCareer"
+                                            onclick="showCompanyLayer(this)" class="sp_ico btn_nation ico_srch2"><span
+                                                class="blind">검색</span></button>
+                                        <input type="hidden" name="careerList.corpCd">
+                                        <input type="hidden" name="careerList.corpGroupCd">
+                                    </label>
+                                    <label for="careerList.deptNm" class="lbl_type">
+                                        <input type="text" name="careerList.deptNm" id="careerList.deptNm"
+                                            placeholder="부서명" class="cr_inpt" style="width:170px">
+                                    </label>
+                                    <label for="careerList.enterYmd" class="lbl_type">
+                                        <input type="text" name="careerList.enterYmd" id="careerList.enterYmd"
+                                            placeholder="입사일" class="cr_inpt" style="width:140px" masktype="dateYmd">
+                                    </label>
+                                    <span class="from_to">~</span>
+                                    <label for="careerList.retireYmd" class="lbl_type">
+                                        <input type="text" name="careerList.retireYmd" id="careerList.retireYmd"
+                                            placeholder="퇴사일" class="cr_inpt" style="width:140px" masktype="dateYmd">
+                                    </label>
+                                    <label for="careerList.jobPosition" class="lbl_type">
+                                        <input type="text" name="careerList.jobPosition" id="careerList.jobPosition"
+                                            placeholder="직위" class="cr_inpt" style="width:140px">
+                                    </label>
+                                    <label for="careerList.jobRole" class="lbl_type">
+                                        <input type="text" name="careerList.jobRole" id="careerList.jobRole"
+                                            placeholder="직무" class="cr_inpt" style="width:140px">
+                                    </label>
+                                    <div id="completeDiv" class="fld_cplt">
+                                        <input type="hidden" name="careerList.sStatus" value="X">
+                                        <input type="hidden" name="careerList.careerId" value="">
+                                        <a href="#null"
+                                            onclick="completeRowForCareer($(this).prev().get(0), $('#addTableCareer'), 'careerList')"><span
+                                                class="sp ico_cplt"></span>완료</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="wrt_noti">
+                    <ul>
+                        <li>
+                            <span>해당 항목을 모두 기입한 후, 완료버튼을 누르면 다음 항목이 활성화됩니다.</span>
+                        </li>
+                        <li>
+                            <span>입사일/퇴사일은 "YYYY.MM.DD" 순서로 입력해 주세요. (예 : 2012.02.22)</span>
+                        </li>
+                        <li>
+                            <span>아르바이트 경력은 기재하지 않습니다.</span>
+                        </li>
+                        <li>
+                            <span>최종 회사에 재직중이면, 퇴사일은 비워 두셔도 됩니다.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <h4>자격/어학 사항</h4>
+
+                <table id="addTableLicenseLanguage">
+                    <thead>
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="display: none;">
+                            <td>
+                                <div id="viewArea" class="wrt_ok_area" style="display: none;">
+                                    <span id="viewAreaInfo"></span>
+                                    <em>
+                                        <button type="button" name="careerList.btnEdit"
+                                            onclick="editRowForLicenseLanguage(this, $('#addTableLicenseLanguage'), 'licenseLanguageList')">수정</button>
+                                        <button type="button" name="careerList.btnDelete"
+                                            onclick="deleteRowForLicenseLanguage(this, $('#addTableLicenseLanguage'), 'licenseLanguageList')">삭제</button>
+                                    </em>
+                                </div>
+                                <div id="inptArea" class="inpt_field">
+                                    <div class="slct_box">
+                                        <a href="#null" class="choice_txt" style="width:130px;" title="자격/어학 구분">
+                                            <span class="">구분</span>
+                                        </a>
+                                        <select name="licenseLanguageList.licenseLanguageTypeCd"
+                                            id="licenseLanguageList.licenseLanguageTypeCd"
+                                            style="width:130px; display: none;" title="자격/어학 구분"
+                                            onchange="changeLicenseLanguageType(this)">
+                                            <option value=""></option>
+                                            <option value="LICENSE">자격</option>
+                                            <option value="LANGUAGE">어학</option>
+                                        </select>
+                                    </div>
+                                    <label for="licenseLanguageList.licenseNm" class="lbl_type cr_inpt_srch">
+                                        <input type="text" name="licenseLanguageList.licenseNm"
+                                            id="licenseLanguageList.licenseNm" onkeydown="showLicenseEvent(this, event)"
+                                            placeholder="자격/면허종류" class="cr_inpt v3" style="width:280px">
+                                        <button type="button" name="licenseLanguageList.btnSearchLicense"
+                                            onclick="showLicenseLayer(this);" class="sp_ico btn_nation"><span
+                                                class="blind">검색</span></button>
+                                        <input type="hidden" name="licenseLanguageList.licenseCd">
+                                    </label>
+                                    <label for="licenseLanguageList.langTypeNm" class="lbl_type cr_inpt_srch">
+                                        <input type="text" name="licenseLanguageList.langTypeNm"
+                                            id="licenseLanguageList.langTypeNm"
+                                            onkeydown="showLanguageEvent(this, 'TYPE', event)" placeholder="언어"
+                                            class="cr_inpt v3" style="width:135px; display: none;">
+                                        <button type="button" name="licenseLanguageList.btnSearchLanguageType"
+                                            onclick="showLanguageLayer(this, 'TYPE');" class="sp_ico btn_nation"
+                                            style="display: none;"><span class="blind">검색</span></button>
+                                        <input type="hidden" name="licenseLanguageList.langTypeCd">
+                                    </label>
+                                    <label for="licenseLanguageList.langTestNm" class="lbl_type cr_inpt_srch">
+                                        <input type="text" name="licenseLanguageList.langTestNm"
+                                            id="licenseLanguageList.langTestNm"
+                                            onkeydown="showLanguageEvent(this, 'TEST', event)" placeholder="시험"
+                                            class="cr_inpt v3" style="width:135px; display: none;">
+                                        <button type="button" name="licenseLanguageList.btnSearchLanguageTest"
+                                            onclick="showLanguageLayer(this, 'TEST');" class="sp_ico btn_nation"
+                                            style="display: none;"><span class="blind">검색</span></button>
+                                        <input type="hidden" name="licenseLanguageList.langTestCd">
+                                    </label>
+                                    <label for="licenseLanguageList.licenseGrdNm" class="lbl_type cr_inpt_srch">
+                                        <input type="text" name="licenseLanguageList.licenseGrdNm"
+                                            id="licenseLanguageList.licenseGrdNm"
+                                            onkeydown="showGradeSearchEvent(this, 'LICENSE', event)" placeholder="등급"
+                                            class="cr_inpt v3" style="width:271px">
+                                        <button type="button" name="licenseLanguageList.btnSearchLicense"
+                                            onclick="showGradeSearchLayer(this, 'LICENSE');"
+                                            class="sp_ico btn_nation"><span class="blind">검색</span></button>
+                                        <input type="hidden" name="licenseLanguageList.licenseGrdCd">
+                                    </label>
+                                    <label for="licenseLanguageList.langGrdNm" class="lbl_type cr_inpt_srch">
+                                        <input type="text" name="licenseLanguageList.langGrdNm"
+                                            id="licenseLanguageList.langGrdNm"
+                                            onkeydown="showGradeSearchEvent(this, 'LANGUAGE', event)" placeholder="등급"
+                                            class="cr_inpt v3" style="width:160px; display: none;">
+                                        <button type="button" name="licenseLanguageList.btnSearchLanguageGrade"
+                                            onclick="showGradeSearchLayer(this, 'LANGUAGE');" class="sp_ico btn_nation"
+                                            style="display: none;"><span class="blind">검색</span></button>
+                                        <input type="hidden" name="licenseLanguageList.langGrdCd">
+                                    </label>
+                                    <label for="licenseLanguageList.score" class="lbl_type">
+                                        <input type="text" name="licenseLanguageList.score"
+                                            id="licenseLanguageList.score" placeholder="점수" class="cr_inpt"
+                                            style="width:100px; display: none; ime-mode:disabled;" maxlength="6">
+                                    </label>
+                                    <label for="licenseLanguageList.takeYmd" class="lbl_type">
+                                        <input type="text" name="licenseLanguageList.takeYmd"
+                                            id="licenseLanguageList.takeYmd" placeholder="취득/응시일" class="cr_inpt"
+                                            style="width:160px" masktype="dateYmd">
+                                    </label>
+                                    <label for="licenseLanguageList.testYmd" class="lbl_type">
+                                        <input type="text" name="licenseLanguageList.testYmd"
+                                            id="licenseLanguageList.testYmd" placeholder="취득/응시일" class="cr_inpt"
+                                            style="width:160px; display: none;" masktype="dateYmd">
+                                    </label>
+                                    <label for="licenseLanguageList.issueOrgNm" class="lbl_type">
+                                        <input type="text" name="licenseLanguageList.issueOrgNm"
+                                            id="licenseLanguageList.issueOrgNm" placeholder="발급기관" class="cr_inpt"
+                                            style="width:170px">
+                                    </label>
+                                    <label for="licenseLanguageList.langOrgNm" class="lbl_type">
+                                        <input type="text" name="licenseLanguageList.langOrgNm"
+                                            id="licenseLanguageList.langOrgNm" placeholder="발급기관" class="cr_inpt"
+                                            style="width:170px; display: none;">
+                                    </label>
+                                    <div id="completeDiv" class="fld_cplt">
+                                        <input type="hidden" name="licenseLanguageList.sStatus" value="X">
+                                        <input type="hidden" name="licenseLanguageList.licenseId" value="">
+                                        <input type="hidden" name="licenseLanguageList.languageId" value="">
+                                        <a href="#null"
+                                            onclick="completeRowForLicenseLanguage($(this).prev().get(0), $('#addTableLicenseLanguage'), 'licenseLanguageList')"><span
+                                                class="sp ico_cplt"></span>완료</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>직무질문 <em>필수</em></h4>
+                <div id="divSelfIntro"></div>
+
+                <div id="divEtcInfo" class="dvid_area">
+                    <h4>병역사항 <em>필수</em></h4>
+                    <div class="inpt_field">
+                        <div class="slct_box" style="width:250px;">
+                            <a href="#null" class="choice_txt">
+
+
+                                <span>병역구분</span>
+
+                            </a>
+                            <select name="military.demobTypeCd" id="military.demobTypeCd"
+                                style="width:250px; display: none;" title="병역복무유형">
+                                <option value=""></option>
+                                <option value="001">만기제대</option>
+                                <option value="010">제대 기타</option>
+                                <option value="006">복무중</option>
+                                <option value="003">병역특례복무만료</option>
+                                <option value="019">병역특례 복무 중(전문)</option>
+                                <option value="020">병역특례 복무 중(산업)</option>
+                                <option value="004">군미필</option>
+                                <option value="030">면제</option>
+                                <option value="031">해당없음</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <h4 class="loc_h5">보훈대상 여부 <em>필수</em></h4>
+                    <div class="chk_area">
+                        <ul>
+                            <li><input type="radio" class="blind" id="applicant.patriotY" name="applicant.patriotYn"
+                                    value="Y" onClick="changePatriot(this.value);"><label for="applicant.patriotY"
+                                    class="btn_chk2 right_margin"><span>대상</span></label></li>
+                            <li><input type="radio" class="blind" id="applicant.patriotN" name="applicant.patriotYn"
+                                    value="N" onClick="changePatriot(this.value);"><label for="applicant.patriotN"
+                                    class="btn_chk2 on"><span>비대상</span></label></li>
+                        </ul>
+                    </div>
+                    <h4 class="loc_h5 v2">장애사항 <em>필수</em></h4>
+                    <div class="inpt_field v3">
+                        <div class="slct_box" style="width:250px;">
+                            <a href="#null" class="choice_txt">
+
+
+                                <span class="selected">해당없음</span>
+
+                            </a>
+                            <select name="handicap.handicapCd" id="handicap.handicapCd"
+                                style="width:250px; display: none;" title="장애구분">
+                                <option value="">해당없음</option>
+                                <option value="003">일반</option>
+                                <option value="001">산재</option>
+                                <option value="002">보훈</option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn_area btn_big_box">
+
+
+                    <a href="#" onclick="saveTemporaryApplication(); return false;" class="btn inquiry">임시저장</a>
+                    <a href="#" onclick="showPreviewApplication(); return false;"
+                        class="btn inquiry btn_center">미리보기</a>
+                    <a href="#" onclick="submitApplication(); return false;" class="btn recruit">지원하기</a>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</body>
+
+</html>
