@@ -53,7 +53,7 @@ title2.onclick = handleTitleClick2;
 
 // document가 아닌 window 객체에 이벤트 적용시키기 - 웹페이지의 창 사이즈를 줄이거나 늘리면 배경색이 노락색로 됨.
 function handleWindowResize() {
-    document.body.style.backgroundColor = 'yellow'; // document.다음에는 body나 title, head만 올 수 있다. 다른 하위 요소들은 (div, h1 등) querySelector와 같은 메소드를 통해서만 불러올 수 있다.
+    document.body.style.backgroundColor = 'rgb(235, 235, 235)'; // document.다음에는 body나 title, head만 올 수 있다. 다른 하위 요소들은 (div, h1 등) querySelector와 같은 메소드를 통해서만 불러올 수 있다.
 }
 window.addEventListener('resize', handleWindowResize);
 

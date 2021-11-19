@@ -1,0 +1,13 @@
+.textYellow{
+    color: goldenrod ;
+}
+.borderRed{
+    border: 1px solid red ;
+    padding: 5px;
+    width: 320px;
+}
+.borderGreen{
+    border: 1px solid forestgreen;
+    padding: 5px;
+    width: 320px;
+}
