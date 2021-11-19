@@ -1,0 +1,22 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+.backgroundYellow{
+    background-color: goldenrod;
+}
+.backgroundBlue, body{
+    background-color: lightseagreen;
+}
+.backgroundPurple{
+    background-color: mediumpurple;
+}
+
+.fontWhite{
+    color: #fff;
+}
+h1{
+    margin-top: 20px;
+    margin-left: 10px;
+}
