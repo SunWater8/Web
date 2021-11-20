@@ -8,13 +8,13 @@ const SMALL_SCREEN = "smallScreen";
 
 function handleResize() {
   const width = window.innerWidth;
-  if (width > 1000) {
+  if (width > 1000) { //가장 클 때
     body.classList.add(BIG_SCREEN);
     body.classList.remove(MEDIUM_SCREEN);
-  } else if (width <= 1140 && width >= 700) {
+  } else if (width <= 1140 && width >= 700) { //중간 클때
     body.classList.add(MEDIUM_SCREEN);
     body.classList.remove(BIG_SCREEN, SMALL_SCREEN);
-  } else {
+  } else {//가장 작을 때
     body.classList.remove(MEDIUM_SCREEN);
     body.classList.add(SMALL_SCREEN);
   }
