@@ -4,24 +4,23 @@ const inputGuessNumber = document.querySelector('#number-form h3 input');
 const chosenNumMsg = document.querySelector('#resultMsg p:first-child');
 const result = document.querySelector('#resultMsg p strong');
 
-function handleSubmitBtn(event){
+function handleSubmitBtn(event) {
     event.preventDefault();
     const genNum = parseInt(inputGeneratedNumber.value);
     const guessNum = parseInt(inputGuessNumber.value);
 
-    if(guessNum <= genNum && guessNum >= 0) {
-        console.log('적절한 범위임');
-        const machineNum = Math.floor(Math.random()*genNum);
-        chosenNumMsg.innerText = `You chose: ${guessNum}, the machine chose: ${machineNum}`;
-        
-        if(guessNum == machineNum){
+    if (guessNum <= genNum && guessNum >= 0) {
+        const machineNum = Math.floor(Math.random() * genNum);
+        chosenNumMsg.innerText = `You chose: ${guessNum}, the machine chose: ${machineNum}.`;
+
+        if (guessNum == machineNum) {
             result.innerText = "You win!";
-        }else{
+        } else {
             result.innerText = "You lost!";
         }
-    }else{
+    } else {
         alert('범위를 벗어났음');
-    }
+    } 
 
 }
 
