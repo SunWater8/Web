@@ -32,7 +32,7 @@ function paintTodo(newTodo) {
 function deleteTodo(e) {
     //삭제할 li
     const li = e.target.parentElement;// 삭제버튼을 클릭한 요소를 선택
-    li.remove(); // 
+    li.remove(); // 선택한 요소의 li만 제거하기
 }
 
 //submit을 하면 밑에 리스트에 표시됨. - 동작 과정 : 입력한 to do 값을 localStorage에 변수화 하여 배열의 요소로 저장을 하고, 입력 란을 초기화 시킴.
