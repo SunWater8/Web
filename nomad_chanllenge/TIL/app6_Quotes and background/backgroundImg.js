@@ -6,6 +6,7 @@ console.log(chosenImage);
 //html 에 <img src="image/1.jpg"/> 와 같은 태그를 넣는 것과 같은 기능을 js에서 만들기.
 const bgImage = document.createElement("img"); // img 태그 생성
 bgImage.src = `images/${chosenImage}`; // img에 src 내용 생성
+bgImage.style.width = '100%';
 console.log(bgImage);
 
 document.body.appendChild(bgImage); // body에 사진 넣기.
