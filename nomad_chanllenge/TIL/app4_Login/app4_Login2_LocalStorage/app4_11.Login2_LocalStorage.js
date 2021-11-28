@@ -16,8 +16,6 @@ const DISPLAY_HIDDEN = 'display_none';
 const USERNAME_KEY = 'username';
 const savedUsername = localStorage.getItem(USERNAME_KEY);
 
-
-
 function submitUsername(username) {
     greeting.innerText = `Hello! ${username}`;
     greeting.classList.remove(DISPLAY_HIDDEN);
@@ -26,6 +24,10 @@ function submitUsername(username) {
 function handleLoginSubmit(event) {
     event.preventDefault();
     const username = loginInput.value;
+    if(username == ""){
+        alert('You didn\'t write your name');
+        return;
+    }
     localStorage.setItem(USERNAME_KEY, username);
     console.log('username : ', username);
 
