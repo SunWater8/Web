@@ -40,8 +40,10 @@ function paintTodo(newTodo) {
 function deleteTodo(e) {
     //삭제할 li
     const li = e.target.parentElement;// 삭제버튼을 클릭한 요소를 선택
-    console.log(li.id);
-    li.remove(); // 
+    li.remove(); // 선택한 요소의 li만 제거하기
+    //7.8 - 1
+    toDos = toDos.filter((toDo) => toDo.id !== parseInt(li.id)); // parse하지 않은 li.id의 type은 string이므로 toDo.id와의 타입이 같지 않아 비교가 되지 않는 문제가 발생한다. 따라서 parseInt가 필요.
+    saveToDos(); //삭제 후 한 번 더 localstorage의 배열을 정리해준다.
 }
 
 //submit을 하면 밑에 리스트에 표시됨. - 동작 과정 : 입력한 to do 값을 localStorage에 변수화 하여 배열의 요소로 저장을 하고, 입력 란을 초기화 시킴.
@@ -50,7 +52,7 @@ function handleTodoSubmit(e) {
     const newTodo = inputToDo.value; // to do 입력란의 값을 변수화 하기
     inputToDo.value = ""; // 입력값 초기화 하기
     
-    //7.6 - 1 // saving to do (배열의 요소로 저장).. 하는 것이 아니고 ! todo 삭제할 때를 위해 Object로 하여야 함.
+    //7.6 - 1 // saving to do (배열의 요소를 object 형태로 저장) todo 삭제할 때를 위해 string이 아닌 Object로 하여야 함.
     const newTodoObj = {
         text: newTodo,
         id:Date.now()
@@ -123,5 +125,22 @@ todos.filter(sFilter);
 const todoss = [{text:"blblbl"}, {text:"sososo"}];
 function ssFilter(todo){return todo.text !== "blblbl"}
 todoss.filter(ssFilter);
+
+*/
+
+
+
+
+/* 7.8 Deleting to Dos 3 */
+
+/* filter와 => 이용한 함수 연습
+
+//console에 작성해보기
+const arr = [1,2,3,4];
+arr.filter(item => item > 2); // (2보다 큰 수 필터링 하기) [3,4]
+const newArr = arr.filter( item => 2); // 필더링 한 배열을 newArr에 넣기
+arr // [1,2,3,4]
+newArr // [3,4]
+
 
 */
