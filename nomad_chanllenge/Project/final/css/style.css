@@ -1,0 +1,119 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+#main_wrap{
+    width: 500px;
+    height: 1000px;
+    margin : 400px auto;
+    text-align: center;
+}
+/* weather */
+#weather{
+    color:sandybrown;
+    font-weight: bolder;
+    font-size: 14.5px;
+    
+}
+/* clock */
+#clock{
+    color:white;
+    text-align: center;
+    font-size: 70px;
+    font-weight: bold;
+}
+
+.display_none{
+    display:none;
+}
+
+/* login */
+#login-form{
+    text-align: center;
+    margin:50px 0;
+}
+#login-form input[type=text]{
+    width: 200px;
+    height: 30px;
+    padding:3px 8px;
+    border:none;
+    background:none;
+    border-bottom:2px solid burlywood;
+    color: white;
+    font-size:20px;
+    outline: none;
+}
+#login-form input[type=text]::placeholder{
+    font-size:20px;
+    color:#aaa;
+    text-align: center;
+}
+
+#login-form input[type=submit]{
+    margin-left : 20px;
+    padding:8px 10px;
+    background-color: white;
+    border:none;
+    border-radius: 10px;
+    font-weight: bolder;
+}
+
+/* a message after login */
+#content{
+    text-align: center;
+}
+#content h2{
+    color: #ddd;
+    text-align: center;
+    margin:10px auto;
+}
+
+/* to dos */
+#title{
+    color:rgb(21, 129, 129);
+    margin:30px auto 0 auto;
+    font-size:23px;
+    font-weight:bold;
+
+}
+#toDoForm input{
+    width: 250px;
+    height: 30px;
+    padding:3px 8px;
+    border:none;
+    background-color:rgba(41, 41, 41, 0.493);
+    border-bottom:2px solid burlywood;
+    color: white;
+    font-size:18px;
+    outline: none;
+    margin : 15px auto;
+}
+#toDoForm input::placeholder{
+    color: #aaa;
+}
+
+#toDoForm+ul{
+    width: 250px;
+    height: 30px;
+    padding:3px 8px;
+    margin : 15px auto;
+    line-height:30px;
+    background-color:rgba(41, 41, 41, 0.493);
+    border-radius: 8px;
+    color:whitesmoke;
+    text-align: left;
+
+}
+#toDoForm+ul li{
+    list-style: none;
+    margin-bottom: 5px;
+}
+#toDoForm+ul span{
+    margin-right: 10px; 
+}
+#toDoForm+ul button{
+    background: none;
+    border:none;
+}
+
