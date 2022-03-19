@@ -1,0 +1,17 @@
+
+:root {
+    font-size: 12px;
+}
+html{
+    height:100%;
+}
+body{
+    height:100%;
+}
+p{
+    font-size:1.5rem;
+    /* width:100vw; */ 
+    width:100%;  /* body가 내어준 공간에서의 100% */
+    height: 50%;
+    background-color: coral;
+}

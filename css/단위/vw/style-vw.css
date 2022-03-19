@@ -1,0 +1,20 @@
+
+:root {
+    font-size: 12px;
+}
+/* vw 에서는 html과 body의 height 설정을 100%로 
+지정 안해도 됨. 
+
+html{     
+    height:100%;
+}
+body{
+    height:100%;
+} */
+p{
+    font-size:1.5rem;
+    /* width:100vw; */ 
+    width:100%;  /* body가 내어준 공간에서의 100% */
+    height: 50vh;
+    background-color: coral;
+}

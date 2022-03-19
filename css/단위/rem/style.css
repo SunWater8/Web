@@ -1,0 +1,28 @@
+
+:root {
+    font-size: 12px;
+}
+
+#sentence p{
+    width: 15rem;
+    background-color: darkmagenta;
+    color:white;
+}
+
+.box_px {
+    width: 160px;
+    height: 160px;
+    background-color: cadetblue;
+}
+
+.box_em { 
+    width : 10em; /* body의 font-size인 12px과 10을 곱한 값. (120px이 된다.) */
+    height: 10em;
+    background-color: burlywood;
+}
+
+.box_rem {
+    width : 10rem;/* root의 font-size인 16px과 10을 곱한 값 (160px이 된다.) */
+    height: 10rem;
+    background-color: yellowgreen;
+}
