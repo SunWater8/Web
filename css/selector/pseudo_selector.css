@@ -1,0 +1,31 @@
+/* 모든 링크가 달린 글자에 밑줄 없애고 색 바꾸기 */
+:link {   /* :link 대신 a:link, a 를 써도 상관 없다. */
+    text-decoration: none;
+    color:blueviolet;
+    
+    /* tab키를 눌렀을 때 생기는 아웃라인의 효과 주기 순서1 - 
+    아웃라인을 아예 없애면 안된다. 몸이 불편한 사람에게는 링크 따라 아웃라인이 있는 것이 필요하기 때문임. */
+    outline: none;
+}
+
+/* 링크에 마우스를 올렸을 때 효과주기 */
+a:hover{
+    color:chartreuse;
+}
+/* 링크를 누르는 순간 효과 주기 */
+a:active {
+    background-color: blue;
+    color:aliceblue;
+}
+/* 방문한 history가 있는 링크에 효과 주기 */
+a:visited{
+    color:silver;
+}
+
+/* tab키를 눌렀을 때 생기는 아웃라인의 효과 주기 순서2 */
+a:focus {
+    border:2px solid steelblue;
+
+}
+
+

@@ -1,0 +1,28 @@
+/* "css 기본 문법"이라는 글자 앞이나 뒤에 before라는 글자를 더 쓰고 싶을 때 */
+h1:before{                  /* tag가 아닌 tag가 감싸고 있는 content를 기준으로 한다는 것이 포인트이다. */
+    content: 'before '; 
+    color:red;
+}
+/* 브라우저에서 전체를 드래그 해보면 추가된 before 글자는 드래그가 안됨. 가상으로 만들어져서 실체가 없기 때문. */
+
+
+/*  "css 기본 문법" 글자 뒤에 파란색 after 라는 글자 추가하기.*/
+h1:after{
+    content:' after';
+    color:blue;
+}
+
+/* 'css basic grammar' 글자 앞에 빨간색 네모 추가하기. */
+h2:before{
+    content:'';
+    display:inline-block;
+    width:10px;
+    height:10px;
+    background-color: red;
+    margin-right:20px;
+}
+
+
+
+
+
