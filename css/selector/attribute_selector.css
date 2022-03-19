@@ -1,0 +1,18 @@
+/* 목록에 있는 글자의 밑줄 없애기 */
+[target] {
+    text-decoration: none;
+}
+/* a태그를 앞에 뭍여도 됨. */
+a[target] {
+    background-color: beige;
+}
+
+/* target이 _blank인 글자의 색을 빨간색으로 입히기 */
+[target="_blank"]{
+    color : red;
+}
+
+/* class 가 link로 시작하는 글자에만 목록 표시 없애주기 */
+[class^="link"] {
+    list-style: none;
+}
