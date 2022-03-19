@@ -1,0 +1,25 @@
+html{
+    background: #f5f7f8;
+    padding: 20px;
+}
+/* typography */
+h1{
+    margin:0;
+    font-size:20px;
+}
+
+.card span{
+    color:#aaa;
+    font-size:13px;
+    font-weight:bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin:2em 0 0 0;
+}
+
+.band{
+    width: 90%;
+    max-width:1240px;   
+    margin: 0 auto;
+}
+
