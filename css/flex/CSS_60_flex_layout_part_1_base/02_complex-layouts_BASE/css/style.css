@@ -8,7 +8,26 @@ html, body {
 h1,h2,h3,h4,h5,h6 {
   font-family: Arial, sans-serif;
 }
+.container {
+  display: flex; 
+}
+.main-content{
+  flex: 3; /* 3/4의 비율 갖기*/
+}
 
+.sidebar {
+  flex: 1; /* 1/4의 비율 갖기*/
+  display: flex;
+  
+  /* 방법 1 */
+  flex-wrap: wrap; /*넘치면 아래로 내리기*/
+  align-content: space-between; /* 줄 사이 간격을 동일하게 하기*/
+
+  /* 방법 2*/
+  /* flex-direction: column; 90 도 옆으로 돌리기. 그러면 열 모양이 줄 모양으로 바뀜
+  justify-content: space-between;  */
+
+}
 .main-content .panel img {
   float: left;
   margin: 0 10px 0 0;

@@ -6,13 +6,15 @@ body { font-family: Arial; }
   list-style: none;
   padding-left: 0;
   height: 60px;
-}
+  display: flex; /* 부모인  ul에 flex를 해줘야 li가 동일한 비율이 될 수 있다.*/
+  justify-content: space-evenly;
+  /* justify-content: space-around; */ 
 
+}
 .main-nav .menu li {
   padding: 4px;
   padding-top: 14px;
-  float: left;
-  margin: 0 30px;
+  border: 1px solid;
 }
 
 .main-nav .fa {
