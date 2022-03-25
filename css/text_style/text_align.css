@@ -2,3 +2,46 @@ body {
     font-family: '돋움', dotum, helvetica, sans-serif;
     font-size: 12px;
 }
+/*** 다루게 될 text style 속성 1
+font-weight
+text-decoration
+text-align
+*/
+
+h1{
+    font-size: 3em;
+    font-weight : 900;
+    /* text-decoration: line-through; */
+    text-decoration: overline;
+
+}
+
+/* 이탤릭체로 강조한 것을 바로 세운 글씨체로 바꾸기 */
+em, address {
+    font-style: normal;
+}
+
+/* 이탤릭체 효과 주기 */
+del {
+    font-style: oblique; /* oblique = italic */
+}
+
+/* 기본적으로 왼쪽 정렬로 되어있는 것을 다른 정렬로 바꿔보기 */
+.left {
+    text-align: left;
+}
+.center {
+    text-align: center;
+}
+.right {
+    text-align: right;
+}
+
+
+/* span 태그는 일반적으로 inline 이라서 줄바꿈이 아니고 한 줄 안에 다 들어간다. */
+.etc {
+    text-align: right;
+}
+
+
+
