@@ -13,6 +13,7 @@ h1{
     font-weight : 900;
     /* text-decoration: line-through; */
     text-decoration: overline;
+    letter-spacing: 16px;    /* px, em, rem  사용 가능 */
 
 }
 
@@ -29,9 +30,11 @@ del {
 /* 기본적으로 왼쪽 정렬로 되어있는 것을 다른 정렬로 바꿔보기 */
 .left {
     text-align: left;
+    word-spacing: 10px;
 }
 .center {
     text-align: center;
+    line-height: 27px;
 }
 .right {
     text-align: right;
@@ -44,4 +47,19 @@ del {
 }
 
 
+/*** 다루게 될 text style 속성 2
+글의 간격 : letter-spacing, word-spacing, line-height
 
+letter-spacing : 글자 하나 하나 사이 사이의 간격을 조정함. 
+word-spacing : 단어와 단어 사이의 간격을 조정함.
+line-height
+*/
+
+/* 빨간 박스 안의 가운데에 위치하도록 하기. */
+h2 {
+    width:300px;
+    border:2px solid red;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+}
