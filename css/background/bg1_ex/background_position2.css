@@ -1,0 +1,12 @@
+.html5news {
+    width:800px; 
+    height:300px; 
+    padding:10px;
+    border:2px solid green;
+    margin:0 auto;
+    background:url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/485050/layout2.jpg) no-repeat;
+    background-position: 50px 50px;
+  }
+  .html5news p{
+    margin-left: 300px;
+  }

@@ -1,0 +1,30 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+li a{
+	background-image : url(img/tab_sprites.gif);
+	width: 108px;
+	height: 32px;
+	display: block;
+	text-indent: -9999em;
+}
+
+li:nth-child(2) a{
+	background-position: -107px 0;
+}
+li:nth-child(3) a{
+	background-position: -214px 0;
+}
+
+/* 마우스를 올렸을 때 빨간 배경 */
+li:nth-child(1) a:hover{
+	background-position: 0 -32px;
+}
+li:nth-child(2) a:hover{
+	background-position: -107px -32px;
+}
+li:nth-child(3) a:hover{
+	background-position: -214px -32px;
+}
