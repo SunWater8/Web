@@ -22,4 +22,24 @@ h6 { font-size: 22px; }
   color: white;
   background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/409269/banner-flowers.jpg') top left/cover no-repeat;
   height: 300px;
+  
+  /* 방법1. position  */
+  /* position : relative; */
+  
+  /* 방법2. flex */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 5px solid seagreen;
+}
+
+.banner-text {
+  
+  /* 방법1. position  */
+  /* position: absolute;
+  top: 50%; left:50%; transform: translate(-50%, -50%); */
+  
+  border: 5px solid slateblue;
+  
 }
