@@ -1,6 +1,82 @@
+/* h1은 block 요소라서 한 줄을 다 차지. */
 h1 { 
-
+    background-color: darkkhaki;
+    width: 300px;
+    display: inline;
 }
-span{
 
+/* span은 inline 요소라서 자기 크기 만큼만 차지 */
+span{
+    background-color: darkkhaki;
+    width: 300px; /*inline 요소에 width 속성만 줘서는 적용이 되지 않는다. inline이 아닌 block으로 성격을 바꿔줘야 한다.*/
+    display: block;
+    
+}
+
+
+/* page nation 의 설정 - 화면의 가운데에 페이지들이 있고 각각의 페이지 숫자마다 사각형 배경으로 만들어주기 (a 태그의 페이지 숫자들을 가운데로 옮겨주기 )*/
+/* p태그는 block 요소이고, a 태그는 inline 요소이다. */
+p{
+    text-align: center;
+}
+p a {
+    background-color: powderblue;
+    text-decoration: none;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    color:chocolate;
+    font-weight: bold;
+}
+
+
+/* 화면에 안보이게 하기. */
+.hidden {
+    display: none;
+}
+.hide {
+    visibility: hidden;
+}
+
+
+/* list가 아니여도 list 처럼 보이게 하기.  */
+div>i {
+    display: list-item;
+}
+
+/* div로 table 처럼 만들기 - 부모 태그에 적용시켜야 함. */
+.services {
+    display: table;
+    width: 800px;
+    border: 1px solid springgreen;
+}
+
+.services div {
+    display: table-cell;
+
+    /* 부모가 가진 너비 안에서 반씩 자리차지 하기 */
+    width: 50%;
+}
+
+
+.overflow {
+    text-align: center;
+    background-color: silver;
+    border: 1px solid;
+    height: 100px;
+
+    /* 설정한 높이 크기보다 넘치면 넘치는 글씨들을 안보이게 하기. */
+    /* overflow: hidden; */
+
+    /* scroll 넣기 */
+    /* overflow: scroll; */
+
+    /* 넘치는 방향으로만 scroll 생기게 하기. */
+    overflow: auto;
+
+    /* overflow 의 기본 속성은 visible 이다. 넘쳐도 보여주도록 하는 기능.
+    overflow: visible;
+    */
 }
