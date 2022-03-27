@@ -5,3 +5,27 @@ body{
 h1{
 	border: 1px solid;
 }
+
+/* 사진 아래에 보였던 공백을 사라지게 하기 */
+img{
+	vertical-align:top;
+}
+
+
+/*
+
+- vertical align 수직 정렬에 대해서 -
+
+이 속성은 inline 요소끼리 위, 아래 간격을 맞춤.
+baseline, sub, super, top, text-top, middle, bottom, text-bottom 이 있다.
+
+baseline    : 글자의 baseline위치에 맞춘다.
+sub         : 부모요소의 아래 첨자 위치에 맞춘다.
+super       : 부모요소의 위 첨자 위치에 맞춘다.
+top         : 부모요소의 상단에 맞춘다.
+text-top    : 부모요소의 글꼴 요소의 상단 위치에 맞춘다.
+middle      : 부모요소의 소문자를 기준으로 중간에 맞춘다.
+bottom      : 부모요소의 아래쪽에 맞춘다.
+text-bottom : 부모요소의 글꼴의 아래쪽에 맞춘다.
+
+*/

@@ -29,3 +29,27 @@ ul {
 ul>li{
     margin:9px 0;
 }
+
+ul>li>span{
+    float: right;
+    font-weight: bold;
+}
+
+ul>li>span.check1 {
+    color: coral;
+}
+ul>li>span.check2 {
+    color: yellowgreen;
+}
+ul>li>span.check3 {
+    color: deepskyblue;
+}
+ul>li>span.check4 {
+    color: crimson;
+}
+ul>li>span.check5 {
+    color: mediumpurple;
+}
+ul>li>span.check6 {
+    color: rgb(236, 221, 0);
+}

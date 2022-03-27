@@ -1,0 +1,19 @@
+h1{
+    border: 1px solid;
+    
+    /*글씨가 오른쪽으로 20px 옮겨지는 들여쓰기하기. */
+    text-indent:20px; 
+    /* text-indent: -20px;   내어쓰기는 ( - )마이너스 부호 붙이면 됨.  */
+    /* text-indent: -9999em; 화면에서 아예 사라짐. */
+}
+
+/* IR 기법 : Image Replacement (글씨 대신 로고 사진으로 대체하는 기법) */
+h2 a{
+    background-image: url(img/logo.png);
+    width:275px;
+    height: 183px;
+    display: block; /*기본으로 inline 으로 설정되었기 때문에 block으로 해야 가로 세로 길이를 적용시킬 수 있다.*/
+
+    /* 글씨를 안보이게 하도록 하기. */
+    text-indent: -9999em; 
+}

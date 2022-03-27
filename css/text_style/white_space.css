@@ -2,3 +2,30 @@ body{
 	font-family: '돋움',dotum,helvetica,sans-serif;
 	font-size: 12px;
 }
+
+.area{
+    width:300px;
+    background-color: silver;
+    margin-bottom:50px;
+}
+
+/* nowrap : 글씨를 아래쪽으로 쌓지 않고 옆으로 쭉 가도록 하기. */
+.nowrap {
+    height: 40px;
+    white-space: nowrap;
+}
+
+/* pre (preserve) : 내가 만든 공백 만큼 표현이 됨. 들여쓰기처럼 글의 앞에도 공간이 생김. */
+.pre {
+    white-space: pre;
+}
+
+/* pre-wrap : pre 였을 때, 글이 길어서 삐져나온 것을 아래로 쌓도록 함 */
+.pre-wrap{
+    white-space: pre-wrap;
+}
+
+/* pre-line : pre였을 때, 들여쓰기한 공간을 아예 없앨 수 있다.  */
+.pre-line{
+    white-space: pre-line;
+}

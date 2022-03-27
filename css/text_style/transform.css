@@ -7,3 +7,20 @@ body {
     width: 400px;
     font-family: verdana, sans-serif;
 }
+
+/* text 모양 변형 시키기  */
+h1.uppercase {
+    text-transform: uppercase; /*  첫 글자만 대문자인 문장 -> 모든 글자를 대문자로 변형*/
+}
+
+h1.lowercase {
+    text-transform: lowercase; /* 첫 글자만 대문자인 문장 -> 모든 글자를 소문자로 변형*/
+}
+
+h1.capitalize {
+    text-transform: capitalize; /* 모두 소문자로 된 문장 -> 첫 글자만 대문자로 */
+}
+
+h1.smallcaps {
+    font-variant: small-caps;  /* 첫 글자만 대문자인 문장 -> 모든 글자들이 대문자이되, 첫 글자를 제외하고 작은 크기로 변형 */
+}
