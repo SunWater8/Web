@@ -1,0 +1,36 @@
+.html5news-slide {
+    width:800px; 
+    height:300px; 
+    padding:10px;
+    border:2px solid green;
+    margin:0 auto; 
+
+    position: relative;
+}
+
+.html5news-slide img {
+    float:left;
+}
+
+.controls a {
+    display:block; 
+    white-space:nowrap; 
+    background:#333; 
+    text-align:center; 
+    line-height:50px; 
+    color:#fff;  
+    
+    position: absolute;
+    top: calc(50% - 25px);
+}
+
+.prev {
+    right: 100%;
+}
+
+.next {
+    left: 100%;
+}
+
+
+  

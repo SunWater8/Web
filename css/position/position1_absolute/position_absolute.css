@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    vertical-align: top;
+}
+
+.box {
+    border:1px solid;
+    /* absolute로 설정하면 다른 요소들이 알아보지 못하고 실체가 없는 요소가 되어 버린다. 
+        그리고, left, right, bottom, top 의 기준은 body이다.*/
+    position:absolute;
+    left: 100px;
+    top: 100;
+    /* 
+    값을 마이너스로 설정하면 화면 바깥에 위치하게 된다. 
+    right: -50px;
+    bottom: -30px;
+    */
+}

@@ -1,0 +1,29 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    vertical-align: top;
+}
+
+/* relative로 설정을 하게 되면,  자기 원래 자리 위치를 기준으로 하여 수치에 따라 이동하게 된다. 실체는 있으나 가상으로 움직였다는 것이 포인트이다.  
+    만일 글씨도 같이 밀리도록 하고 싶었다면 margin을 쓰면 된다.*/
+
+.box-re {
+    position: relative;
+    padding: 10px;
+
+}
+.a {
+    background: red;
+    top: 50px;
+    left: 50px;
+}
+
+.b {
+    background: blue;
+    top:50px;
+    left: 50px;
+}
+

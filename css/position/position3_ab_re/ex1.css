@@ -1,0 +1,40 @@
+body{
+    padding-top:100px;
+}
+
+.container {
+    width:600px; 
+    height:300px; 
+    margin:0 auto; 
+    background:yellow; 
+    position: relative;
+}
+
+.box{
+    width:100px; 
+    height:100px; 
+    color:#fff; 
+    font-weight: bold; 
+    text-transform: uppercase;
+    position: absolute;
+
+}
+
+.a { 
+    background:red;
+    top: 100px;
+    /* right:550px 은 left: -50px 과 같다. a의 박스 크기를 모를 때 유용하다.  */
+    right: 550px;
+}
+.b { 
+    background:green;
+    top: 100px;
+    right: 250px;
+}
+.c { 
+    background:blue; 
+    /* left:100% 는 right:-100px 과 같다. container 크기를 모를 때 유용하다.  */
+    /* left: 100%; */
+    right: -100px;
+    bottom: 100px  ;
+}

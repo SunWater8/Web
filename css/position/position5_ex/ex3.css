@@ -1,0 +1,42 @@
+*{
+    margin:0; 
+    padding:0;
+}
+.mainmenu {
+    background:#333; 
+    padding-left:40px;
+
+    position: relative;
+}
+.mainmenu ul {
+    background:#666; 
+    
+    display: none;
+}
+
+.mainmenu:after {
+    content:''; 
+    display:block; 
+    clear:both; 
+}
+.mainmenu > li {
+    float:left; 
+    list-style:none;
+    margin-right:30px; 
+    line-height:35px;
+    color:#fff; 
+}
+.mainmenu > li ul li {
+    padding:0 10px; 
+    white-space:nowrap;
+}
+
+.mainmenu>li:hover ul{
+    
+    position: absolute;
+    top: 100%;
+    display: block;
+
+}
+
+

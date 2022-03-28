@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    vertical-align: top;
+}
+
+.box-ab {
+    position: absolute;
+    padding: 10px;
+
+}
+.a {
+    background: red;
+    top: 50px;
+    left: 50px;
+}
+
+.b {
+    background: blue;
+    top:100px;
+    left: 100px;
+}
+
