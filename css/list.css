@@ -30,7 +30,18 @@ ul>li{
     margin:9px 0;
 }
 
-ul>li>span{
+.detail {
+    background-color: rgb(241, 241, 241);
+    border-radius: 8px;
+    margin: 10px 10px 20px 60px;
+    padding: 5px 10px;
+    color: rgb(84, 150, 180);
+    font-size: 0.85em;
+    display: none;
+}
+
+
+ul>li>span.done{
     float: right;
     font-weight: bold;
 }
@@ -42,14 +53,14 @@ ul>li>span.check2 {
     color: yellowgreen;
 }
 ul>li>span.check3 {
-    color: deepskyblue;
-}
-ul>li>span.check4 {
-    color: crimson;
-}
-ul>li>span.check5 {
     color: mediumpurple;
 }
+ul>li>span.check4 {
+    color: rgb(149, 213, 221);
+}
+ul>li>span.check5 {
+    color: rgb(207, 193, 0);
+}
 ul>li>span.check6 {
-    color: rgb(236, 221, 0);
+    color: crimson;
 }

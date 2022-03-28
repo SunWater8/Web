@@ -1,0 +1,31 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+h2{
+    background-color: silver;
+    /* float을 left나 right로 지정하면 한 block을 차지하던 것이 마치 inline-block 처럼 해당 요소 내용 만큼의 크기만 갖고, 해당 방향으로 이동한다.
+        그리고 hr이 위로 올라간다. */
+    /* float: left; */
+    /* float: right; */
+}
+hr{
+    margin-bottom: 30px;
+
+}
+
+/* 이미지에 float을 설정하면 뒤따라오는 요소들이 달려들어 감싼다. */
+.thumb {
+    float: right;
+}
+
+/* 글자가 깨지더라도 꽉꽉 채우게 하기 */
+.content p {
+    word-break: break-all;
+}
+
+/* br을 입력한 다음의 paragraph 부터는 사진 아래로 왔으면 할 때 float을 설정한 방향 (left/right)에 따라 clear 설정하면 된다. */
+.break {
+    clear: right;
+}

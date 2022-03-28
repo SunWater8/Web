@@ -1,0 +1,25 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+img {
+    vertical-align: top;
+}
+
+
+/* 3개의 이미지를 가로로 줄을 세우려고 하는데 마지막에 오는 요소에 clear를 걸어서 더이상 들러붙지 않도록 하여야 한다. */
+.portfolio {
+    background-color: green;
+}
+.portfolio:after {
+    content:'';
+    display: block;
+    clear: both;
+
+}
+
+.portfolio p{
+    border: 1px solid;
+    float: left;
+}

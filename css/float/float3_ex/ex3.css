@@ -1,0 +1,40 @@
+* {
+    margin:0; 
+    padding:0;
+}
+header {
+    background:#ccc;
+}
+.container {
+    width:960px; 
+    margin:0 auto;
+    /* height:60px;  list에만 line-height 주면 된다. 굳이 height를 초기에 설정할 필요가 없음.*/
+}
+
+header::after{
+    content:'';
+    display: block;
+    clear: both;
+}
+.container a{
+    color: black;
+    text-decoration: none;
+}
+
+
+.container h1{
+    float:left;
+}
+nav {
+    float:right;
+}
+ul li{
+    line-height: 60px;
+    vertical-align: center;
+    float:left;
+    list-style: none;
+    margin-right: 20px;
+}
+ul li:last-child {
+    margin-right: 0;
+}
