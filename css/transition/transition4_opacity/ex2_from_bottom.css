@@ -1,0 +1,35 @@
+* {
+    margin:0;
+    padding:0;
+}
+
+ul li  {
+    width: 400px;
+    height:200px;
+
+    margin: 10px;
+    position : relative;
+
+    overflow: hidden;
+}
+
+ul li span {
+    position: absolute;
+
+    left:0;
+    top:100%;
+    right:0;
+    bottom:-100%;
+
+    background: rgba(0,0,0,0.8);
+    color:#fff;
+    line-height: 200px;
+    text-align: center;
+
+    transition: 0.5s;
+}
+
+li:hover span{
+    top: 0;
+    bottom: 0;
+}

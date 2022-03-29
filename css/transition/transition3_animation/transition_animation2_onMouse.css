@@ -1,0 +1,26 @@
+* {
+    margin:0;
+    padding:0;
+}
+/* .red_box 위에 마우스를 올리면 애니메이션이 작동하도록 하기. */
+.red_box {
+    width: 100px;
+    height: 100px;
+    background-color: red;
+}
+.wrapper {
+    width: 100%;
+    height:300px;
+    /* border: 1px solid; */
+}
+.wrapper:hover .red_box {
+    animation: change_color 3s 0.3s ease 3 forwards;
+
+}
+@keyframes change_color {
+    0% {background-color: mediumpurple;}
+    25% {margin: 0 0 0 200px; background-color: darkcyan;}
+    50% {margin: 200px 0 0 200px;  background-color: gold;}
+    75% {margin:200px 0 0 0; background-color: coral;}
+    100% {margin: 0 0 0 0; background-color: darkgreen;}
+}

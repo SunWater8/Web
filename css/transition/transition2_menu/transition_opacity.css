@@ -1,0 +1,43 @@
+*{
+    margin:0; 
+    padding:0;
+}
+.mainmenu {
+    background:#333; 
+    padding-left:40px;
+}
+.mainmenu ul {
+    background:#666; 
+    /* display: none; */
+    position: absolute;
+    list-style: none;
+    opacity:0;
+    transition: opacity 0.5s; 
+
+    /* 안보이는 sub menu 위에 마우스를 올려도 투명도가 없어지는 것을 막기 위한 방법. 하지만 메뉴에서 마우스가 나가버리면 sub menu가 다시 사라져서 선택할 수 없게 됨. 
+    hover 한 곳에 auto로 마우스 포인터 이벤트를 설정해주면 해결할 수 있다.*/
+    pointer-events: none;
+}
+.mainmenu:after {
+    content:''; 
+    display:block; 
+    clear:both; 
+}
+.mainmenu > li {
+    float:left; 
+    list-style:none;
+    margin-right:30px; 
+    line-height:35px;
+    color:#fff; 
+}
+.mainmenu > li ul li {
+    padding:0 10px; 
+    white-space:nowrap;
+}
+
+.mainmenu>li:hover ul {
+    /* display: block; */
+    opacity: 1;
+    pointer-events: auto;
+}
+

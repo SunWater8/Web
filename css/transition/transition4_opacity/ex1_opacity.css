@@ -1,0 +1,34 @@
+li{
+    list-style:none; 
+    width:400px; 
+    height:200px;  
+    position: relative;
+    margin-bottom: 10px;
+} 
+img{
+    vertical-align: top;
+}
+figcaption {
+    position:absolute;
+
+    top:0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    color:white;
+    background: rgba(0,0,0,0.8);
+
+    text-align: center;
+    line-height: 200px;
+    opacity: 0;
+
+    transition: 0.5s
+
+}
+li:hover figcaption{
+    opacity: 1;
+}
+
+
+  

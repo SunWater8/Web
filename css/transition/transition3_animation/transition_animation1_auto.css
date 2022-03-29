@@ -1,0 +1,61 @@
+body{
+	font-family: tahoma,sans-serif;
+	font-size: 12px;
+}
+
+/* animation은 transition과 달리 마우스를 대지 않아도 자동으로 작동되는 것을 말한다.  */
+.photo{
+	width: 100px;
+	height: 100px;
+	background-color: red;
+
+    /* 2초 동안 색이 파란색이었다가 빨간색으로 돌아오게 하기. */
+    animation-name: change_color;
+    animation-duration: 2s;
+    animation-delay: 0.1s;
+    animation-timing-function: ease-in;
+    /* 3번 animation 반복하기 */
+    animation-iteration-count: 3;
+    /* animation-iteration-count: infinite; */
+
+    /* animation이 진행되는 방향 설정하기. reverse, alternate, alternate-reverse, normal이 있다. 기본 값은 normal 이다. */
+    animation-direction: reverse;
+   
+    /* 파란색으로 바뀌면 빨간색으로 못 돌아오게 하기  (진행 방향에서 멈추기)*/
+    animation-fill-mode: forwards;
+
+
+
+    /* 
+    한 줄로 써보기
+    animation: change_color 4s 0.1s 2 ease-in forwards normal;
+
+    */
+
+}
+
+/* animation 이름인 change_color 가 하는 일 적어보기 */
+@keyframes change_color {
+    /* from {background-color: red;}
+    to {background-color: blue;}
+     */
+     
+    /* 
+    * from, to 가 아닌 % 단위로 색이 변하는 과정을 추가할 수 있다.
+    0% {background-color: blue;}
+    25% {background-color: yello;}
+    50% {background-color: green;}
+    75% {background-color: red;}
+    100% {background-color: silver;}
+    */
+
+
+    /* 
+    * 색이 변함과 동시에 위치도 이동시킬 수 있다.
+    */
+    0% {background-color: blue;}
+    25% {background-color: yello; margin: 0 0 0 200px;}
+    50% {background-color: green; margin: 200px 0 0 200px;}
+    75% {background-color: red; margin: 200px 0 0 0;}
+    100% {background-color: silver; margin: 0;}
+}
