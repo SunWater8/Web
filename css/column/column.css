@@ -1,0 +1,22 @@
+.area {
+    /* column-count 에는 여러 웹 브라우저 지원을 위한 여러 vendor prefix 가 존재한다. */
+    -moz-column-count: 3;
+    -webkit-column-count: 3;
+    column-count: 3;
+    /* vendor prefix가 없는 속성을 마지막에 써주는 것이 좋다. */
+
+    /* 다단의 가로지르는 선에 대한 스타일 */
+    column-rule: 2px dotted red;
+
+    /* 다단의 너비 */
+    column-width: 150px;
+
+    /* column-width 와 column-count를 한 줄로 쓸 수도 있다.  */
+    /* columns: 100px 3; */
+}
+
+/* 제목을 다단 위의 공간을 모두 쓰게 하기 */
+.area h1{
+    -webkit-column-span: all;
+    column-span: all;
+}
