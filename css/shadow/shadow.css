@@ -1,0 +1,124 @@
+h1 {
+    font-size: 5em;
+    color: red;
+    text-transform: uppercase;
+    /*
+     text-shadow: x축 y축 block값 size color; 
+     text-shadow: x축 y축 block값 color;      (많이 사용하는 형태)
+    */
+
+
+    text-shadow: 6px 10px 0 silver;
+    
+    /* 
+    text-shadow: -6px -10px 0 silver;     다른 방향의 그림자
+    text-shadow: 0 0 20px black;          사방으로 퍼지는 그림자.
+    text-shadow:                          이중 그림자
+        6px 10px 0 rgba(0,0,0,.6),
+        5px 5px 0 #00f;
+    
+    */
+    
+
+    
+}
+
+
+div.square_box {
+    width: 300px;
+    padding:30px;
+    background: red;
+
+    /* 
+    box-shadow: x축  y축 blur color;
+    */
+    box-shadow: 10px 10px 5px rgba(0,0,0,.2);
+    /*
+     box-shadow: 0 0 10px rgba(0,0,0,.2);              사방으로 퍼지는 그림자
+     box-shadow: inset 0 0 10px rgba(0,0,0,.2);        바깥이 아닌 안쪽으로 들어오는 그림자.
+     
+     */
+}
+
+
+/* input 박스를 클릭할 때 박스 안에 그림자 생기게 하기 */
+input {
+    margin: 30px 0;
+    padding: 10px;
+    display: inline-block;
+    /* outline: none; */
+}
+
+input:focus{
+    box-shadow: inset 0 0 8px rgba(255,0,0,.8);
+}
+
+
+
+/* 글자까지 포함해서 박스의 투명도를 낮추기 */
+h2 {
+    width: 200px;
+    margin: 30px 0;
+    padding: 20px;
+    background-color: red;
+
+    /* 전체 투명도 낮추게 하는 속성 opacity */
+    opacity: 0.5;
+}
+
+/* list 를 opacity로 안 보이게하고 hover 하면 보이게 하기. */
+ul.list_opacity {
+    border: 5px solid olivedrab ;
+    padding: 30px;
+    margin: 30px 0;
+    display: inline-block;
+}
+ul.list_opacity ul {
+    opacity: 0;
+}
+
+ul.list_opacity>li:hover ul{
+    opacity: 1;
+}
+
+
+
+
+/* 사진의 상세 설명 보기 */
+ul.portfolio {
+    border: 3px solid pink;
+    padding: 30px 30px;
+    margin: 10px;
+    list-style: none;
+}
+
+ul.portfolio li {
+    position: relative;
+
+    /* display: inline-block;  display 아닌 float 사용하기. */
+    float: left;
+    margin-left: 20px;
+    text-align: center;
+    margin: 20px;
+    
+}
+
+ul.portfolio div.hover_content {
+    position: absolute;
+
+    top:0;
+    left:0;
+    right:0;
+    bottom: 0;
+    
+    background: rgba(0,0,0,.7);
+    /* text-align: center;  상위 태그에서 설정했으니 여기서 할 필요 없음.*/
+    /* line-height: 200px;  글씨가 3번 줄바꿈 했으므로 이 속성은 사용하면 안됨.*/
+    color: white;
+    padding-top:50px;
+    opacity:0;
+}
+
+ul.portfolio>li:hover div.hover_content {
+    opacity: 1;
+}
