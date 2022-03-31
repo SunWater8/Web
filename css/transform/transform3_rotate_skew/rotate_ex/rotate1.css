@@ -1,0 +1,10 @@
+div img {
+    transition: 0.5s;
+
+    /* 왼쪽 상단을 기준으로 돌아가게 하기. */
+    transform-origin: left top;
+}
+
+div:hover img{
+    transform: rotateX(45deg);
+}

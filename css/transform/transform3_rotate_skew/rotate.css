@@ -1,0 +1,63 @@
+/* 사진 돌리기 */
+div#photo1 {
+	perspective: 1000px;
+	perspective-origin: 50% 50%;
+}
+div#photo1 img {
+	transition: all 0.5s;
+
+}
+div#photo1:hover img {
+	/* 사진을 위로 45도 기울이기 */
+	transform: rotateX(90deg);
+}
+
+
+/* 사진 돌리기2 90도 - div 중간을 기준으로 기울이기*/
+div#photo2 {
+	perspective: 1000px;
+
+	/* perspective-origin 이 div의 중간에 있기 때문에 기울일 때 그 소실점을 기준으로 기울여진다. */
+	perspective-origin: 50% 0%;
+}
+div#photo2 img {
+	transition: all 0.5s;
+	/* 사진 상단을 기준으로 기울이기 */
+	transform-origin: 50% 0;
+
+}
+div#photo2:hover img {
+	/* 사진을 위로 90도 기울이기 */
+	transform: rotateX(90deg);
+}
+
+
+
+
+/* 사진 돌리기3 90도 - div의 중간이 아닌 사진 상단을 기준으로 기울이기*/
+div#photo3 {
+}
+div#photo3 img {
+	transition: all 0.5s;
+	/* 상단을 기준으로 rotate */
+	transform-origin: 50% 0;
+	perspective-origin: 50% 0%;
+	transform: perspective(1000px) rotateX(0deg);
+
+}
+div#photo3:hover img {
+	transform: perspective(1000px) rotateX(-90deg);
+}
+
+
+/* skew */
+div#photo4 img{
+	transition: all 0.35s;
+	transform-origin: 0 0;
+
+	/* 다른 소실점으로 설정하기. */
+	/* transform-origin: 50% 50%; */
+}
+div#photo4:hover img {
+	transform: skewX(-45deg);
+}

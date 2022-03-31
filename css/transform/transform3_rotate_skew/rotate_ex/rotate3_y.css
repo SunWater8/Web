@@ -1,0 +1,7 @@
+div img {
+    transition: 0.35s;
+    transform: perspective(500px) rotateY(0 );
+}
+div:hover img {
+    transform: perspective(500px) rotateY(45deg)
+}

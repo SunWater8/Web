@@ -1,0 +1,56 @@
+ul>li {
+    list-style: none;
+    margin: 50px 0;
+    width:400px;
+    position: relative;
+    /* display: inline-block; width 값을 주었기 때문에 이 설정은 안해도 됨.*/
+    /* overflow: hidden;  이거 굳이 안 해도 될 것 같은데 왜 했지?*/
+
+}
+
+ul>li>span {
+    position: absolute;
+    top:0; left:0; bottom:0; right:0;
+    background-color: rgba(0,0,0,0.8);
+    color:white;
+    text-align: center;
+    line-height: 200px;
+    /* opacity:0;  없었다 생기는 것은 transform 에서 다 설정되어 있어서 opacity 굳이 안써도 됨.*/
+    transform-origin: 50% 50%;
+    transform:scale(0);
+    transition: 0.5s;
+
+
+}
+
+ul>li:hover span {
+    /* opacity:1; */
+    transform: scale(1);
+}
+
+
+
+/* 모범 정답 
+li{
+    list-style:none; 
+    width:400px;  
+    position: 
+    relative; 
+    overflow:hidden;
+}
+
+li span {
+  position: absolute;
+  left: 0;top: 0;right: 0;bottom: 0;
+  background: rgba(0,0,0,.8);
+  text-align: center;
+  line-height:286px ;
+  color: #fff;
+  transform: scale(0);
+  transition:0.5s;
+  transform-origin:50% 50%;
+}
+
+li:hover span{
+  transform:scale(1);
+} */

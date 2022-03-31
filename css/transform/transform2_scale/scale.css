@@ -1,0 +1,86 @@
+* {
+	margin:0;
+	padding:0;
+}
+
+hr {
+    margin: 100px 0;
+}
+h1 {
+    margin-bottom: 20px;
+}
+
+
+
+
+/* scale X, Y 로 어떻게 늘어나는지 */
+div#photo1 {
+    perspective: 1000px;
+    perspective-origin: 50% 50%;
+}
+div#photo1 img {
+
+    transition: all 0.35s;
+    
+    /* 사진이 늘어나는 기준은 중간으로 기본 설정되어 있다. 
+    다음은 transform:scale(1.5,2)일 때, 왼쪽 상단을 기준으로 사진을 늘어난다.
+    transform: scale(1.5); 라면 상단을 기준으로 아래로 늘어나게 된다.  */
+    transform-origin: 0 0;
+}
+div#photo1:hover img {
+    /* 가로로 1.5배 늘어남.  */
+    /* transform:scaleX(1.5); */
+
+    /* 가로 방향으로 반으로 줄어들음. */
+    /* transform:scaleX(0.5); */
+
+    /* 가로 방향으로 뒤집히며 1.5배 늘어남. */
+    /* transform: scaleX(-1.5); */
+
+    /* 세로로 1.5배 늘어남 */
+    /* transform: scaleY(1.5); */
+
+    /* 가로와 세로 모두 해당하는 수치대로 (가로, 세로 순) 늘어남. */
+    /* transform: scale(1.5, 2); */
+
+    /* x축과 y축의 늘어나는 값이 같다면 하나만 써도 된다. */
+    transform: scale(1.5);
+}
+
+
+/* scale(0) -> scale(1) */
+div#photo2 {
+    perspective : 1000px;
+    perspective-origin: 50% 50%;
+}
+div#photo2 img {
+    transition: .35s;
+    transform-origin: 0 0;
+
+    /* 안보이다가 보이게 하기. */
+    transform: scale(0);
+
+    /* 가운데이서 보이게 하기. */
+    transform-origin: 50% 50%;
+}
+div#photo2:hover img {
+    transform: scale(1);
+}
+
+
+/* scaleZ 활용 */
+div#photo3 {
+	perspective: 1000px; 
+	perspective-origin: 50% 50%; 
+
+}
+div#photo3 img {
+	transition: all 0.5s;
+	transform-origin: 50% 50%;
+	transform: scaleZ(1) translateZ(100px);
+}
+
+div#photo3:hover  img{
+	transform: scaleZ(2) translateZ(100px);
+}
+
