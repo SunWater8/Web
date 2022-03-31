@@ -18,3 +18,7 @@ body {
     background-position: center center; /* 그림을 가운데에 위치하도록 하기*/
 
 }
+
+.bg {
+    margin: 20px;
+}

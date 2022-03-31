@@ -2,13 +2,13 @@
     margin:0; 
     padding:0;
 }
-.mainmenu {
+ul.mainmenu {
     background:#333; 
     padding-left:40px;
 
     position: relative;
 }
-.mainmenu ul {
+ul.mainmenu ul {
     background:#666; 
     
     display: none;
