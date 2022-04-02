@@ -1,0 +1,59 @@
+
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Palanquin', sans-serif;
+  line-height: 1.618em;
+  background: #3498db;
+  color: #fff;
+}
+.wrapper {
+  max-width: 50rem;
+  width: 100%;
+  margin: 5rem auto;
+  text-align: center;
+}
+h1.loading {
+  font-size: 3em;
+  font-weight: 400;
+}
+
+
+/* 애니메이션 이름 dot_one, 총 시간 2s, 무한 반복 */
+.dot-one {
+  /* animation-name: dot_one;
+  animation-duration: 2s;
+  animation-iteration-count: infinite; */
+  
+  animation: dot_one 2s infinite;
+}
+
+/* 애니메이션 이름 dot_one이 할일
+투명도가 0 -> 1  . 점이 나타나는 시간을 길게 하기.*/
+@keyframes dot_one {
+  /* 15%까지는 점이 안보이다가 25% 부터 100% 까지 보이게 하기. */
+  0% {opacity: 0;}
+  15% {opacity: 0;}
+  25% {opacity: 1;}
+  100% {opacity: 1;}
+}
+
+.dot-two {
+  animation: dot_two 2s infinite; 
+}
+@keyframes dot_two {
+    0% {opacity:0;}
+    40% {opacity:0;}
+    50% {opacity:1;}
+    100% {opacity:1;}
+}
+.dot-three {
+  animation: dot_three 2s infinite; 
+}
+@keyframes dot_three {
+    0% {opacity:0;}
+    65% {opacity:0;}
+    75% {opacity:1;}
+    100% {opacity:1;}
+}

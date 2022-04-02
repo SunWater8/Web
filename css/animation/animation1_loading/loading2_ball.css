@@ -1,0 +1,62 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Palanquin', sans-serif;
+    line-height: 1.618em;
+    background: #3498db;
+    color: #fff;
+}
+.wrapper {
+    max-width: 50rem;
+    width: 100%;
+    margin: 5rem auto;
+    text-align: center;
+}
+
+div.bouncing_ball {
+    width: 4rem;
+    height: 12rem;
+    /* background:  sienna; */
+    margin: 0 auto;
+
+    position: relative;
+}
+
+div.ball {
+    width: 4rem;
+    height: 4rem;
+    background: white;
+    border-radius: 50%;
+
+    position: absolute;
+    /* top:0; */
+    animation: bouncing 1s  infinite;
+}
+
+@keyframes bouncing {
+    0% {top:0; 
+        /* 도입부엔 공 움직임이 느리기 때문에 ease-in */
+        animation-timing-function: ease-in;
+    }
+
+    34% {
+        /* 공이 바닥에 닿기 직전 공의 크기는 도입부와 동일하도록 한다. */
+        transform: scale(1,1);
+    }
+    35% {top:8rem; 
+        /* 공이 바닥이 닿은 후 올라올 때 공 움직임은 빨랐다가 느려지기 때문에 ease-out */
+        animation-timing-function: ease-out;
+        /* 공이 바닥에 닿을 때 공의 너비와 높이가 달라지기 때문에 수치를 조정한다. 
+        width와 height로 조정하게 되면 공이 오른쪽으로 삐져나오면서 크기가 늘어나기 때문에 scale 을 쓰면 그 문제를 해결할 수 있다. */
+        transform: scale(1.2,0.8);
+    }
+    50% {
+        /* 공이 바닥에 닿은 후 어서 원래 크기로 되돌아 오도록 설정한다. */
+        transform: scale(1,1);
+    }
+
+
+    100% {top:0; }
+
+}
