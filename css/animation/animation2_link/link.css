@@ -1,0 +1,157 @@
+body {
+  font-family: "Open Sans";
+  font-size: 1.125rem;
+  line-height: 1.618em;
+  color: #454545;
+
+  background-color: rgb(140, 216, 178);
+}
+
+
+p.back_red {
+  border: 3px solid  rgb(255, 0, 0);
+}
+
+
+
+/* ing 표시 */
+header>h1 {
+  margin: 0 auto;
+  padding: 0.5em 1.2rem;
+  padding-left: 5rem;
+  /* text-align: center; */
+  color: rgb(234, 247, 100);
+  font-size: 3rem;
+}
+
+header>h1>span.first_dot {
+  animation:loading 2s infinite;
+  opacity: 0;
+  transition: .3s;
+
+}
+@keyframes loading {
+  0% {opacity:0;}
+  30% {opacity: 1;}
+  100% {opacity: 1;}
+}
+header>h1>span.second_dot {
+  animation:loading2 2s infinite;
+  opacity: 0;
+  transition: .3s;
+
+}
+@keyframes loading2 {
+  0% {opacity:0;}
+  50% {opacity: 1;}
+  100% {opacity: 1;}
+}
+header>h1>span.third_dot {
+  animation:loading3 2.5s infinite;
+  opacity: 0;
+  transition: .5s;
+
+}
+@keyframes loading3 {
+  0% {opacity:0;}
+  80% {opacity: 1;}
+  100% {opacity: 1;}
+}
+
+/* int 표시 끝 */
+
+
+
+.wrapper {
+  max-width: 50rem; /*50rem = 800px*/
+  width: 100%;
+  margin: 2rem auto;
+
+  background-color: #fff;
+  padding: 0.5em 1.2rem;
+  border-radius: 10px;
+}
+a {
+  color: #3498db;
+}
+
+/* 1. 배경색 fade in */
+div.wrapper a.fade_in_bg {
+  transition:all .35s;
+  /* border: 1px dotted #3498db; */
+  border-bottom : 1px dotted #3498db;
+  padding: 0.13em;
+  text-decoration: none;
+}
+
+div.wrapper a.fade_in_bg:hover {
+  background-color: #3498db;
+  color: #fff;
+} 
+
+/* 2. slide */
+
+
+a[class^="slide"] {
+  text-decoration: none;
+  padding-left: 0.25em;
+  padding-right:0.25em;
+  border-bottom: 0.0625em dotted #3498db;
+  display: inline-block;
+  vertical-align: bottom;
+  
+  position: relative;
+  line-height: 1.5em;
+  overflow: hidden;
+}
+
+a[class^="slide"]:after {
+  padding-left: 0.25em;
+  padding-right:0.25em;
+  content: attr(data-linktext);
+  display: block;
+  position: absolute;
+  background-color: #3498db;
+  color:#fff;
+  transition: 0.35s;
+  text-align: center;
+  
+}
+
+a[class^="slide"]:hover {
+  border-bottom: 0.0625em solid #3498db;
+}
+
+a[class^="slide"]:hover:after {
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+}
+
+a.slide_from_left:after {
+  top:0;
+  left:-100%;
+  right:100%;
+
+}
+
+a.slide_from_right:after {
+  top:0%;
+  right: -100%;
+  left:100%;
+}
+
+a.slide_from_top:after {
+  top:-100%;
+  bottom:100%;
+  left:0;
+}
+a.slide_from_bottom:after {
+  top:100%;
+  bottom:-100%;
+  left:0;
+}
+
+
+/* 3. 밑줄 색 변화 */
