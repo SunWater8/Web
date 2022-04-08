@@ -1,0 +1,21 @@
+.wrap{
+	display:flex;
+	width:90%;
+	height:500px;
+	margin:20px auto;
+	border:2px solid;
+}
+
+
+.wrap div:first-child{
+	flex:1 1 0;
+	background:red;
+}
+.wrap div:nth-child(2){
+	background:blue;
+	flex:1 1 0;
+}
+.wrap div:nth-child(3){
+	background:yellow;
+	flex:2 2 0;
+}

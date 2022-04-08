@@ -1,0 +1,33 @@
+.wrap{
+
+	height:500px;
+	margin:20px auto;
+
+    display: flex;
+    /* flex를 앞에서부터 채우기 
+    나올 수 있는 값으로 flex-end, center, space-between이 있다.
+    flex-end는 뒤쪽부터 채운다는 뜻이다.
+    center는 가운데에 위치하게 된다.
+    space-between 은 양 옆에 붙이면서 넓게 퍼지되, 중간에 동일한 빈 공간이 존재한다.
+    spcce-around 는 좌우의 빈 공간을 동일하게 주도록 하는 것.
+    space-evenly 는 
+    */
+
+    /* justify-content: flex-start; */
+    justify-content: even;
+    width:90%;
+
+}
+
+.wrap div{
+    width: 60px;
+}
+.wrap div:first-child{
+	background:red;
+}
+.wrap div:nth-child(2){
+	background:blue;
+}
+.wrap div:nth-child(3){
+	background:yellow;
+}

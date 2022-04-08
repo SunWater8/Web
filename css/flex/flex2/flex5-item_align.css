@@ -1,0 +1,31 @@
+.wrap{
+	display:flex;
+
+	/* align-items 는 y 축을 기준으로 한다.
+	여기에 들어오는 값으로, center, stretch, 
+	center는 세로 축에서 가운데에 맞추기.
+	stretch는 자식태그인 .wrap div 의 height 값이 없다면 세로로 늘리기.
+	flex-end는 아래쪽에 맞추기
+	flex-start는 위쪽에 맞추기.
+	*/
+	align-items:center;
+
+	width:50%;
+	height:300px;
+	margin:20px auto;
+	border:2px solid;
+}
+
+.wrap div{
+	width:100%;
+	height: 5em;
+	text-align: center;
+	text-transform: uppercase;
+	background: #ccc;
+	border:1px solid #fff
+}
+/* 이 박스만 위치를 조정하기. */
+.wrap div:last-child{
+	align-self:flex-end;
+	margin-bottom:20px;
+}
