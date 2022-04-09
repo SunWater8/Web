@@ -116,9 +116,6 @@ ul#main_menu div.list_text:hover {
 
 
 
-
-
-
 /* image 영역 */
 #item_container {
     display: flex;
@@ -132,7 +129,7 @@ ul#main_menu div.list_text:hover {
 
 #item_container .item img{
     width:100%;
-
+    
 }
 
 
@@ -144,7 +141,7 @@ ul#main_menu div.list_text:hover {
     display: inline-block;
     top: 8%;
     left: 6%;
-
+    
     font-size: 16px;
     color: white;
 }
@@ -165,3 +162,34 @@ ul#main_menu div.list_text:hover {
 
 
 
+/* comming soon  문구 */
+main div.long-bar {
+    width:100%;
+    height: 60px;
+    line-height: 60px;
+    font-size: 1.5em;
+    font-weight: 900;
+    background-color: rgb(25, 206, 206);
+    color: #fff;
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+.foot_menu{
+    margin-bottom: 30px;
+    padding-left: 10px;
+}
+.about_company, .manual_info{
+    display: inline-block;
+    margin-right:20px;
+    font-size: 0.8em;
+    color: #aaa;
+    font-weight: 500;
+}
+
+
+
+/* media query */
+@media screen {
+    
+}
