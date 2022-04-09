@@ -1,0 +1,10 @@
+* {
+    margin:0;
+    padding:0;
+}
+.container {
+    background-color: beige;
+    /* 100vh : 보이는 웹 브라우저 화면 모두를 쓰겠다는 의미. */
+    height: 100vh;
+}
+
