@@ -1,0 +1,39 @@
+* {
+    margin:0;
+    padding:0;
+
+}
+header {
+    border:2px solid salmon;
+}
+
+div.img-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+.item {
+    position:relative;
+    width:50%;
+    background-color: blue  ;
+    
+}
+
+.img-container img {
+    width: 100%;
+    /* img 태그를 감싸는 div.item 아래에 있는 여백 없애기 */
+    display: block;
+}
+
+/* 이미지 안의 글씨 위치 조정하기. */
+span.item_title {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+}
+
+
+
+
+
+
+
