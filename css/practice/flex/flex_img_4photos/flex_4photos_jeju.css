@@ -1,0 +1,167 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+li {
+    list-style: none;
+}
+/* header 전체 영역 */
+header {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* mini menu */
+ul#my_info {
+    text-align: right;
+    vertical-align: baseline;
+    padding: 1.25em 0; 
+}
+ul#my_info > a.mini_menu {
+    text-decoration: none;
+    font-size: 0.75em;;
+    font-weight: 700;
+    color: rgb(126, 126, 126);
+    margin: 0.625em;
+    transition: .35s;
+}
+/* mini 메뉴에 마우스를 올리면 */
+ul#my_info > a.mini_menu:hover {
+    color: rgb(173, 173, 173);
+    cursor: pointer;
+}
+
+
+/* title */
+
+div#title {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.325em 0;
+}
+#title>.title_area {
+    width: 400px;
+}
+#title>div.title_area:nth-child(2) {
+    color: rgb(25, 206, 206);
+    font-weight: bold;
+    text-align: center;
+}
+#title>div.title_area:last-child {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    
+}
+div#fast_link {
+    display: inline-block;
+    
+}
+
+/* buttons in header*/
+div#fast_link>button.fast_link_box {
+    padding: 0.4em 1.25em;
+    margin-left: 0 0.625em;
+    background-color: rgb(25, 206, 206);
+    border: none;
+    color: #fff;
+    font-weight: 900;
+    transition: .35s;
+}
+
+/* 버튼에 마우스를 올리면 */
+div#fast_link>button.fast_link_box:hover {
+    background-color: rgb(27, 141, 141);
+    cursor: pointer;
+}
+
+/* main menu (nav-bar) */
+nav {
+    width: 1000px;
+    margin: 10px auto;
+}
+nav > ul#main_menu {
+    text-align: center;
+
+}
+
+ul#main_menu li.main_menu_list {
+    list-style: none;
+    display: inline-block;
+    text-align: center;
+    height: 3em;
+    line-height: 3em;
+    padding: 0 50px;
+}
+/* nav 메뉴에 마우스를 올리면 */
+ul#main_menu div.list_text {
+    display: inline-block;
+    height: 100%;
+    font-size: 0.9em;
+    font-weight: 700;
+    color:rgb(109, 109, 109);
+    transition: .35s;
+    
+}
+
+ul#main_menu div.list_text:hover {
+    /* border-bottom:1px solid rgb(25, 206, 206); */
+    color: rgb(173, 173, 173);
+    cursor: pointer;
+
+}
+
+
+
+
+
+
+
+
+/* image 영역 */
+#item_container {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0;
+}
+#item_container>div.item {
+    width: 50%;
+    position: relative;
+}
+
+#item_container .item img{
+    width:100%;
+
+}
+
+
+
+/* 이미지 안의 글씨 위치 조정하기 */
+#item_container .item_info {
+    position: absolute;
+    /* border: 1px solid steelblue; */
+    display: inline-block;
+    top: 8%;
+    left: 6%;
+
+    font-size: 16px;
+    color: white;
+}
+.item_info .en_name {
+    font-size: 0.9em;
+}
+.item_info .ko_name {
+    font-size: 1.5em;
+    font-weight: 500;
+    margin-top:0.5em;
+}
+.item_info .price {
+    font-size: 1.4em;
+    font-weight: bold;
+    margin-top: 2em; 
+}
+
+
+
+
