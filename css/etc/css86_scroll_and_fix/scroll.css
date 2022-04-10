@@ -1,0 +1,66 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+body {
+    background-color: #F5F7FA;
+    line-height: 1.2;
+}
+
+.cf:after {
+    content: " ";
+    display: block;
+    clear: both;
+}
+
+.wrapper {
+    width: 90%;
+    max-width: 600px;
+    margin: 60px auto 200px;
+}
+
+ .content {
+    padding: 0 15px;
+    width: 380px;
+}
+
+.content h1 {
+    margin-top: 0;
+}
+
+.sidebar {
+    padding: 20px;
+    width: 170px;
+    background-color: #434A54;
+    color: #fff;
+}
+
+.sidebar h3 {
+    margin: 0;
+}
+
+/* float */
+/* .content,
+.sidebar {
+    float: left;
+}  */
+
+
+/* The sticky */
+.sidebar {
+    position: sticky;
+    /* sticky를 쓸 땐 top 값만 추가할 수 있다. */
+    top:0;
+}
+
+/* float 이 아닌 flex로 sidebar 배치하기 */
+.wrapper {
+    display: flex;
+    align-items: flex-start;
+}
