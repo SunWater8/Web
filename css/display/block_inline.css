@@ -18,6 +18,7 @@ span{
 /* p태그는 block 요소이고, a 태그는 inline 요소이다. */
 p{
     text-align: center;
+    border: 1px solid slateblue;
 }
 p a {
     background-color: powderblue;

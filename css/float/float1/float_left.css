@@ -23,9 +23,11 @@ hr{
 /* 글자가 깨지더라도 꽉꽉 채우게 하기 */
 .content p {
     word-break: break-all;
+    border: 1px solid red;
 }
 
 /* br을 입력한 다음의 paragraph 부터는 사진 아래로 왔으면 할 때 float을 설정한 방향 (left/right)에 따라 clear 설정하면 된다. */
 .break {
     clear: right;
+
 }
