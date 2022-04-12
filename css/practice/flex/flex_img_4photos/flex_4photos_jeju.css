@@ -122,7 +122,7 @@ ul#main_menu div.list_text:hover {
     flex-wrap: wrap;
     font-size: 0;
 }
-#item_container>div.item {
+#item_container>a.item {
     width: 50%;
     position: relative;
 }
