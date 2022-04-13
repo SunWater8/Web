@@ -1,0 +1,184 @@
+.main_info_allwrap {
+    max-width: 1200px;
+    margin: 50px auto;
+    /* border: 1px solid steelblue; */
+    padding-top: 40px;
+    color: rgb(87, 87, 87);
+
+}
+
+.thum-container {
+    display: flex;
+    margin-bottom: 40px;
+    /* border: 1px solid ; */
+}
+.thum-img {
+    width: 50%;
+    /* display: block; */
+    /* border: 1px solid sienna; */
+}
+.thum-img img {
+    width: 95%;
+    /* border: 1px solid seagreen; */
+}
+.prd-info {
+    width: 50%;
+    /* border: 1px solid slateblue; */
+}
+
+
+/* 상품 이름과 가격 */
+.en-prd-title {
+    font-size: 1.3em;
+    font-weight: 900;
+}
+.kr-prd-title {
+    font-size: 1.2em;
+    margin-top: 0.5em;
+    font-weight: 500;
+}
+.price-bigfont {
+    margin: 1.5em 0;
+    font-size: 1.7em;
+    font-weight: 900;
+    /* border: 1px solid darkcyan; */
+}
+/* 배송비 */
+.post-price {
+    margin-top: 2em;
+    font-size: 1.4em;
+    display: inline-block;
+    /* border: 1px solid darkmagenta; */
+}
+.post-price > img {
+    /* width: 100%; */
+    width: 300px;
+    padding-top: 8px;
+}
+/* 수량 입력 회색 박스*/
+.count-greybox {
+    width:100%;
+    display: block;
+    
+    background-color: rgb(247, 247, 247);
+    padding: 1.2em 1em;
+    box-sizing: border-box;
+    margin: 2em 0;
+}
+.count-text {
+    padding-bottom: 1em;
+    font-size: 0.75em;
+    border-bottom: 1px dotted #bbb;
+}
+.count-price > div {
+    display: inline-block;
+    padding-top: 1em;
+}
+.counted-price {
+    float:right;
+    font-size: 0.8em;
+    font-weight: 600;
+}
+/* 총 가격 */
+.total-price {
+    /* border: 1px solid rebeccapurple; */
+    margin-bottom: 27px;
+
+}
+.total-price > div {
+    display: inline-block;
+}
+.total-text {
+    font-size: 0.9em;
+
+}
+.counted-total-price {
+    float: right;
+    font-size: 1.3em;
+}
+
+/* 구매/장바구니 버튼 */
+.btn-container {
+    display: flex;
+    /* border: 1px solid red; */
+    width: 100%;
+    justify-content: space-evenly;
+    
+}
+.btn-container button {
+    width:45%;
+    border-radius: 50px;
+    border: 1px solid #1ecad3;
+    padding: 22px 0;
+    font-size: 1.2em;
+    font-weight: 800;
+    
+}
+button.buy-btn {
+    background-color: #1ecad3;
+    color: white;
+    transition: 0.35s;
+}
+button.cart-btn {
+    background-color: white;
+    color: #1ecad3;
+}
+
+button.buy-btn:hover {
+    background-color: #1bb2ba;
+    cursor: pointer;
+}
+
+button.cart-btn:hover {
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+.prd-detail-bar {
+    display: table;
+    width: 100%;
+    /* border: 1px solid salmon; */
+    font-size: 0.9em;
+
+
+}
+.prd-detail-bar > div {
+    display: table-cell;
+    width: 50%;
+    text-align: center;
+    padding: 10px 0 10px 0;
+    /* border: 1px solid slateblue; */
+    border-bottom: 1px solid #ddd;
+}
+
+
+
+
+.prd-detail-wrap {
+    max-width: 750px;
+    /* background-color: red; */
+    margin: 50px auto;
+}
+.prd-detail-wrap img {
+    width: 100% ;
+    display: block;
+    margin:10px auto;
+    
+}
+.prd-detail-wrap > div.detail-text p{
+    margin:10px 0;
+    /* border: 1px solid darkslateblue; */
+    /* font-size: 0.9em; */
+    padding: 15px 0;
+}
+
+
+div.detail-text > p.head {
+    font-size: 1.8em;
+    font-weight: 400;
+}
