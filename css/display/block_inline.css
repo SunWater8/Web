@@ -50,15 +50,17 @@ div>i {
 /* div로 table 처럼 만들기 - 부모 태그에 적용시켜야 함. */
 .services {
     display: table;
-    width: 800px;
+    width: 500px;
     border: 1px solid springgreen;
 }
 
 .services div {
-    display: table-cell;
+    /* display: table-cell; */
+    border:1px solid slateblue;
 
     /* 부모가 가진 너비 안에서 반씩 자리차지 하기 */
     width: 50%;
+    
 }
 
 
