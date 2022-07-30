@@ -1,2 +1,3 @@
 Git is a free and open source
 about - Branching and Merging
+Git allow and encourages you to have multiple local branches
