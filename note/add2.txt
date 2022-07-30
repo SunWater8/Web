@@ -1,3 +1,5 @@
-modifiying in main
+modifiying in about branch
 Git is a free and open source
-Yaho in main branch
+about - Branching and Merging
+Git allow and encourages you to have multiple local branches
+that can be entirely independent of each other
